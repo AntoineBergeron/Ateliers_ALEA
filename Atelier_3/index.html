@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>: Introduction à la programmation scientifique</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Antoine Bergeron" />
+    <link href="assets/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="assets/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../Ateliers_ALEA.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, middle
+
+&lt;style type="text/css"&gt;
+  .title-slide {
+    background-image: url('assets/img/Coding.png');
+    background-color: #23373B;
+    background-size: contain;
+    border: 0px;
+    background-position: 600px 0;
+    line-height: 1;
+  }
+&lt;/style&gt;
+
+# Bienvenue à l'atelier 3
+
+&lt;hr width="65%" align="left" size="0.3" color="orange"&gt;&lt;/hr&gt;
+
+## Algorithmique 
+
+&lt;hr width="65%" align="left" size="0.3" color="orange" style="margin-bottom:40px;" alt="@Martin Sanchez"&gt;&lt;/hr&gt;
+
+.instructors[
+  ***ALÉA R*** - Antoine Bergeron
+]
+
+&lt;img src="assets/img/Rlogo.png" width="8%" style="margin-top:20px;"&gt;&lt;/img&gt;
+
+
+---
+class: inverse, middle, center
+
+# Les boucles
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Mise en situation
+
+Vous étudiez la démographie de la population humaine sur la planète Terre. Vos données sont très simples, vous avez deux pays dont vous connaissez la taille de la population au 1er janvier 1988, 1989, 1990, 1991, 1992, 1993 et 1994. Vous devez vérifier si l'évolution de la population est stable, en croissance ou en déclin sur cette séquence de 7 ans. Le taux de croissance est donné par l'équation suivante:
+
+
+`$$\lambda_t = \dfrac{N_{t+1} - N_t}{N_t}$$`
+
+---
+
+# Mise en situation
+
+Les données (en millions d'habitants) ressemblent à ce qui suit:
+
+
+```r
+donnees &lt;- matrix(nr = 7, nc = 2)
+donnees[,1] &lt;- c(11.1,11.4,11.8,12.1,12.5,12.9,13.2) #Cameroun
+donnees[,2] &lt;- c(7.1,7.3,7.3,7.1,6.7,6.3,5.9) #Rwanda
+an &lt;- c(1988:1994)
+donnees
+```
+
+```
+##      [,1] [,2]
+## [1,] 11.1  7.1
+## [2,] 11.4  7.3
+## [3,] 11.8  7.3
+## [4,] 12.1  7.1
+## [5,] 12.5  6.7
+## [6,] 12.9  6.3
+## [7,] 13.2  5.9
+```
+
+---
+
+# Mise en situation
+
+Les données ressemblent à ce qui suit:
+
+
+```r
+plot(an, donnees[,1], type = "l", xlab = "Année", ylab = "Nombre d'individus", ylim=c(3,15), cex=2)
+lines(an, donnees[,2], lty = 3)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" width="42%" style="display: block; margin: auto;" /&gt;
+
+---
+# Mise en situation
+
+Remarquons qu'il nous est seulement possible de trouver 6 valeurs de lambda par pays. Comme on doit utiliser le temps `\(t\)` et le temps `\(t+1\)` pour calculer lambda au temps `\(t\)`, une paire de données est associée à chaque lambda:
+
+*(numéro de la première donnée; numéro de la deuxième donnée):*
+
+(1,2) - (2,3) - (3,4) - (4,5) - (5,6) - (6,7) qui nous permettent d'obtenir ( `\(\lambda_1\)`; `\(\lambda_2\)`; `\(\lambda_3\)`; `\(\lambda_4\)`; `\(\lambda_5\)`; `\(\lambda_6\)`)
+
+Il n'est effectivement pas possible d'utiliser (0,1) ou (7,8) pour trouver une valeur de lambda, car les éléments 0 et 8 n'existent pas (sont inconnus).
+
+
+---
+# Mise en situation
+
+Maintenant, on doit calculer le taux de croissance annuel pour chaque pays. Commençons pour l'intervalle entre l'an 1988 et l'an 1989 pour le Cameroun :
+
+
+```r
+lambda &lt;- matrix(nrow = 6, ncol = 2)
+lambda[1,1] &lt;- (donnees[2,1] - donnees[1,1]) / donnees[1,1]
+```
+
+Ensuite, on fait pour la période de 1989 à 1990 :
+
+
+```r
+lambda[2,1] &lt;- (donnees[3,1] - donnees[2,1]) / donnees[2,1]
+```
+
+---
+# Mise en situation
+
+Très rapidement, on réalise que c'est assez fastidieux de refaire cet exercice à la main, mais c'est faisable. (12 calculs pour 2 pays et 7 années)
+
+Imaginez cependant qu'on vous demande d'effectuer une étude similaire sur l'ensemble de tous les pays dans le monde, sur une période de 50 ans. Le nombre de calculs à effectuer deviendrait alors beaucoup trop élevé pour être effectué à la main. Il faudra alors changer de technique....
+
+---
+# Mise en situation
+
+Dans les capsules de l'atelier 2, nous avons vu comment généraliser une séquence d'opérations au moyen d'une fonction. Comment est-ce qu'on peut généraliser des opérations qui sont répétées très souvent ? C'est le principe de la boucle.
+
+---
+# Définition
+
+Une boucle est une commande qui permet de répéter une série d'instructions sous des conditions définies de départ et de fin. C'est une commande de base de l'algorithmique.
+
+---
+# Anatomie de la boucle
+
+
+```r
+depart &lt;- 1
+fin &lt;- 5
+for(etape in depart:fin) {
+    print(etape)
+}
+```
+
+```
+## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+```
+
+L'exécution une fois d'un groupe de commandes dans une boucle s'appelle une itération.
+
+---
+# Quelques exemples simples
+
+On peut mettre toutes sortes de contraintes sur l'index de la boucle
+
+
+```r
+for(etape in c("Bonjour", "programmeurs", "en R")) {
+    print(etape)
+}
+```
+
+```
+## [1] "Bonjour"
+## [1] "programmeurs"
+## [1] "en R"
+```
+
+Dans cet exemple, notre séquence contient 3 éléments "Bonjour", "programmeurs", "en R". R va évaluer l'expression 3 fois. La variable index, ici `etape`, prendra successivement les valeurs de 1 à 3 pendant l'exécution de la boucle.
+
+---
+# Quelques exemples simples
+
+Par défaut, R augmente toujours l'index de 1 unité
+
+
+```r
+for(etape in 1:5) {
+    print(etape*2)
+}
+```
+
+```
+## [1] 2
+## [1] 4
+## [1] 6
+## [1] 8
+## [1] 10
+```
+
+---
+# Exercice
+
+Transformez en Fahrenheit une séquence de température en Celsius qui va de -50 à 100, par bond de 1. Rappelez-vous que la conversion est `\(1.8*C + 32\)`.
+
+- Déterminez le point de départ de la séquence
+- Déterminez le point de fin de la séquence
+- Faites le calcul approprié
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exercice
+
+
+```r
+for(C in -50:100) {
+    cat("Pour C = ",C," on obtient F = ",1.8*C + 32, '\n')
+}
+```
+
+```
+## Pour C =  -50  on obtient F =  -58 
+## Pour C =  -49  on obtient F =  -56.2 
+## Pour C =  -48  on obtient F =  -54.4 
+## Pour C =  -47  on obtient F =  -52.6 
+## Pour C =  -46  on obtient F =  -50.8 
+## Pour C =  -45  on obtient F =  -49 
+## Pour C =  -44  on obtient F =  -47.2 
+## Pour C =  -43  on obtient F =  -45.4 
+## Pour C =  -42  on obtient F =  -43.6 
+## Pour C =  -41  on obtient F =  -41.8 
+## Pour C =  -40  on obtient F =  -40 
+## Pour C =  -39  on obtient F =  -38.2 
+## Pour C =  -38  on obtient F =  -36.4 
+## Pour C =  -37  on obtient F =  -34.6 
+## Pour C =  -36  on obtient F =  -32.8 
+## Pour C =  -35  on obtient F =  -31 
+## Pour C =  -34  on obtient F =  -29.2 
+## Pour C =  -33  on obtient F =  -27.4 
+## Pour C =  -32  on obtient F =  -25.6 
+## Pour C =  -31  on obtient F =  -23.8 
+## Pour C =  -30  on obtient F =  -22 
+## Pour C =  -29  on obtient F =  -20.2 
+## Pour C =  -28  on obtient F =  -18.4 
+## Pour C =  -27  on obtient F =  -16.6 
+## Pour C =  -26  on obtient F =  -14.8 
+## Pour C =  -25  on obtient F =  -13 
+## Pour C =  -24  on obtient F =  -11.2 
+## Pour C =  -23  on obtient F =  -9.4 
+## Pour C =  -22  on obtient F =  -7.6 
+## Pour C =  -21  on obtient F =  -5.8 
+## Pour C =  -20  on obtient F =  -4 
+## Pour C =  -19  on obtient F =  -2.2 
+## Pour C =  -18  on obtient F =  -0.4 
+## Pour C =  -17  on obtient F =  1.4 
+## Pour C =  -16  on obtient F =  3.2 
+## Pour C =  -15  on obtient F =  5 
+## Pour C =  -14  on obtient F =  6.8 
+## Pour C =  -13  on obtient F =  8.6 
+## Pour C =  -12  on obtient F =  10.4 
+## Pour C =  -11  on obtient F =  12.2 
+## Pour C =  -10  on obtient F =  14 
+## Pour C =  -9  on obtient F =  15.8 
+## Pour C =  -8  on obtient F =  17.6 
+## Pour C =  -7  on obtient F =  19.4 
+## Pour C =  -6  on obtient F =  21.2 
+## Pour C =  -5  on obtient F =  23 
+## Pour C =  -4  on obtient F =  24.8 
+## Pour C =  -3  on obtient F =  26.6 
+## Pour C =  -2  on obtient F =  28.4 
+## Pour C =  -1  on obtient F =  30.2 
+## Pour C =  0  on obtient F =  32 
+## Pour C =  1  on obtient F =  33.8 
+## Pour C =  2  on obtient F =  35.6 
+## Pour C =  3  on obtient F =  37.4 
+## Pour C =  4  on obtient F =  39.2 
+## Pour C =  5  on obtient F =  41 
+## Pour C =  6  on obtient F =  42.8 
+## Pour C =  7  on obtient F =  44.6 
+## Pour C =  8  on obtient F =  46.4 
+## Pour C =  9  on obtient F =  48.2 
+## Pour C =  10  on obtient F =  50 
+## Pour C =  11  on obtient F =  51.8 
+## Pour C =  12  on obtient F =  53.6 
+## Pour C =  13  on obtient F =  55.4 
+## Pour C =  14  on obtient F =  57.2 
+## Pour C =  15  on obtient F =  59 
+## Pour C =  16  on obtient F =  60.8 
+## Pour C =  17  on obtient F =  62.6 
+## Pour C =  18  on obtient F =  64.4 
+## Pour C =  19  on obtient F =  66.2 
+## Pour C =  20  on obtient F =  68 
+## Pour C =  21  on obtient F =  69.8 
+## Pour C =  22  on obtient F =  71.6 
+## Pour C =  23  on obtient F =  73.4 
+## Pour C =  24  on obtient F =  75.2 
+## Pour C =  25  on obtient F =  77 
+## Pour C =  26  on obtient F =  78.8 
+## Pour C =  27  on obtient F =  80.6 
+## Pour C =  28  on obtient F =  82.4 
+## Pour C =  29  on obtient F =  84.2 
+## Pour C =  30  on obtient F =  86 
+## Pour C =  31  on obtient F =  87.8 
+## Pour C =  32  on obtient F =  89.6 
+## Pour C =  33  on obtient F =  91.4 
+## Pour C =  34  on obtient F =  93.2 
+## Pour C =  35  on obtient F =  95 
+## Pour C =  36  on obtient F =  96.8 
+## Pour C =  37  on obtient F =  98.6 
+## Pour C =  38  on obtient F =  100.4 
+## Pour C =  39  on obtient F =  102.2 
+## Pour C =  40  on obtient F =  104 
+## Pour C =  41  on obtient F =  105.8 
+## Pour C =  42  on obtient F =  107.6 
+## Pour C =  43  on obtient F =  109.4 
+## Pour C =  44  on obtient F =  111.2 
+## Pour C =  45  on obtient F =  113 
+## Pour C =  46  on obtient F =  114.8 
+## Pour C =  47  on obtient F =  116.6 
+## Pour C =  48  on obtient F =  118.4 
+## Pour C =  49  on obtient F =  120.2 
+## Pour C =  50  on obtient F =  122 
+## Pour C =  51  on obtient F =  123.8 
+## Pour C =  52  on obtient F =  125.6 
+## Pour C =  53  on obtient F =  127.4 
+## Pour C =  54  on obtient F =  129.2 
+## Pour C =  55  on obtient F =  131 
+## Pour C =  56  on obtient F =  132.8 
+## Pour C =  57  on obtient F =  134.6 
+## Pour C =  58  on obtient F =  136.4 
+## Pour C =  59  on obtient F =  138.2 
+## Pour C =  60  on obtient F =  140 
+## Pour C =  61  on obtient F =  141.8 
+## Pour C =  62  on obtient F =  143.6 
+## Pour C =  63  on obtient F =  145.4 
+## Pour C =  64  on obtient F =  147.2 
+## Pour C =  65  on obtient F =  149 
+## Pour C =  66  on obtient F =  150.8 
+## Pour C =  67  on obtient F =  152.6 
+## Pour C =  68  on obtient F =  154.4 
+## Pour C =  69  on obtient F =  156.2 
+## Pour C =  70  on obtient F =  158 
+## Pour C =  71  on obtient F =  159.8 
+## Pour C =  72  on obtient F =  161.6 
+## Pour C =  73  on obtient F =  163.4 
+## Pour C =  74  on obtient F =  165.2 
+## Pour C =  75  on obtient F =  167 
+## Pour C =  76  on obtient F =  168.8 
+## Pour C =  77  on obtient F =  170.6 
+## Pour C =  78  on obtient F =  172.4 
+## Pour C =  79  on obtient F =  174.2 
+## Pour C =  80  on obtient F =  176 
+## Pour C =  81  on obtient F =  177.8 
+## Pour C =  82  on obtient F =  179.6 
+## Pour C =  83  on obtient F =  181.4 
+## Pour C =  84  on obtient F =  183.2 
+## Pour C =  85  on obtient F =  185 
+## Pour C =  86  on obtient F =  186.8 
+## Pour C =  87  on obtient F =  188.6 
+## Pour C =  88  on obtient F =  190.4 
+## Pour C =  89  on obtient F =  192.2 
+## Pour C =  90  on obtient F =  194 
+## Pour C =  91  on obtient F =  195.8 
+## Pour C =  92  on obtient F =  197.6 
+## Pour C =  93  on obtient F =  199.4 
+## Pour C =  94  on obtient F =  201.2 
+## Pour C =  95  on obtient F =  203 
+## Pour C =  96  on obtient F =  204.8 
+## Pour C =  97  on obtient F =  206.6 
+## Pour C =  98  on obtient F =  208.4 
+## Pour C =  99  on obtient F =  210.2 
+## Pour C =  100  on obtient F =  212
+```
+
+---
+# Boucles et indexation
+
+Les boucles sont souvent utilisées pour accéder à des positions dans un objet de façon récursive. La variable de la boucle peut alors être utilisée directement comme index pour accéder à l'objet. Par exemple :
+
+
+```r
+test &lt;- runif(5, 0,1)
+for(etape in 1:5) {
+    print(test[etape])
+}
+```
+
+```
+## [1] 0.2608785
+## [1] 0.9962786
+## [1] 0.639588
+## [1] 0.1504539
+## [1] 0.4787758
+```
+
+---
+# Boucles et indexation
+
+De même, on peut réaliser des opérations mathématiques sur cette variable
+
+
+```r
+for(etape in 1:8) {
+    cat("À l'étape", etape, ", la boucle est complétée à", etape/8*100, "%.", '\n')
+}
+```
+
+```
+## À l'étape 1 , la boucle est complétée à 12.5 %. 
+## À l'étape 2 , la boucle est complétée à 25 %. 
+## À l'étape 3 , la boucle est complétée à 37.5 %. 
+## À l'étape 4 , la boucle est complétée à 50 %. 
+## À l'étape 5 , la boucle est complétée à 62.5 %. 
+## À l'étape 6 , la boucle est complétée à 75 %. 
+## À l'étape 7 , la boucle est complétée à 87.5 %. 
+## À l'étape 8 , la boucle est complétée à 100 %.
+```
+
+---
+# Compteur
+
+La séquence ne commence pas toujours par 1, et donc parfois on doit avoir un compteur indépendent pour l'indexation. Il est donc pratique de calculer à quelle position on se situe dans la boucle.
+
+
+```r
+n &lt;- 1
+for(etape in -2:5) {
+    cat("etape = ",etape, " n = ",n, '\n')
+    n &lt;- n + 1
+}
+```
+
+```
+## etape =  -2  n =  1 
+## etape =  -1  n =  2 
+## etape =  0  n =  3 
+## etape =  1  n =  4 
+## etape =  2  n =  5 
+## etape =  3  n =  6 
+## etape =  4  n =  7 
+## etape =  5  n =  8
+```
+
+---
+# Exercice
+
+Enregistrez les résultats de votre conversion de température dans une matrice ayant pour première colonne la valeur en Celcius et pour deuxième colonne la valeur en Fahrenheit.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Solution
+
+
+```r
+resultat &lt;- matrix(nrow = 151, ncol = 2)
+colnames(resultat) &lt;- c("C", "F")
+n &lt;- 1
+for(C in -50:100) {
+    resultat[n,1] &lt;- C
+    resultat[n,2] &lt;- 1.8*C + 32
+    n &lt;- n + 1
+}
+```
+
+---
+# Exercice
+
+On peut aussi utiliser le compteur pour réaliser des opérations mathématiques récursives. Par exemple, la factorielle de **n** est définie comme :
+
+$$
+n! = 1 \times 2 \times 3 \times \dots \times (n-1) \times n
+$$
+
+Calculez la factorielle  de 10 au moyen d'une boucle.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Solution
+
+
+```r
+n &lt;- 1
+for(etape in 1:10) n &lt;- n*etape
+n
+```
+
+```
+## [1] 3628800
+```
+
+---
+# On complexifie le problème ...
+
+Il est possible d'incruster une boucle dans une boucle. On réalise notamment cette opération pour faire des calculs sur des matrices, des listes...
+
+
+```r
+ma_matrice &lt;- matrix(nrow = 5, ncol = 3)
+n &lt;- 1
+for(i in 1:5) {
+    for(j in 1:3) {
+        ma_matrice[i,j] &lt;- n
+        n &lt;- n + 1
+    }
+}
+ma_matrice
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9
+## [4,]   10   11   12
+## [5,]   13   14   15
+```
+
+---
+
+# Retour sur la mise en situation
+
+Vous étudiez la démographie de la population humaine sur la planète Terre. Vos données sont très simples, vous avez deux pays dont vous connaissez la taille de la population au 1er janvier 1988, 1989, 1990, 1991, 1992, 1993 et 1994. Vous devez vérifier si l'évolution de la population est stable, en croissance ou en déclin sur cette séquence de 7 ans. Le taux de croissance est donné par l'équation suivante:
+
+`$$\lambda_t = \dfrac{N_{t+1} - N_t}{N_t}$$`
+
+On se souvient que c'est assez fastidieux de refaire cet exercice à la main, mais c'est faisable. (12 calculs pour 2 pays et 7 années)
+
+Imaginez cependant qu'on vous demande d'effectuer une étude similaire sur l'ensemble de tous les pays dans le monde, sur une période de 50 ans. Le nombre de calculs à effectuer deviendrait alors beaucoup trop élevé pour être effectué à la main. Il faudra alors changer de technique....
+
+---
+# Retour sur la mise en situation
+
+La solution ressemblerait à
+
+
+```r
+n_pays &lt;- ncol(donnees)
+n_annees &lt;- nrow(donnees)
+lambda &lt;- matrix(nrow = n_annees-1, ncol = n_pays)
+for(i in 2:n_annees) {
+    for(j in 1:n_pays) {
+        lambda[i-1,j] &lt;- (donnees[i,j] - donnees[i-1,j]) / donnees[i-1,j]
+    }   
+}
+```
+
+---
+# La boucle while
+
+La boucle de type *while* répète une série d'intructions tant qu'une condition n'a pas été atteinte. C'est une version générale de la boucle *for*. Par exemple, on peut tirer deux pièces de monnaie jusqu'à ce que l'on obtienne la combinaison pile-pile.
+
+
+```r
+piece &lt;- c("pile","face")
+combinaison = "face-face"
+while(combinaison != "pile-pile") {
+    essai1 &lt;- sample(piece, 1)
+    essai2 &lt;- sample(piece, 1)
+    combinaison &lt;- paste(essai1, "-" , essai2, sep = "")
+    print(combinaison)
+}
+```
+
+```
+## [1] "pile-face"
+## [1] "pile-pile"
+```
+
+---
+# Exercice
+
+Calculez en moyenne combien de fois vous avez à tirer un dé à 6 faces pour obtenir la valeur 1.
+
+Pour ce faire, vous devrez utiliser la fonction `sample`. 
+
+Vous pouvez aussi considérer faire 10000 tests. (C'est-à-dire 10000 expériences de lancer un dé jusqu'à l'obtention du chiffre 1)
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Solution
+
+
+```r
+de &lt;- c(1:6)
+n_test &lt;- 10000
+res &lt;- numeric(n_test)
+for(i in 1:n_test) {
+	n &lt;- 0
+	face &lt;- 0
+	while(face != 1) {
+		face &lt;- sample(de,1)
+		n &lt;- n + 1
+	}
+	res[i] &lt;- n
+}
+mean(res)
+```
+
+```
+## [1] 5.948
+```
+
+---
+# Solution
+
+
+```r
+hist(res)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-18-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle, center, inverse
+
+# Exercice intermédiaire
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Croissance logistique
+
+La croissance d'une population sujette à la densité-dépendance, en temps discret, se calcul bien au moyen d'une boucle. En notant `\(N_t\)` la densité au temps `\(t\)`, on a que la densité au temps `\(t+1\)` se calcule ainsi :
+
+$$
+N_{t+1} = N_t + r \times N_t \times (1 - N_t/K)
+$$
+
+Henri Meunier a importé environ 220 cerfs sur l'île d'Anticosti au début du 20ème siècle et on compte aujourd'hui, en 2015, environ 200 000 bêtes, ce qui correspond à la capacité de support du milieu `\(K\)`. Si on fixe le taux de croissance `\(r\)` à 0.3, combien de temps, en années, fut nécessaire à la population pour atteindre 50% de la capacité de support ?
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Solution 1
+
+
+```r
+r &lt;- 0.3
+N &lt;- 220
+K &lt;- 200000
+step &lt;- 1
+while(N &lt; K/2) {
+    N &lt;- N + r * N * (1 - N/K)
+    step &lt;- step + 1
+}
+step
+```
+
+```
+## [1] 27
+```
+
+---
+# Solution 2
+
+
+```r
+r &lt;- 0.3
+K &lt;- 200000
+n_steps &lt;- 115
+N &lt;- numeric(n_steps+1)
+N[1] &lt;- 220
+
+for(i in 2:(n_steps+1)) {
+    N[i] &lt;- N[i-1] + r * N[i-1] * (1 - N[i-1]/K)
+}
+N[25:30]
+```
+
+```
+## [1]  80600.57  95036.06 109999.10 124849.13 138922.91 151650.42
+```
+
+---
+# Solution 2
+
+
+```r
+plot(c(1900:2015), N, type = "l", xlab = "Année", ylab = "Population")
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+class: middle, center, inverse
+
+# Expressions conditionnelles
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Principe
+
+Très souvent en programmation, on doit prendre des décisions du type **si la condition X est remplie, alors faire Y, sinon faire Z**. Nous avons déjà vu certains exemples depuis le début des ateliers.
+
+La structure de base d'une expression conditionnelle est la suivante:
+
+
+```r
+if(condition) {
+    instruction(1)
+    }
+else {
+    instruction(2)
+}
+```
+
+---
+# Arbre décisionnel
+
+Un exemple,
+
+
+```r
+test &lt;- function(jour) {
+    if(jour == "lundi") {
+        print("Je dois aller à l'atelier R.")
+    }
+    else {
+        if(jour == "dimanche") {
+        print("Ai-je relus les slides de la présentation de la semaine passée?")
+        }
+        else {
+            if(jour == "samedi") {
+                print("Aujourd'hui c'est la journée gauffres!")
+            }
+            else {
+                print("Bof, j'ai encore du temps!")
+            }
+        }
+    }  
+}
+```
+
+Conditions: (==)
+
+---
+# Astuce
+
+L'indentation (l'utilisation d'espaces dans le code) est fort utile pour s'y retrouver lorsque les conditions deviennent nombreuses. Reprenons l'exemple précédent.
+
+---
+# Astuce (comparaison)
+
+
+```r
+test &lt;- function(jour) {
+if(jour == "lundi") {
+print("Je dois aller à l'atelier R.")
+}
+else {
+if(jour == "dimanche") {
+print("Ai-je relus les slides de la présentation de la semaine passée ?")
+}
+else {
+if(jour == "samedi") {
+print("Aujourd'hui c'est la journée gauffres!")
+}
+else {
+print("Bof, j'ai encore du temps !")
+}
+}
+}  
+}
+```
+
+---
+# Astuce (comparaison)
+
+
+```r
+test &lt;- function(jour) {
+    if(jour == "lundi") {
+        print("Je dois aller à l'atelier R.")
+    }
+    else {
+        if(jour == "dimanche") {
+        print("Ai-je relus les slides de la présentation de la semaine passée ?")
+        }
+        else {
+            if(jour == "samedi") {
+                print("Aujourd'hui c'est la journée gauffres!")
+            }
+            else {
+                print("Bof, j'ai encore du temps !")
+            }
+        }
+    }  
+}
+```
+
+---
+# Opérateurs logiques
+
+Les classiques :
+
+- X est égal à Y : `X == Y` ( == )
+- X est supérieur à Y : `X &gt; Y` 
+- X est inférieur à Y : `X &lt; Y`
+- X est supérieur ou égal à Y : `X &gt;= Y` ( &gt;= )
+- X est inférieur ou égal à Y : `X &lt;= Y` ( &lt;= )
+- X est différent de Y : `X != Y` ( != )
+
+---
+# Exercice
+
+1. Tirez au hasard 10 chiffres entre 0 et 1.
+2. Pour chacun de ces chiffres, déterminez s'il est plus petit ou plus grand que la valeur seuil de 0.3.
+3. Inscrivez votre résultat dans un autre objet.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Solution
+
+.pull-left[
+
+
+```r
+X &lt;- runif(n = 10)
+res &lt;- numeric(10)
+for(i in 1:10) {
+    if(X[i] &lt; 0.3) {
+        res[i] &lt;- "plus petit"
+    }
+    else {
+        res[i] &lt;- "plus grand"
+    }
+}
+cbind(X,res)
+```
+]
+
+.pull-right[
+
+
+```
+##       X                    res         
+##  [1,] "0.262050857534632"  "plus petit"
+##  [2,] "0.908883562777191"  "plus grand"
+##  [3,] "0.0693539460189641" "plus petit"
+##  [4,] "0.900521705159917"  "plus grand"
+##  [5,] "0.42542283819057"   "plus grand"
+##  [6,] "0.393789185211062"  "plus grand"
+##  [7,] "0.216471873689443"  "plus petit"
+##  [8,] "0.735183112556115"  "plus grand"
+##  [9,] "0.968395354691893"  "plus grand"
+## [10,] "0.790970178321004"  "plus grand"
+```
+]
+
+
+---
+# Opérateurs logiques
+
+On peut aussi combiner plusieurs conditions :
+
+- La condition A et la condition B : `A &amp; B`
+- La condition A ou la condition B : `A | B`
+
+---
+# Exercice
+
+Reprenez la même séquence de chiffres, mais cette fois-ci déterminez si le chiffre est situé entre les valeurs de 0.2 et 0.6.
+
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+
+---
+
+# Solution
+
+.pull-left[
+
+
+```r
+res2 &lt;- numeric(10)
+for(i in 1:10) {
+    if(X[i] &gt; 0.2 &amp; X[i] &lt; 0.6) {
+        res2[i] &lt;- "oui"
+    }
+    else {
+        res2[i] &lt;- "non"
+    }
+}
+cbind(X,res2)
+```
+]
+
+
+.pull-right[
+
+
+```
+##       X                    res2 
+##  [1,] "0.262050857534632"  "oui"
+##  [2,] "0.908883562777191"  "non"
+##  [3,] "0.0693539460189641" "non"
+##  [4,] "0.900521705159917"  "non"
+##  [5,] "0.42542283819057"   "oui"
+##  [6,] "0.393789185211062"  "oui"
+##  [7,] "0.216471873689443"  "oui"
+##  [8,] "0.735183112556115"  "non"
+##  [9,] "0.968395354691893"  "non"
+## [10,] "0.790970178321004"  "non"
+```
+]
+
+---
+
+# Conditions sur des vecteurs
+
+R a la particularité d'être optimisé pour les objets sous forme de matrice ou de vecteur. Ainsi, vous pouvez évaluer des expressions conditionnelles sur un vecteur sans avoir à passer par une boucle. On peut reprendre l'exemple précédent, d'une façon beaucoup plus rapide :
+
+.pull-left[
+
+
+```r
+res2 &lt;- numeric(10)
+res2[X &gt; 0.2 &amp; X &lt; 0.6] &lt;- "oui"
+res2[X &lt; 0.2 | X &gt; 0.6] &lt;- "non"
+cbind(X,res2)
+```
+]
+
+
+.pull-right[
+    
+
+```
+##       X                    res2 
+##  [1,] "0.262050857534632"  "oui"
+##  [2,] "0.908883562777191"  "non"
+##  [3,] "0.0693539460189641" "non"
+##  [4,] "0.900521705159917"  "non"
+##  [5,] "0.42542283819057"   "oui"
+##  [6,] "0.393789185211062"  "oui"
+##  [7,] "0.216471873689443"  "oui"
+##  [8,] "0.735183112556115"  "non"
+##  [9,] "0.968395354691893"  "non"
+## [10,] "0.790970178321004"  "non"
+```
+]
+
+
+---
+class: middle, inverse, center
+
+# Exercice 
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le retour du scrabble ...
+
+Vous avez tiré au hasard les lettres X = {E, Z, F, C, D}. Écrivez une fonction qui va trier vos lettres automatiquement pour vous, sans utiliser les fonctions `sort()` et `order()` de R. 
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+
+---
+# Solution
+
+
+
+```r
+tri &lt;- function(x){
+	# Calcul de la dimension du vecteur
+	taille &lt;- length(x)
+	ordre &lt;- "NON"
+	# Boucle qui tourne jusqu'à ce que tout soit en ordre
+	while(ordre == "NON") {
+		ordre &lt;- "OUI"
+		# Boucle qui passe tous les éléments en paires
+		for(i in 1:(taille-1)) {
+			if(x[i+1] &lt; x[i]) {
+				# Inversion des deux lettres
+				x[c(i,i+1)] &lt;- x[c(i+1,i)]
+				# Comme un changement a été fait, l'ordre
+				# n'est pas encore garanti
+				ordre &lt;- "NON"
+			}
+		}
+	}
+	return(x)
+}
+tri(c("E", "Z", "F", "C", "D"))
+```
+
+```
+## [1] "C" "D" "E" "F" "Z"
+```
+
+
+---
+class: middle, center, inverse
+
+# Les jeux de hasard
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+# Les jeux de hasard
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/hasard.jpg" height="450px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+class: middle, center, inverse
+
+# Application 1: échantillonner un vecteur
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+# Exemple : tirer une carte au hasard
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/cartes.jpg" height="250px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+1- Créez un vecteur comportant les 52 cartes (sans les jokers) d'un jeu de cartes.
+
+2- Créez une fonction permettant de piger un certain nombre de cartes du jeu de cartes.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Exemple : votre jeu de cartes sur R
+## La fonction `sample()`
+
+
+```r
+valeurs &lt;- c("2", "3", "4", "5", "6", "7", "8", "9", "10", "valet", "reine", "roi", "as")
+couleurs &lt;- rep(c("pique", "trèfle", "carreau", "coeur"),each = 13)
+cartes &lt;- paste(valeurs,"-",couleurs)
+tirage &lt;- function(n, cartes) {
+    sample(x = cartes, size = n, replace = FALSE)
+}
+tirage(3, cartes)
+```
+
+```
+## [1] "10 - coeur"    "roi - carreau" "as - trèfle"
+```
+
+---
+# Exercice
+
+Vous trouverez les lettres du scrabble dans le fichier [lettres.txt](./donnees/lettres.txt). Vous pouvez les charger et programmer votre fonction qui vous pigera au hasard les 7 lettres pour ce jeux.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Solution
+
+
+```r
+scrabble &lt;- read.table(file = "./donnees/lettres.txt", header=TRUE, sep = " ")
+res &lt;- sample(scrabble[,1],7)
+res
+```
+
+```
+## [1] L T U S M M T
+## Levels: A B C D F G H I J K L M N O P Q R S T U V W X Y Z
+```
+
+---
+class: middle, center, inverse
+
+# Application 2: échantillonner une loi de probabilité
+
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+# Principe
+
+Plutôt que de tirer un élément d'une série de chiffres ou de caractères, on peut échantillonner une loi de probabilité dont les propriétés sont connues. Fort heureusement, la plupart de ces lois de probabilité sont déjà programmées. Certaines sont intuitives et déjà utilisées dans des jeux de hasard.
+
+---
+# La lotto 6/49
+
+## La loi uniforme
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/649.jpg" width="50%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+
+```r
+hist(floor(runif(n = 10000, min = 1, max = 50)))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# La taille
+## La loi normale
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/taille.png" height="450px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+
+```r
+hist(rnorm(n = 30, mean = 10, sd = 1))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Une pièce de monnaie
+## La loi binomiale
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/piece.jpg" width="100%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```r
+rbinom(n = 10, size = 1, prob = 0.5)
+```
+
+```
+##  [1] 1 1 1 0 0 1 1 0 0 1
+```
+]
+
+---
+
+# Les dés
+## La loi multinomiale
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/des.png" width="100%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```r
+rmultinom(n = 3, size = 1, prob = rep(1/6, 6))
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    0    0    0
+## [2,]    1    0    0
+## [3,]    0    1    1
+## [4,]    0    0    0
+## [5,]    0    0    0
+## [6,]    0    0    0
+```
+]
+
+
+---
+
+# La roulette russe
+## La loi exponentielle
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/roulette.jpg" width="80%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+
+.pull-right[
+
+```r
+hist(rexp(n = 1000, rate = 1/6),
+xlab = "Nombre d'essais avant de perdre")
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-39-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: middle, center, inverse
+
+# Application 3: prise de décision
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Pourquoi "prise de décision" ?
+
+On peut trouver au milieu d'un algorithme un élément décisionnel aléatoire. Par exemple, la survie d'un individu suite à un évènement grave (AVC, accident de voiture, etc). Bien que l'on ne dispose pas nécessairement de cette information précise (ici la survie de l'individu), il est néanmoins possible, si l'on dispose de la distribution de probabilité associée à l'évènement aléatoire, de rendre notre algorithme fonctionnel.
+
+Remarquons que dans ce genre de situations, ce n'est pas le comportement d'un individu en particulier qui nous intéresse, mais plutôt le comportement global (d'une masse d'individus) ou encore le comportement à long terme (s'il s'agit d'un phénomène temporel). Malgré cela, on devra quand même pouvoir simuler le comportement, ou encore la &lt;b&gt; prise de décision &lt;/b&gt;, de chacun des individus afin d'avoir une idée des tendances globales.
+
+---
+
+# Exemple
+## L'épreuve de Bernoulli
+
+- Une épreuve de Bernoulli est une expérience aléatoire (un tirage) avec deux issues : succès ou échec;
+- Les épreuves sont indépendantes: l'issue d'une seconde épreuve ne dépend pas de la première;
+- La probabilité de succès est représentée par le paramètre `p`, alors que la probabilité d'un échec est représentée par `1-p`;
+
+---
+# Exemple
+## L'épreuve de Bernoulli
+
+**Exemple des jeux de hasard:** la pièce de monnaie
+
+**Exemples:**
+
+- Quel est le sexe du nouveau-né?
+- Est-ce qu'une personne susceptible sera contaminée par un virus après avoir été en contact avec une personne infectée?
+- Dans une manufacture, est-ce qu'une pièce pourra passer l'étape du triage?
+- Déterminer si un électeur votera **oui** dans un prochain référendum.
+- Déterminer les parts d'un marché après plusieurs campagnes publicitaires.
+
+---
+# Simuler un tirage de Bernoulli
+
+Dans le cas classique du lancer d'une pièce de monnaie, on utilise `\(p = 0.5\)`. 
+
+Mais qu'en est-il si la pièce est biaisée, par exemple si la face est plus lourde et donc la probabilité d'obtenir pile est de `\(p = 0.55\)` ?
+
+
+```r
+set.seed(1)
+p &lt;- 0.55
+alea &lt;- runif(n = 1, min = 0, max = 1)
+if(alea &lt; p) res = "pile" else res = "face"
+res
+```
+
+```
+## [1] "pile"
+```
+
+---
+# Comprendre la tendance globale
+
+
+Si `\(U\)` est une variable aléatoire distribuée selon la loi uniforme entre 0 et 1, alors la chance que `\(U &lt; p\)` est exactement de valeur `\(p\)`. Si on réalise `\(n\)` tirage, alors le nombre moyen de succès (aussi appelé l'espérance du nombre moyen de succès) est exactement `\(np\)`.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/Uniforme_Proba.PNG" width="50%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Un exemple vaut mille mots
+
+- Tirez au hasard 10 000 chiffres de la loi uniforme bornée entre 0 et 1
+- Créez un vecteur 'res' rempli de 0 et de 10 000 unités de longueur
+- Pour chaque valeur de la séquence, évaluez si le chiffre est plus petit que la valeur seuil de `\(p = 0.2\)`. Si la valeur est plus petite, inscrivez 1 dans le vecteur 'res' à la position correspondante
+- Combien de fois est-ce que la valeur est inférieure à `\(p\)` ?
+- Essayez à nouveau et comparez.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Solution
+
+
+
+
+```r
+X &lt;- runif(n = 10000, min = 0, max = 1)
+p &lt;- 0.2
+res &lt;- numeric(length = 10000)
+res[X&lt;p] &lt;- 1
+sum(res)
+```
+
+```
+## [1] 2012
+```
+
+```r
+X &lt;- runif(n = 10000, min = 0, max = 1)
+p &lt;- 0.2
+res &lt;- numeric(length = 10000)
+res[X&lt;p] &lt;- 1
+sum(res)
+```
+
+```
+## [1] 1988
+```
+
+```r
+10000*p
+```
+
+```
+## [1] 2000
+```
+
+---
+
+# Un exercice est encore plus efficace...
+
+Vous observez une personne ivre à la sortie d'un bar prendre sa voiture. Vous appelez la police pour l'avertir. Estimez la distance parcourue (à vol d'oiseau) par ce conducteur en 10 minutes, sachant que :
+
+- Le quartier où vous vous trouvez est un plan cartésien parfait (une grille régulière) composé de blocs de 250 m;
+- À chaque intersection, votre conducteur ivre tourne à gauche ou à droite avec une probabilité de 0.5;
+- Il faut exactement 30 secondes à votre conducteur pour parcourir la distance entre deux arrêts.
+- Le conducteur débute à la coordonnée (0,0).
+- La distance à vol d'oiseau est calculée de la façon suivante:
+
+`$$dist = \sqrt{x_{final}^2 + y_{final}^2}$$`
+où `\((x_{final},y_{final})\)` correspond à la coordonnée finale (x,y) de la personne ivre après 10 minutes de voiture.
+
+---
+
+# Un exercice est encore plus efficace...
+
+Calculez la distance parcourue en X et en Y, puis reprenez votre calcul une centaine de fois pour estimer la distance moyenne parcourue entre le point de départ et la fin du parcours de notre individu (à vol d'oiseau).
+
+Vous pouvez utiliser le fichier [Deplacement_Grille_Incomplet.R](./donnees/Deplacement_Grille_Incomplet.R) pour vous aider. Ce fichier contient une partie des fonctions qui gèrent le changement de direction et le déplacement de l'individu.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Solution
+
+.pull-left[
+
+
+
+
+```r
+# ChangerDirection &lt;- function(DirectionDepart, Probabilite){...}
+# Deplacement &lt;- function(PositionCourante, Direction){...}
+
+nsteps &lt;- 20
+xy &lt;- matrix(0,nrow = 21, ncol = 2)
+xy[1,] &lt;- c(0,0)
+direction &lt;- 0
+probabilite &lt;- c(0.5,0.5)
+set.seed(2)
+for(step in 2:(nsteps+1)) {
+  
+  # Calcul de la nouvelle direction
+  direction &lt;- ChangerDirection(direction, probabilite)
+ 
+  # Calcul des nouvelles coordonnees
+  xy[step,] &lt;- Deplacement(xy[step-1,], direction)
+}
+```
+]
+
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-45-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Solution (suite)
+
+
+
+```r
+res &lt;- numeric(50)
+
+set.seed(3)
+for (j in 1:50){
+nsteps &lt;- 20
+xy &lt;- matrix(0,nrow = 21, ncol = 2)
+xy[1,] &lt;- c(0,0)
+direction &lt;- 0
+probabilite &lt;- c(0.5,0.5)
+for(step in 2:(nsteps+1)) {
+  
+  direction &lt;- ChangerDirection(direction, probabilite)
+ 
+  xy[step,] &lt;- Deplacement(xy[step-1,], direction)
+}
+dist &lt;- sqrt(xy[21,1]^2 + xy[21,2]^2)
+res[j] &lt;- dist
+}
+mean(res)
+```
+
+```
+## [1] 1075.572
+```
+
+---
+# La loi multinomiale
+
+La situation se complique lorsqu'il y a plus que 2 résultats possibles à notre épreuve aléatoire. Par exemple, le conducteur peut tourner à gauche avec une probabilité de 0.25, poursuivre en ligne droite avec une probabilité de 0.5 ou encore tourner à droite avec une probabilité de 0.25.
+
+La loi multinomiale est une généralisation de la loi binomiale qui permet d'avoir plus de 2 résultats possibles
+
+
+---
+# La loi multinomiale
+
+- La somme des probabilités d'observer chacun des événements doit être obligatoirement de 1.
+
+- Dans ce contexte, la décision est prise en comparant la valeur aléatoire à la distribution cumulative, pour chacun des événements possibles.
+
+**Prenons la séquence de probabilités `\(p = \{0.25, 0.5, 0.25 \}\)`.**
+
+- La distribution cumulative des événements est de `\(\{0.25, 0.75, 1\}\)`.
+- La décision est prise en tirant un chiffre au hasard et en trouvant où il se situe dans cet intervalle.
+
+---
+# Exemple
+
+
+```r
+etats &lt;- c("A", "B", "C", "D", "E")
+p &lt;- c(0.1, 0.5, 0.2, 0.05, 0.15)
+sum(p)
+```
+
+```
+## [1] 1
+```
+
+```r
+# On utilise cumsum pour calculer la probabilité cumulative
+cump &lt;- cumsum(p)
+cump
+```
+
+```
+## [1] 0.10 0.60 0.80 0.85 1.00
+```
+
+---
+# Exemple
+
+
+```r
+alea &lt;- runif(1,0,1)
+alea
+```
+
+```
+## [1] 0.01618378
+```
+
+```r
+n_etats &lt;- 5; i = 1; plus_petit = FALSE
+while(plus_petit == FALSE) {
+    if(alea &lt; cump[i]) {
+        decision &lt;- etats[i]
+        plus_petit &lt;- TRUE
+    }
+    else {
+        i &lt;- i + 1
+    }
+}
+decision
+```
+
+```
+## [1] "A"
+```
+
+---
+# Une façon plus rapide d'y arriver ....
+## Profitons de la fonction `rmultinom()` qui simplifie les opérations
+
+
+```r
+tirage &lt;- function(p) {
+    etats &lt;- c("A", "B", "C", "D", "E")
+    res &lt;- rmultinom(n=1,size=1,prob=p)
+    etats[which(res==1)]
+}
+tirage(p)
+```
+
+```
+## [1] "B"
+```
+
+---
+# Exemple: La corde à linge colorée
+
+Le modèle de lotterie est à la base de nombreuses théories. Le travail final suggéré à la fin de cet atelier en sera d'ailleurs fortement inspiré.
+
+Sur ma corde à linge, un nombre limité de morceaux de linge peuvent y être suspendus. Toutes les 5 minutes, lorsque je retourne voir mon linge sécher sur la corde, un seul morceau est manquant (le vent l'a apporté dans un pays lointain). Ainsi, je pige dans mon sac de linge mouillé (qui attend patiemment d'être étendu sur la corde) et je remplace le morceau manquant par un nouveau.
+
+---
+# Exemple: La corde à linge colorée
+
+Le nom de "lotterie" vient de la façon dont s'effectue le recrutement. Pour ce qui est du problème, nous nous intéresserons seulement à la couleur du morceau pigée. Initialement, 25 morceaux sont étendus sur la corde. On y retrouve 5 morceaux de chacune des couleurs suivantes: bleu, rouge, vert, jaune, noir. Ces 25 morceaux ont tous la même probabilité d'être décrochés par le vent. Par la suite, je pige au hasard dans le sac, sans regarder, un morceau à placer sur la corde. Le sac comporte 20 morceaux bleus et rouges, ainsi que 30 morceaux jaunes, verts et noirs (donc un total de 130 morceaux). J'installe par la suite le morceau dans l'espace vide.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/cordelinge.PNG" width="50%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/cordelinge2.PNG" width="50%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+
+---
+# Exemple: La corde à linge colorée
+
+Le vecteur N représente le nombre de morceaux sur la corde de chaque couleur. Les étapes de la simulation du modèle de loterie sont les suivantes:
+
+À chaque pas de temps;
+
+- Calcul de l'abondance relative des morceaux prêt à être pigés en fonction des couleurs. (envol)
+- Identification de quel morceau (couleur) s'envole (on en pige un seul au hasard parmi les K morceaux sur la corde).
+- Retrait d'une de ces couleurs sur la corde.
+- Calcul de l'abondance relative des morceaux prêt à être pigés en fonction des couleurs. (nouveau)
+- Identification du morceau pigé recrutée
+- Ajout de ce morceau à la corde à linge.
+- Après 20 changements de morceaux, à quoi ressemblera la corde à linge en termes de couleur?
+
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+
+---
+# Solution
+
+
+```r
+nsteps &lt;- 20
+nsac &lt;- 130
+couleursac &lt;- c(rep(20,2),rep(30,3))
+ncorde &lt;- 5
+ntotalcorde &lt;- 25
+matres &lt;- matrix(nr = nsteps+1, nc = ncorde)
+matres[1,] &lt;- rep(5,5)
+colnames(matres) &lt;- c("bleu", "rouge", "jaune", "vert", "noir")
+
+# Une fonction utile pour faire des tirages
+# Elle retourne la position de la couleur pigée au hasard
+tirage  &lt;- function(p) {
+  res &lt;- rmultinom(n=1,size=1,prob=p)
+  return(which(res==1))
+}
+```
+
+---
+# Solution
+
+
+```r
+# La boucle principale
+for(step in 2:(nsteps+1)) {
+  # Calcul de l'abondance relative
+  p &lt;- matres[step-1,] / ntotalcorde
+  # On tire l'identité du morceau qui s'envole
+  ID_envol &lt;- tirage(p)
+  # On applique le changement
+  matres[step,] &lt;- matres[step-1,]
+  matres[step,ID_envol] &lt;- matres[step,ID_envol] - 1
+  # On tire l'identité de la recrue
+  # Calcul de l'abondance relative
+  p &lt;- couleursac/nsac
+  ID_recrue &lt;- tirage(p)
+  matres[step,ID_recrue] &lt;- matres[step,ID_recrue] + 1
+  couleursac[ID_recrue] &lt;- couleursac[ID_recrue] - 1
+  nsac &lt;- nsac - 1
+}
+matres[21,]
+```
+
+```
+##  bleu rouge jaune  vert  noir 
+##     3     2     5     8     7
+```
+
+---
+# Solution
+
+
+```r
+# Illustration des résultats
+colo &lt;- c("red","yellow", "green", "black")
+plot(c(1:(nsteps+1)), matres[,1], type = "l", ylim = c(0,ntotalcorde),
+     xlab = "Temps", ylab = "Densité", col = "blue")
+for(i in 2:(ncorde)) lines(c(1:(nsteps+1)), matres[,i], col = colo[i-1])
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-52-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle, center, inverse
+
+# Optimisation des scripts
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+# Optimisation
+
+R est un langage de programmation et il est donc possible de faire à peu près tout ce que l'on fera avec d'autres langages de programmation. Mais, notons qu'il a d'abord et surtout été développé pour l'analyse statistique de données. Par conséquent, il peut être assez lent pour réaliser certaines opérations.
+
+**L'optimisation de code peut être réalisée de différentes façons:**
+
+- Trouver les portions de code qui prennent le plus de temps ;
+- Profiter de la structure de R (vectorielle) afin d'accélérer le calcul ;
+- Écrire ses propres fonctions en C pour les portions les plus exigeantes ;
+
+---
+# Référence
+
+L'optimisation est un sujet avancé que nous ne couvrirons pas en détails dans l'atelier. Il est recommandé cependant d'aller consulter l'excellente référence sur le sujet :
+
+&gt; Visser, M.D., McMahon, S.M., Merow, C., Dixon, P.M., Record, S., Jongejans., E. 2015. Speeding up ecological and evolutionary computations in R; Essentials of high performance computing for biologists. PLoS Computational Biology 11: e1004140.
+
+---
+# Calculer le temps écoulé
+
+La fonction `system.time()` est un minimum pour tester la performance d'un code. Par exemple, on peut comparer la performance de notre fonction de tri à celle qui est native sur R.
+
+
+
+```r
+x &lt;- runif(1000)
+system.time(sort(x))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+```r
+system.time(tri(x))
+```
+
+```
+##    user  system elapsed 
+##    0.24    0.00    0.24
+```
+
+---
+# Calculer le temps écoulé
+
+Certaines opérations peuvent dépendre de la taille de l'objet (ci-dessous, `res`)
+
+.pull-left[
+
+```r
+n &lt;- 2*10^seq(1,3,0.1)
+res &lt;- numeric(length(n))
+for(i in 1:length(res)) {
+	x &lt;- runif(n[i])
+	res[i] &lt;- system.time(tri(x))[3]
+}
+plot(n,res, type = "l", xlab = "Taille",
+	ylab = "Temps")
+```
+]
+
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/unnamed-chunk-55-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+# Vectorisation
+
+L'utilisation d'opérations vectorielles plutôt que les boucles augmente l'efficacité du code.
+
+.pull-left[
+
+```r
+f1 &lt;- function(x) {
+	taille &lt;- length(x)
+	x2 &lt;- numeric(taille)
+	for(i in 1:taille) if(x[i] &lt; 0.5) x2[i] &lt;- 1
+}
+f2 &lt;- function(x) {
+	x2 &lt;- x*0
+	x2[x&lt;0.5] &lt;- 1
+}
+```
+]
+
+
+.pull-right[
+
+```r
+x &lt;- runif(1000000)
+system.time(f1(x))
+```
+
+```
+##    user  system elapsed 
+##    0.05    0.00    0.04
+```
+
+```r
+system.time(f2(x))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+]
+
+
+---
+# Utilisation de fonctions natives
+
+Certaines fonctions sur R (voir Visser et al. 2015) sont optimisées. L'exemple suivant montre la puissance de la fonction `rowSums()`.
+
+.pull-left[
+
+```r
+f1 &lt;- function(x) {
+	res &lt;- numeric(ncol(x))
+	for(j in 1:ncol(x)) {
+		for(i in 1:nrow(x)){
+			res[x] &lt;- res[j] + x[i,j]
+		}
+	}
+}
+X &lt;- matrix(runif(100*100),nr=100,nc=100)
+```
+
+]
+
+
+.pull-right[
+
+
+```r
+system.time(rowSums(X))
+system.time(apply(X,2,sum))
+system.time(f1(X))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0 
+##    user  system elapsed 
+##       0       0       0 
+##    user  system elapsed 
+##    0.64    0.00    0.64
+```
+]
+
+
+
+---
+class: middle, inverse, center
+
+# Exercice final
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+# Répartition des domaines bioclimatiques
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/bioclim.png" height="500px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+# La distribution des arbres à Sutton
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/grille.jpg" height="250px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+# Un modèle de communauté
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/modele_vissault.png" height="500px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+# Répartition des états
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/modele_vissault.png" width="100%"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/animation.gif" height="500px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+
+---
+# Les différents états
+
+Présentation des données 
+
+
+```r
+quadrats &lt;- read.table(file = "./donnees/quadrats.txt", header=TRUE, sep = ";")
+head(quadrats)
+```
+
+```
+##   borx bory abba acpe acsa beal bepa fagr piru
+## 1    0    0    1   55   11    7    0   92    0
+## 2    0   20    0    0   18    5    0    3    2
+## 3    0   40    0    0   14    0    0   11    0
+## 4    0   60    0    1   11    1    0    5    0
+## 5    0   80    0    1    8    4    0    9    0
+## 6    0  100    0    5    4    3    0    6    0
+```
+
+- 'B' si présence de abba ou piru
+- 'T' si présence de acsa ou beal ou fagr
+- 'M' si présence de (abba ou piru) et (acsa ou beal ou fagr)
+- 'R' si aucun de ces critères n'est rempli
+
+---
+
+# Le code pour générer la figure
+
+.pull-left[
+
+```r
+coordx &lt;- seq(0,180,20)
+coordy &lt;- seq(0,980,20)
+paysage &lt;- tapply(etats,INDEX = quadrats[,c(1:2)],sum)
+par(mar = c(4,4,3,0.5))
+image(x=coordx,y=coordy,z=paysage,xlab=NULL,ylab=NULL,
+	col=c("black","orange","darkcyan","palegreen3"))
+```
+
+]
+
+
+.pull-right[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/parcelle_SUT.png" height="500px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+
+
+---
+# La matrice de transition entre les différents états
+
+$$
+`\begin{bmatrix}
+P(B_{t+1}|B_t) &amp; P(M_{t+1}|B_t) &amp; P(T_{t+1}|B_t) &amp; P(R_{t+1}|B_t) \\
+P(B_{t+1}|M_t) &amp; P(M_{t+1}|M_t) &amp; P(T_{t+1}|M_t) &amp; P(R_{t+1}|M_t) \\
+P(B_{t+1}|T_t) &amp; P(M_{t+1}|T_t) &amp; P(T_{t+1}|T_t) &amp; P(R_{t+1}|T_t) \\  
+P(B_{t+1}|R_t) &amp; P(M_{t+1}|R_t) &amp; P(T_{t+1}|R_t) &amp; P(R_{t+1}|R_t) \\
+\end{bmatrix}`
+$$
+
+Se lit ainsi: la rangée correspond à l'état au temps t et la colonne correspond à l'état au temps t+1. Une ligne de ce tableau correspond à un vecteur de probabilités d'une distribution multinomiale. Donc, la somme d'une rangée doit être égale à 1.
+
+---
+# La matrice de transition entre les différents états
+
+$$
+`\begin{bmatrix}
+0.9225 &amp; 0.0766 &amp; 0.0000 &amp; 0.0009 \\  
+0.0004 &amp; 0.8552 &amp; 0.1354 &amp; 0.0090 \\
+0.0000 &amp; 0.0350 &amp; 0.9243 &amp; 0.0407 \\
+0.0001 &amp; 0.0020 &amp; 0.0011 &amp; 0.9968 \\
+\end{bmatrix}`
+$$
+
+Notez que l'intervalle de temps entre deux épisodes est 5 ans.
+
+
+Une entrée `\(P(B_{t+1} | T_t)\)` se lit comme "la probabilité qu'un quadrat occupé par l'état T au temps t soit occupé par l'état B au temps t+1".
+
+---
+# ATTENTION !
+
+Bien qu'il y ait de nombreuses similarités avec le modèle de lotterie, il ne s'agit pas du même modèle. Ainsi, les étapes de mortalité et de recrutement sont combinées dans une seule étape où sont remplacés automatiquement les états d'un pas de temps à l'autre et où les probabilités sont toujours les mêmes (elles ne changent pas avec l'abondance relative).
+
+---
+# Question de recherche
+
+Quelle sera la distribution de la forêt tempérée au sein de la Réserve écologique des Montagnes vertes dans 100 ans ?
+
+---
+# Données
+
+- Distribution initiale de la végétation dans le fichier [quadrats.txt](./donnees/quadrats.txt)
+- Matrice de transition entre les 4 états dans le fichier [matrice_transitions.txt](./donnees/matrice_transitions.txt)
+
+---
+# Étapes du travail
+
+- Transformer les abondances en états de départ
+- Préparer une fonction qui tire au hasard l'état au temps t+1 en fonction de l'état au temps t
+- Préparer une fonction qui fait une simulation sur N pas de temps et enregistre la composition (proportion de chaque état sur l'ensemble de la placette) à chaque pas de temps
+- Exécuter la fonction sur 10 et 100 pas de temps et évaluer le temps de calcul
+- Utiliser la sortie de la fonction pour répondre à deux questions au moyen d'une figure :
+	i) est-ce que les espèces de conifères seront toujours présentes dans le futur ?
+	ii) combien de temps sera nécessaire pour que la composition de la forêt atteigne l'équilibre (soit constante) ?
+
+---
+
+# Suggestions et objectifs
+
+- Faire un pseudo-code pour la fonction principale qui réalise votre simulation
+- Respecter les bonnes pratiques 
+- Exécution des différentes étapes du code :
+	+ Transformation des données sous forme d'états
+	+ Programmation de la simulation sous forme d'une fonction ré-utilisable
+	+ Réalisation de la simulation stochastique (tirage des transitions)
+	+ Réalisation de la figure
+- Pouvoir exécuter le code de A à Z, soit de la lecture du fichier de données jusqu'à la figure, sans intervenir.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "monokai",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

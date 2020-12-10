@@ -1,0 +1,2999 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>: Introduction à la programmation scientifique</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Antoine Bergeron" />
+    <link href="assets/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="assets/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../Ateliers_ALEA.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, middle
+
+&lt;style type="text/css"&gt;
+  .title-slide {
+    background-image: url('assets/img/Coding.png');
+    background-color: #23373B;
+    background-size: contain;
+    border: 0px;
+    background-position: 600px 0;
+    line-height: 1;
+  }
+&lt;/style&gt;
+
+# Bienvenue à l'atelier 1
+
+&lt;hr width="65%" align="left" size="0.3" color="orange"&gt;&lt;/hr&gt;
+
+### Introduction à la programmation scientifique et au langage R
+
+&lt;hr width="65%" align="left" size="0.3" color="orange" style="margin-bottom:40px;" alt="@Martin Sanchez"&gt;&lt;/hr&gt;
+
+.instructors[
+  ***ALÉA R*** - Antoine Bergeron
+]
+
+&lt;img src="assets/img/Rlogo.png" width="8%" style="margin-top:20px;"&gt;&lt;/img&gt;
+
+---
+
+# Rappel
+
+Avez-vous vu le plan des ateliers?
+
+Matériel du cours à l'adresse :
+https://github.com/AntoineBergeron/Ateliers_ALEA
+
+---
+class: inverse, middle, center
+
+# L'idée derrière l'ordinateur!
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Introduction
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/USA2016.PNG" height="400"&gt;&lt;/img&gt; 
+&lt;/div&gt;
+
+&lt;div style='text-align:center;'&gt;
+Résultats de l'élection présidentielle américaine de 2016
+&lt;/div&gt;
+
+---
+
+# Le type de données
+
+
+```r
+can &lt;- read.table(file = './donnees/Canadiens.txt', sep="\t", header = TRUE)
+head(can)
+```
+
+```
+##             Joueurs Buts Tirs Points Parties.jouees Position
+## 1       Tomas Tatar   22  162     61             68       AG
+## 2   Phillip Danault   13  131     47             71        C
+## 3          Max Domi   17  179     44             71        C
+## 4 Brendan Gallagher   22  226     43             59       AD
+## 5       Nick Suzuki   13  138     41             71        C
+## 6        Jeff Petry   11  158     40             71        D
+```
+
+---
+
+# Le type de données 
+
+
+```r
+parties &lt;- read.table(file = './donnees/parties.txt', sep="\t", header = TRUE)
+head(parties)
+```
+
+```
+##   Partie Resultat Buts.pour Buts.contre Equipe.adverse Differentiel
+## 1      1        W         4           2            BOS            2
+## 2      2        L         2           3            CHI           -1
+## 3      3        T         1           1            VEG            0
+## 4      4        W         3           1            CAR            2
+## 5      5        W         5           0             TB            5
+## 6      6        L         2           3             TB           -1
+```
+
+---
+
+# Exemple 1
+
+Ouvrir le fichier [parties](./donnees/parties.xlsx) avec Excel et trouver le nombre de buts marqués par le Canadiens de Montréal en fonction du résultat de la partie.
+
+---
+
+# Exemple 1: solution sur R
+
+
+```r
+parties &lt;- read.table(file = './donnees/parties.txt', sep="\t", header = TRUE)
+ButsResult &lt;- table(parties$Buts.pour,parties$Resultat)
+head(ButsResult)
+```
+
+```
+##    
+##     L T W
+##   0 1 0 0
+##   1 3 1 1
+##   2 3 0 0
+##   3 1 0 3
+##   4 0 1 2
+##   5 0 0 4
+```
+
+
+---
+
+# Exemple 2
+
+Ouvrir le fichier [ButsResult](./donnees/ButsResult.xlsx) avec Excel et calculer la corrélation entre les différents résultats d'une partie.
+
+Indice: sur Excel, la fonction pour calculer une corrélation est:
+
+```bash
+=COEFFICIENT.CORRELATION(données_1; données_2)
+```
+
+---
+
+# Exemple 2: solution sur R
+
+
+```r
+ButsResult &lt;- read.table(file = './donnees/ButsResult.txt', header = TRUE, sep= "\t")
+cor(ButsResult)
+```
+
+
+```
+##           L         T         W
+## L  1.000000  0.094491 -0.657376
+## T  0.094491  1.000000 -0.079057
+## W -0.657376 -0.079057  1.000000
+```
+
+---
+
+# Exercice 2: visualisation sur R
+
+
+```r
+plot(ButsResult)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, middle, center
+
+# La place de la programmation dans le monde
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Hier
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/RDV.png" height="400"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Aujourd'hui
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/Online_RDV.png" height="400"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+
+---
+
+# Et demain...
+
+Google Duplex
+
+&lt;a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=yDI5oVn0RgM
+" target="_blank"&gt;&lt;img src="http://img.youtube.com/vi/yDI5oVn0RgM/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="540" height="360" border="1" /&gt;&lt;/a&gt;
+
+---
+
+# Progression de la puissance de calcul
+
+&lt;div style='text-align:center;'&gt;
+  &lt;img src="assets/img/intro/moores.png" height="525px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;!-- Ces questions sont rendu possible en partie grâce à l'augmentation de la puissance de nos ordinateurs et l'accessibilité aux données --&gt;
+
+
+
+---
+
+# Utilisation en recherche au quotidien
+
+La programmation est un outil indispensable au chercheur 2.0, elle permet de réaliser:
+
+- Tâches répétitives et/ou complexes (p. ex. Nettoyage des données, Simulations stochastiques)
+- Visualisation et exploration des données
+- Analyses statistiques avancées (p. ex. Tests par permutations)
+
+---
+
+# La programmation en recherche
+
+.pull-left[
+## Avantages
+
+- Gain de temps
+- Limiter les erreurs
+- Formaliser les opérations
+- Archiver, reproduire et partager
+- Tâches intensives (e.g. en génomique)
+]
+
+
+.pull-right[
+## Augmentation du volume de données génomiques
+&lt;img src="assets/img/intro/data_increase.jpg" width="100%"&gt;&lt;/img&gt;
+&lt;span style="font-size:small;text-transform:uppercase;text-align:right;"&gt;
+[Nature 2013](http://www.nature.com/nature/journal/v498/n7453/full/498255a.html)
+&lt;/span&gt;
+]
+
+---
+
+# La programmation en recherche
+
+&lt;img src="assets/img/intro/geek_mode.jpg" align="center" width="80%"&gt;&lt;/img&gt;
+
+&lt;!-- Feuille personnalisé  --&gt;
+
+---
+
+# La programmation en recherche
+
+.pull-left[
+## Inconvénients
+
+- L'erreur est avant tout humaine, avant d'être informatique
+- La courbe apprentissage peut être difficile
+]
+
+.pull-right[
+&lt;img src="assets/img/intro/FunctionalResp.svg" width="100%"&gt;&lt;/img&gt;
+]
+
+---
+
+## Exemple
+
+Supposons que l'on cherche à calculer:
+
+
+$$ \dfrac{w \cdot x + y}{z} $$
+
+avec `\(w = 2\)`, `\(x = 6\)`, `\(y = 4\)` et `\(z = 4\)`.
+
+---
+
+## Exemple (suite)
+
+```
+w &lt;- 2
+x &lt;- 6
+y &lt;- 4
+z &lt;- 4
+
+
+Rep1 &lt;- w*x + y / z
+Rep2 &lt;- (w*x + y)/z
+
+
+Rep1 = 13
+Rep2 = 4
+
+```
+Mais, quelle réponse est la bonne? 
+
+
+---
+
+class: inverse, middle, center
+
+# Le Pseudo-Code
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `Pseudo-Code` et ses **algorithmes**
+
+
+## Définitions
+
+- *En programmation, le `pseudo-code` est une façon de formuler un &lt;b&gt;algorithme&lt;/b&gt; sans référence à un langage de programmation en particulier.*
+
+&gt; - *Un &lt;b&gt;algorithme&lt;/b&gt; est une suite d'actions réalisées dans un ordre précis par l'ordinateur. C'est une séquence d'étapes dans la résolution d'un problème.*
+
+---
+
+# Le `Pseudo-Code`
+
+## Exemple
+
+```
+PROGRAM DEMO
+  FOR t IN 1:100
+    n_t = n_t + n_t * lambda
+    PRINT n_t
+    IF n_t &lt; 1
+      BREAK
+    ELSE
+      CONTINUE
+    END IF
+  END FOR
+```
+
+Le programme `DEMO` fait croître une population de taille initiale `\(n_t\)` à un taux `\(\lambda\)` et affiche à l'utilisateur si la population est éteinte `\(n_t&lt;1\)` ou vivante `\(n_t&gt;1\)`.
+
+---
+
+# Le `Pseudo-Code`
+
+## Exemple
+
+```
+PROGRAM DEMO
+  FOR t IN 1:100 &lt;------------- Opération itérative
+    n_t = n_t + (n_t * lambda)
+    PRINT n_t &lt;---------------- Le programme affiche la valeur à l'écran
+    IF n_t &lt; 1 &lt;--------------- Opération décisionnelle
+      BREAK &lt;------------------ Le programme arrête son exécution
+    ELSE
+      CONTINUE &lt;--------------- Le programme continue son exécution
+    END IF
+  END FOR
+```
+
+Le programme `DEMO` fait croitre une population de taille initiale `\(n_t\)` à un taux `\(\lambda\)` et affiche à l'utilisateur si la population est éteinte `\(n_t&lt;1\)` ou vivante `\(n_t&gt;1\)`.
+
+**Exemple** : 1000 + (1000 * 0.01) = 1010
+
+
+---
+
+# Les structures de base d'un algorithme
+
+Il existe 3 familles d'opérations:
+
+1. Les opérations séquentielles
+2. Les opérations itératives (`FOR`, `WHILE`)
+3. Les opérations décisionnelles (`IF`, `IFELSE`)
+
+---
+
+# Avant-propos
+
+Avant de décrire chacune des opérations d'un algorithme, certaines instructions sont communes:
+
+- `READ`: Le programme lit un fichier
+- `WRITE`: Le programme écrit un fichier
+- `PRINT`: Le programme écrit un message à l'écran pour l'utilisateur
+- `BREAK`: Le programme arrête son exécution
+- `CONTINUE`: Le programme continue son exécution
+
+---
+
+# 1. Les opérations séquentielles
+
+## Exemple: Calculer l'aire d'un rectangle
+
+```
+PROGRAM AIRE_REC
+  READ hauteur
+  READ largeur
+  WRITE hauteur * largeur
+```
+
+Chaque opération est effectuée l'une après l'autre dans un **ordre déterminé**.
+
+---
+
+# 2. Les opérations itératives
+
+## Exemple avec `FOR`: Croissance exponentielle
+
+```
+PROGRAM DEMO
+  FOR t IN 1:100
+    n_t = n_t + n_t * lambda
+  END FOR
+```
+
+La population va croître pendant 100 pas de temps.
+
+---
+
+# 2. Les opérations itératives
+
+## Exemple avec `WHILE`: Croissance avec capacité de support (K)
+
+```
+PROGRAM DEMO
+  WHILE n_t &lt; K
+    n_t = n_t + n_t * lambda
+  END WHILE
+```
+
+La population va croître pour un pas de temps indéterminé. L'arrêt de l'opération itérative est relié à la capacité de support. Tant que la quantité d'être humain (n_t) ne dépassera pas K (valeur prédéfinie), on continue.
+
+---
+
+# 3. Les opérations décisionnelles
+
+## Exemple avec `IF`: quelques tests sur `\(\lambda\)`
+
+```
+PROGRAM DEMO
+  IF lambda &gt; 0
+    PRINT "La population est croissante"
+  ELSE lambda &lt; 0
+    PRINT "La population est décroissante"
+  ENDIF
+```
+
+
+
+---
+
+# 3. Les opérations décisionnelles
+
+## Exemple avec `IF`: quelques tests sur `\(\lambda\)`
+
+```
+PROGRAM DEMO
+  IF lambda &gt; 0
+    PRINT "La population est croissante"
+  ELSE lambda &lt; 0
+    PRINT "La population est décroissante"
+  ENDIF
+```
+
+&gt; - Et si le taux de croissance est nul?
+---
+
+# 3. Les opérations décisionnelles
+
+## Exemple avec `IF`: quelques tests sur `\(\lambda\)`
+
+```
+PROGRAM DEMO
+  IF lambda &gt; 0
+    PRINT "La population est croissante"
+  IF ELSE lambda &lt; 0
+    PRINT "La population est décroissante"
+  ELSE
+    PRINT "Absence de croissance"
+  ENDIF
+```
+
+Avec la clause `IF ELSE`, nous pouvons ajouter tout les cas particuliers qui peuvent survenir: par exemple, notre absence de croissance!
+
+---
+
+# Les types d'objets
+
+Les objets en programmation sont définis en fonction de leur dimensionnalité.
+
+## Dimensionnalité
+
+- **Dimension 0** : Valeur unique (ou scalaire)
+- **Dimension 1** : Vecteur
+- **Dimension 2** : Matrice
+- **Dimension 3** : ...
+
+Bien qu'il n'y ait pas de limite à la dimension d'un objet en programmation,
+nous nous limiterons pour les différents ateliers à des objets en deux dimensions.
+
+---
+
+# Dimension 0: Les scalaires
+
+Ces objets ne contiennent qu'une seule information
+
+## Exemple
+
+```
+Nom = "Anthony"
+Age = 32
+Fraise = TRUE
+QI = 456457.678
+Banque = -7000
+Verite = FALSE
+```
+
+---
+
+# Dimension 1:  Les vecteurs
+
+Ces objets contiennent une série d'information. Chaque valeur
+possède une position dans le vecteur, laquelle peut être accédée.
+
+## Exemple
+
+```
+lettre = ["R" "S" "T" "U" "D" "I" "O"]
+lettre[3]
+# "T"
+```
+
+---
+
+# Dimension 2: Les matrices
+
+Ayant deux dimensions, ces objets présentent les données sous forme de tableaux. Ces tableaux sont représentés par des matrices avec un certain nombre de lignes et de colonnes. Pour accéder à une valeur dans une matrice il faut en premier lieu donner la position de la &lt;b&gt;ligne&lt;/b&gt; suivit de la position de la &lt;b&gt;colonne&lt;/b&gt;.
+
+
+## Exemple
+
+```
+lettreTab = ["A" "B" "C"
+             "D" "E" "F"
+             "G" "H" "I"]
+lettreTab[2, 1]
+# "D"
+```
+
+---
+
+# Les règles du `pseudo-code`
+
+## À garder en mémoire
+
+1. N'écrivez qu'une seule instruction par ligne de pseudo-code.
+2. Écrivez en lettres majuscules le verbe de chaque opération principale.
+3. Soyez explicite en nommant les opérations et les variables.
+4. Soyez le plus détaillé possible (c.à.d les plus petites étapes possibles)
+5. Utilisez des structures de langages de programmation connues (c.à.d `WHILE`, `FOR`, `IF` etc.)
+6. Délimitez les étapes en formant des blocs d'instructions par l'utilisation de l'indentation.
+
+&lt;b&gt; Ces règles sont générales, peu importe le langage de programmation utilisé. &lt;/b&gt;
+
+
+---
+
+class: inverse, middle, center
+
+# Les bonnes pratiques en programmation scientifique
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;1.&lt;/b&gt; Tu commenteras ton code pour que d'autres puissent le lire, le comprendre et le partager
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;1.&lt;/b&gt; Tu commenteras ton code pour que d'autres puissent le lire, le comprendre et le partager
+
+
+\# Avec le symbole "#", il est possible d'écrire des commentaires!
+
+\# Ceci peut s'avérer utile afin de détailler notre code. 
+
+&lt;div style='text-align:center;'&gt;
+  &lt;img src="assets/img/Commentaire.PNG" height="200px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;2.&lt;/b&gt; Il faut prendre soin de l'environnement et nettoyer ses déchets
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;2.&lt;/b&gt; Il faut prendre soin de l'environnement et nettoyer ses déchets
+
+
+Tout comme pour la planète, il est important de garder notre environnement de programmation soigné. L'ajout de commentaire peut aider, mais il ne faut pas non-plus exagérer! De plus, dans un fichier de code (tout comme dans n'importe quel fichier informatique), on ne devrait jamais garder les choses qui ne servent à rien. On doit faire du ménage!
+
+&lt;div style='text-align:center;'&gt;
+  &lt;img src="assets/img/Commandement2.PNG" height="200px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;3.&lt;/b&gt; Ton script sera dur à avaler. Mieux vaut le découper
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;3.&lt;/b&gt; Ton script sera dur à avaler. Mieux vaut le découper
+
+
+Le pseudo-code est souvent très utile pour répondre à ce commandement. Celui-ci agit à titre de résumer et nous permet de mieux séparer les différentes sections nécessaires dans la réalisation de notre script. N'oublions pas que de programmer, c'est avant tout résoudre des problèmes. De plus, si l'histoire nous a bien appris une chose, c'est bien qu'il vaut mieux diviser pour régner.
+
+.pull-left[
+&lt;img src="assets/img/Commandement3.PNG" width="50%"&gt;&lt;/img&gt;
+]
+
+.pull-right[
+&lt;img src="assets/img/Commandement31.PNG" width="50%"&gt;&lt;/img&gt;
+]
+
+---
+
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;4.&lt;/b&gt; Plusieurs chiens s'appellent Fido, le tiens tu sauras le nommer
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;4.&lt;/b&gt; Plusieurs chiens s'appellent Fido, le tiens tu sauras le nommer
+
+
+Lorsqu'on écrit un algorithme, on travaille avec des objets (ou encore des variables).
+
+Il vaut mieux bien nommer ces objets, sans quoi le code devient rapidement illisible et complexe!
+
+```
+x = xx + xxx
+
+y = y1 + y2
+
+z = Z_A + Z_B
+
+a = x * y * z
+```
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;5.&lt;/b&gt; Des pas de bébés permettent aussi d'avancer
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;5.&lt;/b&gt; Des pas de bébés permettent aussi d'avancer
+
+On ne se cachera pas que programmer, c'est difficile au début. On doit apprendre une nouvelle langue et penser différemment. C'est important d'être fier et satisfait de nos petites victoires! L'important, c'est de garder une mentalité de marathonien: il ne s'agit que de mettre un pied devant l'autre pour atteindre la ligne d'arrivée!
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;6.&lt;/b&gt; Un bon programmeur est paresseux. Les opérations répétées doivent être définies sous forme de fonctions
+---
+
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;6.&lt;/b&gt; Un bon programmeur est paresseux. Les opérations répétées doivent être définies sous forme de fonctions
+
+
+Si en programmant, on se rend compte que l'on utilise toujours la même opération, alors mieux vaut la définir sous forme de fonction et appeler la fonction. C'est en quelque sorte une branche du `\(2^e\)` commandement! Un des buts de la programmation, c'est aussi de ne pas avoir à répéter une même tâche encore et encore!
+
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;7.&lt;/b&gt; La vie est trop courte, ton code sera optimisé
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;7.&lt;/b&gt; La vie est trop courte, ton code sera optimisé
+
+
+Bien que ce n'est pas la chose la plus importante lorsqu'on apprend à coder, il vient un temps où il est important de faire des algorithmes efficaces. La perte de temps se doit d'être minimale. Qu'il s'agit de sauver 3 millièmes de secondes ou 11 minutes, le fait d'optimiser son code devrait être un réflexe habituel, peu importe la longueur du script.
+
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;8.&lt;/b&gt; Et un jour tu disparaîtras, alors assure toi que ton code soit reproductible
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;8.&lt;/b&gt; Et un jour tu disparaîtras, alors assure toi que ton code soit reproductible
+
+
+Certains logiciels permettent de créer des projets plutôt que simplement un script contenant un algorithme. Ceci peut permettre d'éviter certaines erreurs lorsque l'on bouge ou modifie des fichiers.
+
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;9.&lt;/b&gt; En tout puissant que tu es, le tirage au sort tu pourras répéter
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;9.&lt;/b&gt; En tout puissant que tu es, le tirage au sort tu pourras répéter
+
+
+Certaines commandes permettent de faire en sorte que notre code donnera toujours le même résultat, et ce, même si on utilise des valeurs aléatoires! Ceci peut être fort utile, voir nécessaire, lorsqu'on construit des modèles complexes.
+
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;10.&lt;/b&gt; Et dans le passé tu souhaiteras voyager, utilise le contrôle de versions
+---
+
+# Les 10 commandements de la programmation
+
+&gt; &lt;b&gt;10.&lt;/b&gt; Et dans le passé tu souhaiteras voyager, utilise le contrôle de versions
+
+
+Quand quelque chose fonctionne, on ne veut surtout pas le briser. C'est pourquoi on a tendance à copier nos fichiers qui contiennent notre code pour éviter de faire des bêtises. Dans ce cas, il est très important de bien identifier ces fichiers (par exemple avec des dates).
+
+---
+
+
+# Google R Style Rules
+
+- Noms de `fichier`: se termine par .R
+- `Identifiants`: variable.nom (ou VariableNom), FonctionNom
+- Longueur de `ligne`: maximum 80 caractères
+- `Indentation`: deux espaces, pas de tabulations
+- `Espacement`: placer des espaces autour des opérateurs binaires
+- `Accolades { }`: s'ouvre sur la même ligne, se ferme sur une ligne indépendente (sauf pour `else`)
+- `else` : Entourer `else` avec des accolades (`}else{`)
+- `Affectation`: utiliser `&lt;-`, pas `=`   (&lt;-)
+- `Commentaire`: tous les commentaires sont précédés par `#` et suivit d'un espace
+- `Fonction`: doivent avoir une section de commentaires
+
+---
+
+class: inverse, middle, center
+
+# Exercices 
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 1
+
+La caisse dans laquelle je transporte mes oranges a brisé. Ainsi, j'aimerais transférer chacune de mes oranges vers ma nouvelle caisse.
+
+*Notons qu'ici, je n'ai aucune idée sur la quantité d'oranges dans ma caisse. 
+
+.pull-left[
+&lt;img src="assets/img/CaisseOrange.PNG" width="80%"&gt;&lt;/img&gt;
+]
+
+.pull-right[
+&lt;img src="assets/img/CaisseVide.PNG" width="80%"&gt;&lt;/img&gt;
+]
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 1 (solution)
+
+Comme je n'ai aucune idée du nombre d'oranges, il m'est impossible d'utiliser une opération comme le `for`. Le `while` est donc le grand gagnant.
+
+```
+NbOrange_1 &lt;- round(rnorm(1, mean = 48, sd = 1))  # PAS IMPORTANT À SAVOIR
+NbOrange_2 &lt;- 0
+
+WHILE NbOrange_1 &gt; 0
+  NbOrange_1 &lt;- NbOrange_1 - 1
+  NbOrange_2 &lt;- NbOrange_2 + 1
+END WHILE
+
+Tant que le nombre d'orange de la caisse 1 est plus grand que 0
+On enlève une orange de la caisse 1
+On ajoute une orange dans la caisse 2
+Se termine seulement quand le nombre d'orange de la caisse 1 sera plus petit ou égal à 0
+```
+---
+
+# Le `pseudo-code`
+
+## Exercices 1.1 et 1.2
+
+Juste avant de commencer à transférer mes oranges, je remarque qu'il est indiqué sur ma caisse qu'elle comporte 48 oranges. Je sais donc qu'il y aura 48 oranges à changer de place. Noter d'abord le pseudo-code qui me permet de transferer les 48 oranges d'une caisse à l'autre à l'aide de la fonction `for`. En deuxième temps, je vous informe que comme j'ai un nombre pair d'oranges, je compte les transférer par coup de 2. Que devient alors le pseudo-code?
+
+.pull-left[
+&lt;img src="assets/img/CaisseOrange.PNG" width="80%"&gt;&lt;/img&gt;
+]
+
+.pull-right[
+&lt;img src="assets/img/CaisseVide.PNG" width="80%"&gt;&lt;/img&gt;
+]
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 1.1 (solution)
+
+Je sais maintenant qu'un total de 48 oranges font parties de ma caisse. Je peux donc associer un numéro à chaque orange.
+
+```
+NbOrange_1 &lt;- 48
+NbOrange_2 &lt;- 0
+
+FOR numero_orange_1 IN 1:NbOrange_1 
+  NbOrange_1 &lt;- NbOrange_1 - 1 
+  NbOrange_2 &lt;- NbOrange_2 + 1 
+END FOR  
+
+Pour chacune des oranges (dénotées par un numéro de 1 à 48)
+On enlève une orange de la caisse 1
+On ajoute une orange dans la caisse 2
+```
+---
+
+# Le `pseudo-code`
+
+## Exercice 1.2 (solution)
+
+Voulant les transporter par coup de deux, on pourrait se questionner sur combien d'interaction entre chaque caisse je devrai faire. En divisant mon nombre d'oranges à déplacer en 2 (j'en déplace 2 à chaque fois), on obtient le nombre d'interactions qu'il faudra effectuer.
+
+```
+NbOrange_1 &lt;- 48
+NbOrange_2 &lt;- 0
+
+FOR nombre_interaction IN 1:(NbOrange_1/2)
+  NbOrange_1 &lt;- NbOrange_1 - 2 
+  NbOrange_2 &lt;- NbOrange_2 + 2
+END FOR  
+
+Pour un nombre d'interaction de 1 à 24
+On enlève deux oranges de la caisse 1
+On ajoute deux oranges dans la caisse 2
+```
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 2
+
+Thomas souhaite lancer un dé équilibré jusqu'attend d'obtenir la valeur 6. Il aimerait précisément savoir en combien de lancer il aura obtenu la valeur 6. 
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/de2.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de5.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de4.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de1.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de3.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de6.PNG" width="10%"&gt;&lt;/img&gt;
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 2 (solution)
+
+On se trouve à nouveau dans un cas où nous ne savons pas le nombre de lancers à effectuer. L'utilisation du while est alors nécessaire. On peut effectivement s'exprimer ainsi: "Tant que je n'ai pas obtenu la valeur 6, je lance mon dé à nouveau".
+
+```
+nb_lancer &lt;- 1
+READ result_de
+
+WHILE result_de != 6
+  nb_lancer &lt;- nb_lancer + 1
+  READ result_de
+END WHILE
+PRINT nb_lancer
+
+Tant qu'il n'a pas obtenu la valeur 6
+Il lance à nouveau le dé
+L'expérience se termine lorsqu'il obtient la valeur 6
+Il peut alors dire combien de lancer(s) ça lui a pris
+```
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 2.1
+
+Étant un peu vantard, Thomas aimerait ajouter à ses amis que d'obtenir 6 en lançant un dé n'est pas une expérience aléatoire (seulement dans son cas). Ainsi, s'il obtient la valeur 6 en un seul lancer, il aimerait leur indiquer: "je suis un maître lanceur!", alors que s'il l'obtient en plus d'un lancer, il aimerait leur mentionner que "le dé est forcément truqué!".
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/de2.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de5.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de1.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de3.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de4.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de6.PNG" width="10%"&gt;&lt;/img&gt;
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 2.1 (solution)
+
+On cherche premièrement à reproduire le même pseudo-code que l'exemple initial. Puis, à la suite de l'expérience, on peut conclure dépendamment des `2` cas possibles.
+
+```
+nb_lancer &lt;- 1
+READ result_de
+
+WHILE result_de != 6
+  nb_lancer &lt;- nb_lancer + 1
+  READ result_de
+END WHILE
+
+IF nb_lancer = 1                    # Si un seul lancer fut nécessaire afin d'obtenir 6
+  PRINT "Je suis un maître lanceur"
+ELSE                                # Dans un cas contraire
+  PRINT "Le dé est forcément truqué!"
+ENDIF
+```
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 2.2
+
+Après quelques essais infructueux, Thomas se ravise. Il préférerait indiquer à ses amis qu'il a été chanceux si 1 seul lancer fut nécessaire, qu'il n'est pas chanceux lorsque le nombre de lancers fut entre 2 et 6, et qu'il est extrêmement mal chanceux de l'avoir obtenu en plus de 6 lancers.
+
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/de5.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de4.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de3.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de2.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de1.PNG" width="10%"&gt;&lt;/img&gt;
+&lt;img src="assets/img/de6.PNG" width="10%"&gt;&lt;/img&gt;
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Le `pseudo-code`
+
+## Exercice 2.2 (solution)
+
+Dans ce cas-ci, il y a `3` cas possibles.
+
+```
+nb_lancer &lt;- 1
+READ result_de
+
+WHILE result_de != 6
+  nb_lancer &lt;- nb_lancer + 1
+  READ result_de
+END WHILE
+
+IF nb_lancer = 1
+  PRINT "J'ai été chanceux!"
+IF ELSE nb_lancer &gt; 6
+  PRINT "Je suis extrêmement malchanceux..."
+ELSE 
+  PRINT "Je ne suis pas chanceux."
+ENDIF
+
+
+ELSE: Autrement (2,3,4,5,6)
+
+```
+
+---
+
+
+# Exercice 3
+
+Julie cherche à calculer la somme des chiffres de 1 à 79 à l'aide d'une boucle `for`. Elle vous demande de l'aide afin d'établir un pseudo-code.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution de l'exercice 3
+
+Manuellement, on cherche à faire: 1 + 2 + 3 + 4 + ... + 78 + 79.
+
+On remarque que ça augmente par coup de 1, tout comme l'**indexation** de notre boucle *for*.
+
+```
+val_som &lt;- 0
+
+FOR (val_chiffre in 1:79)
+  val_som &lt;- val_som + val_chiffre
+END FOR
+```
+
+---
+
+# Exercice 4
+
+Bruno et Martin s'entraînent au lancer du poids. Au cours des dernières années, ils ont dû s'affronter 10 fois dans des compétitions. Pour Bruno, son meilleur lancer (en mètres) pour chacune des compétitions est donné par le vecteur B. Les meilleurs lancers de Martin se trouvent dans le vecteur M.
+
+
+
+
+```r
+B
+```
+
+```
+##  [1] 11.80 13.74 14.67 12.14 11.42 13.80 13.11 14.23 14.83 11.44
+```
+
+```r
+M
+```
+
+```
+##  [1] 13.23 14.21 13.43 14.52 13.18 12.91 13.74 16.00 14.50 15.79
+```
+
+Ainsi, pour accéder au résultat de Bruno lors de sa deuxième compétition, il suffit de noter l'indexation 2:
+
+
+```r
+B[2]
+```
+
+```
+## [1] 13.74
+```
+
+---
+
+# Exercice 4 (suite)
+
+On aimerait écrire le pseudo-code nous permettant de déterminer qui de Bruno ou Martin a obtenu le meilleur lancer pour chacune des compétitions.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution de l'exercice 4 (tentative 1)
+
+Une méthode (qui n'est pas la plus optimale) serait de comparer les lancers lors de chaque compétition *manuellement* et d'indiquer en fonction du résultat qui a obtenu le meilleur lancer:
+
+
+## Compétition 1
+
+```
+IF B[1] &lt; M[1]
+  PRINT "Martin a gagné la compétition 1"
+IF ELSE B[1] &gt; M[1]
+  PRINT "Bruno a gagné la compétition 1"
+ELSE
+  PRINT "Il y a eu égalité à la compétition 1"
+ENDIF
+```
+
+---
+# Solution de l'exercice 4 (tentative 1)
+
+
+## Compétition 2
+
+```
+IF B[2] &lt; M[2]
+  PRINT "Martin a gagné la compétition 2"
+IF ELSE B[2] &gt; M[2]
+  PRINT "Bruno a gagné la compétition 2"
+ELSE
+  PRINT "Il y a eu égalité à la compétition 2"
+ENDIF
+```
+
+
+Et ainsi de suite... Par contre, on remarque que les seuls choses qui change d'une étape à l'autre est l'indexation des vecteurs B et M, ainsi que la valeur qui suit le mot compétition!
+
+---
+# Solution de l'exercice 4 (tentative 2)
+
+Il est alors possible de passer une boucle `for` où les indexations seront le numéro de la compétition qui augmentera de 1 à 10:
+
+```
+FOR NumCompet in 1:10
+  IF B[NumCompet] &lt; M[NumCompet]
+    PRINT ("Martin a gagné la compétition" NumCompet)
+  IF ELSE B[NumCompet] &gt; M[NumCompet]
+    PRINT ("Bruno a gagné la compétition" NumCompet)
+  ELSE
+    PRINT ("Il y a eu égalité à la compétition" NumCompet)
+  ENDIF
+END FOR
+```
+
+
+---
+# Exercice 5
+
+1. On jette en face de vous 5 lettres d'un jeu de scrabble
+2. Un maniac vous demande d'écrire un programme permettant d'ordonner les 5 lettres
+
+Prenez le temps de distinguer les étapes que vous réalisez lorsque vous triez les lettres. Essayez de les décrire sous forme de pseudo-code.
+
+Note: L'utilisation de booléen peut être utile. `is.sort = FALSE` indique que les 5 lettres ne sont pas ordonnées!
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solutions de l'exercice 5
+
+Ordonner un vecteur `X` composé de 5 lettres de Scrabble
+
+.pull-left[
+## Solution 1: Tri bulle
+
+```
+WHILE is.sort = FALSE
+  is.sort = TRUE
+  FOR pos IN 1:4
+    IF X[pos] &gt; X[pos+1]
+      INVERSE
+      is.sort = FALSE
+    END IF
+  END FOR
+END WHILE  
+```
+]
+
+.pull-right[
+
+## Solution 2: Tri aléatoire
+
+```
+WHILE is.sort = FALSE
+  is.sort = TRUE
+  MELANGE X
+  FOR pos IN 1:4
+    IF X[pos] &gt; X[pos+1]
+      is.sort = FALSE
+    END IF
+  END FOR
+END WHILE  
+```
+]
+
+---
+
+# 5 raisons pour utiliser R
+
+R est un langage de programmation en source libre conçu pour l'analyse statistique, l'analyse de données et la visualisation. R n'est cependant pas optimisé pour la performance, mais néanmoins, il est fort utile pour l'apprentissage de la programmation en raison de sa convivialité (!) et de sa facilité de `débogage` (!!)
+
+## Les arguments en faveur de R:
+
+1. Gratuit et ouvert (open-source)
+2. Communauté active (Scientifique, mais aussi StackOverflow, R-Bloggers)
+3. Diversité d'utilisateurs et de contributions
+4. En phase avec les nouvelles technologies statistiques
+5. Intégration du langage de programmation avec les outils de visualisation et de manipulation des données
+
+---
+
+# Interagir avec R sur la console
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/intro/Rgui.png" height="500px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Utiliser R Studio
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/intro/RStudio.png" height="500px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Exercice : interaction avec la ligne de commande
+
+Le plus simple est d'utiliser R comme une calculatrice.
+
+## Que donne l'opération suivante ?
+
+
+```r
+2 + 16 * 24 - 56
+```
+
+---
+
+# Répertoire de travail
+
+## Savoir où on est
+
+
+```r
+getwd()
+```
+
+```
+## [1] "C:/Users/bera1923/Desktop/Ateliers_ALEA/Atelier_1"
+```
+
+---
+
+# Répertoire de travail
+
+## Changer le répertoire de travail
+
+- Pour les utilisateurs Mac et Linux:
+
+
+```r
+setwd("/home/bera1923/Desktop/Ateliers_ALEA/Atelier_1")
+```
+
+- Pour les utilisateurs Windows:
+
+
+```r
+setwd("C:/Users/bera1923/Desktop/Ateliers_ALEA/Atelier_1")
+```
+
+Le `c:` correspond à la partition du disque.
+
+&lt;!-- Les chemins d'accès ressemblent généralement à ça: `c:\Documents\BIO109\cours2`
+Le problème étant que le backslash est utilisé pour marquer un espace dans le nom d'un répertoire sous Linux --&gt;
+
+---
+
+# Répertoire de travail
+
+## Changer le répertoire de travail
+
+Pour les utilisateurs R Studio : 
+
+&gt; RStudio -&gt; session -&gt; set working directory 
+
+Pour les utilisateurs R GUI (Windows):
+
+&gt; file -&gt; set working directory
+
+Pour les utilisateurs R GUI (Mac):
+
+&gt; file -&gt; set working directory
+---
+
+# Environnement de travail
+
+## Obtenir le contenu du dossier dans le répertoire de travail
+
+
+```r
+dir()
+```
+
+```
+## [1] "assets"            "ButsMoyenNouv.csv" "donnees"          
+## [4] "index.html"        "index.Rmd"         "index_files"      
+## [7] "MaListe.Rdata"     "mat.csv"           "test.Rdata"
+```
+
+## Obtenir la liste des objets en mémoire
+
+
+```r
+ls()
+```
+
+```
+## [1] "B"          "ButsResult" "can"        "M"          "parties"
+```
+
+---
+
+# Environnement de travail
+
+## Effacer un objet en mémoire:
+
+
+```r
+test &lt;- 1
+ls()
+```
+
+```
+## [1] "B"          "ButsResult" "can"        "M"          "parties"   
+## [6] "test"
+```
+
+```r
+rm(test)
+ls()
+```
+
+```
+## [1] "B"          "ButsResult" "can"        "M"          "parties"
+```
+
+---
+
+# Le script 
+
+Un script est un fichier `.R` contenant une série d'instructions et de commentaires pour réaliser des opérations sur R. Le script est utilisé pour conserver l'historique des opérations et les répéter au besoin.
+
+Un bon éditeur de script (e.g. RStudio ou R GUI) permet d'exécuter une ligne de commande à la fois, un bloc de commandes ou encore l'ensemble du script (avec crtl + enter ou fonction + R).
+
+Il est préférable d'utiliser uniquement le script et de l'enregistrer et de ne pas enregistrer le contenu de la console. Ainsi la reproductibilité est assurée. 
+
+---
+
+# Le script : fonction source
+
+Il est possible d'exécuter un script sans avoir à l'ouvrir. 
+
+
+```r
+source("MonScript.R")
+```
+
+---
+
+# Le concept d'objet
+
+Un objet peut contenir de l'information de toute nature: un tableau de données, les résultats d'une analyse, une figure, une fonction, ...
+
+## La commande pour créer un objet `a` est composé de trois parties:
+
+1. une valeur d'intérêt
+2. un identifiant (soit un nom d'objet)
+3. l'opérateur d'assignation
+
+
+```r
+a &lt;- c(1,2)
+a
+```
+
+```
+## [1] 1 2
+```
+
+---
+
+# Le concept d'objet
+
+Un objet peut contenir de l'information de toute nature: un tableau de données, les résultats d'une analyse, une figure, une fonction, ...
+
+## La commande pour créer un objet `a` est composé de trois parties:
+
+1. une valeur d'intérêt
+2. un identifiant (soit un nom d'objet)
+3. l'opérateur d'assignation
+
+
+```r
+a &lt;- c(1,2)
+a
+```
+
+```
+## [1] 1 2
+```
+
+- Notons que les opérateurs `&lt;-` et `=` sont équivalents pour attribuer une valeur à un objet.
+- L'opérateur `&lt;-` sera toutefois préféré. (&lt;-)
+
+---
+class: middle, center, inverse
+
+# Les types de valeurs assignables à un objet
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+# Assigner une valeur de type `numérique`
+
+## Les données numériques peuvent être déclarées de différentes manières
+
+
+```r
+a &lt;- 1
+a
+```
+
+```
+## [1] 1
+```
+
+```r
+b &lt;- 1.1
+b
+```
+
+```
+## [1] 1.1
+```
+
+```r
+c &lt;- 1e-6
+c
+```
+
+```
+## [1] 1e-06
+```
+
+---
+# Assigner une valeur de type `caractère`
+
+## On peut également déclarer des séries de caractères
+
+
+```r
+test &lt;- "test"
+test
+```
+
+```
+## [1] "test"
+```
+
+**Important** - Les valeurs de type `caractère` doivent être placées entre guillemets. Cette nomenclature permet de différencier une valeur du nom d'un objet.
+
+
+---
+# Assigner une valeur de type `caractère`
+
+## Finalement, des séries de caractères peuvent être collées entre elles pour créer des chaines de caractères.
+
+
+```r
+collage &lt;- paste("R","S","T","U","D","I","O", sep="")
+collage
+```
+
+```
+## [1] "RSTUDIO"
+```
+
+---
+
+# Assigner une valeur de type `booléen`
+
+Le type `booléen` (logical) permet de représenter les états `TRUE` (1) et `FALSE` (0) et de faire des opérations mathématiques sur des objets.
+
+
+```r
+vrai &lt;- TRUE
+faux &lt;- FALSE
+vrai
+```
+
+```
+## [1] TRUE
+```
+
+```r
+vrai + faux
+```
+
+```
+## [1] 1
+```
+
+---
+
+# Assigner une valeur de type `facteur`
+
+R est d'abord un langage utilisé pour les statistiques et par conséquent, on y retrouve un type de données utilisé pour la réalisation de tests d'hypothèse, qui ne sont pas standard à tous les langages. Les facteurs sont des données catégoriques.
+
+
+```r
+MesFacteurs &lt;- factor(c("Categorie1","Categorie2","Categorie3","Categorie2","Categorie3","Categorie3","Categorie1","Categorie2"))
+MesFacteurs
+```
+
+```
+## [1] Categorie1 Categorie2 Categorie3 Categorie2 Categorie3 Categorie3 Categorie1
+## [8] Categorie2
+## Levels: Categorie1 Categorie2 Categorie3
+```
+
+
+```r
+Scol &lt;- factor(c("Sec","Col","Uni","Uni","Col","Uni","Col","ind"))
+Scol
+```
+
+```
+## [1] Sec Col Uni Uni Col Uni Col ind
+## Levels: Col ind Sec Uni
+```
+
+Niveau de scolarité: secondaire, collégial, universitaire, indéterminé.
+
+---
+class: middle, center, inverse
+
+# Conversion entre types de valeur
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Conversion entre types de valeur
+
+R permet de convertir des objets en différents types de données lorsque le contenu le permet.
+
+## Conversion vers les types `numérique` et `caractère`:
+
+
+```r
+as.numeric(c("4","6"))
+```
+
+```
+## [1] 4 6
+```
+
+```r
+as.character(c(4,6))
+```
+
+```
+## [1] "4" "6"
+```
+
+```r
+as.numeric(c("a","7"))
+```
+
+```
+## Warning: NAs introduits lors de la conversion automatique
+```
+
+```
+## [1] NA  7
+```
+
+---
+
+# Conversion entre types de valeur
+
+## Conversion vers les types `facteurs` et nombre `entier`:
+
+
+```r
+as.integer(2.6)
+```
+
+```
+## [1] 2
+```
+
+```r
+as.factor(c("4","6"))
+```
+
+```
+## [1] 4 6
+## Levels: 4 6
+```
+
+---
+
+# Conversion entre types de valeur
+
+## Conversion vers le type `booléen`:
+
+
+```r
+as.logical(0)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+as.logical(1)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+as.logical(2)
+```
+
+```
+## [1] TRUE
+```
+
+---
+class: middle, center, inverse
+
+# Les types d'objets
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Les types d'objets
+
+Depuis le début de l'atelier, nous avons très souvent assigné une seule valeur à un objet. Lorsqu'un objet contient une seule valeur, on dit que c'est un objet `scalaire`.
+
+
+```r
+a &lt;- 1
+a
+```
+
+```
+## [1] 1
+```
+
+Cependant, un objet peut contenir plusieurs valeurs. Dans un tel cas, il sera alors défini comme un `vecteur`.
+
+---
+
+# Type d'objets: les `vecteurs`
+
+Le vecteur est un des objets les plus importants de R.
+
+## La façon la plus simple de déclarer un vecteur est:
+
+
+```r
+MonPremierVecteur &lt;- c(1,2,3,4,5)
+MonPremierVecteur
+```
+
+```
+## [1] 1 2 3 4 5
+```
+
+
+**Note** - D'autres méthodes seront présentées dans un futur proche.
+
+---
+
+# Type d'objets: les `vecteurs`
+
+La force de R repose dans sa capacité à réaliser des opérations `vectorielles`.
+
+Il est ainsi possible d'additionner simplement deux vecteurs d'une même dimension de la façon suivante:
+
+
+```r
+MonPremierVecteur &lt;- c(1,2,3,4,5)
+MonDeuxiemeVecteur &lt;- c(11,12,13,15,16)
+MonPremierVecteur + MonDeuxiemeVecteur
+```
+
+```
+## [1] 12 14 16 19 21
+```
+
+---
+
+# Exercice  
+
+Créez un vecteur contenant les valeurs `[-1,2,5,9]`. Par la suite, calculez la racine carrée de ces nombres au moyen de la fonction `sqrt()`.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution
+
+On obtient un `NaN` lorsqu'on effectue des opérations qui ne font pas de sens ou encore lorsque le résultats de notre opération n'est pas un nombre. 
+
+
+```r
+MonVecteur &lt;- c(-1,2,5,9)
+sqrt(MonVecteur)
+```
+
+```
+## Warning in sqrt(MonVecteur): production de NaN
+```
+
+```
+## [1]      NaN 1.414214 2.236068 3.000000
+```
+
+Certaines fonctions renvoient également des avertissements pour prévenir l'utilisateur qu'il y a peut-être quelque chose d'anormal.
+
+---
+
+# Types d'objets: les `vecteurs`
+
+On peut accéder à une position sur le vecteur au moyen d'un `index`, indiqué par les `[]`
+
+
+```r
+MonPremierVecteur &lt;- c(1,2,3,4,5)
+MonPremierVecteur
+```
+
+```
+## [1] 1 2 3 4 5
+```
+
+```r
+MonPremierVecteur[3]
+```
+
+```
+## [1] 3
+```
+
+On obtient un `NA` si on tente d'accéder à une position qui n'existe pas:
+
+
+```r
+MonPremierVecteur &lt;- c(1,2,3,4,5)
+MonPremierVecteur[6]
+```
+
+```
+## [1] NA
+```
+
+---
+
+# Exercice  
+
+Au moyen du vecteur créé précédemment, calculer le produit des valeurs aux positions `2` et `4`.
+
+
+```r
+MonVecteur
+```
+
+```
+## [1] -1  2  5  9
+```
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution
+
+
+```r
+MonVecteur &lt;- c(-1,2,5,9)
+MonVecteur[2]*MonVecteur[4]
+```
+
+```
+## [1] 18
+```
+
+---
+
+# Types d'objets: les `vecteurs`
+
+Il est possible d'obtenir la dimension de notre vecteur à l'aide de la fonction length().
+
+
+```r
+MonPremierVecteur &lt;- c(1,2,3,4,5)
+length(MonPremierVecteur)
+```
+
+```
+## [1] 5
+```
+
+---
+
+# Types d'objets: les `matrices`
+
+L'extension naturelle d'un vecteur est une `matrice`, soit une collection de vecteurs.
+R est également optimisé pour réaliser des opérations mathématiques et de manipulation de données sur ce type d'objets.
+
+## La commande de base pour créer une matrice est `matrix()`
+
+
+```r
+MaMatrice &lt;- matrix(c(1,2,3,4,5,6), nrow = 2, ncol = 3)
+MaMatrice
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+```
+
+---
+
+# Types d'objets: les `matrices`
+
+On accède à la ligne `i` et la colonne `j` au moyen de la commande MaMatrice[i,j]. Ainsi, pour accèder à l'élément de la première ligne et de la deuxième colonne, on doit utiliser la commande suivante
+
+
+```r
+MaMatrice[1,2]
+```
+
+```
+## [1] 3
+```
+
+---
+
+# Types d'objets: les `matrices`
+
+On peut aussi accéder à des lignes ou des colonnes entières
+
+
+```r
+MaMatrice[1,]
+```
+
+```
+## [1] 1 3 5
+```
+
+```r
+MaMatrice[,1]
+```
+
+```
+## [1] 1 2
+```
+
+---
+
+# Types d'objets: les `matrices`
+
+On obtient la dimension de la matrice ainsi
+
+
+```r
+dim(MaMatrice)
+```
+
+```
+## [1] 2 3
+```
+
+Dans le cas des matrices, length() nous indiquerait le nombre total d'éléments dans la matrice.
+
+---
+
+# Types d'objets: les `matrices`
+
+## Ou encore
+
+
+```r
+nrow(MaMatrice)
+```
+
+```
+## [1] 2
+```
+
+```r
+ncol(MaMatrice)
+```
+
+```
+## [1] 3
+```
+
+---
+
+# Types d'objets: les `matrices`
+
+Le nom des colonnes et des lignes peut être modifié
+
+
+```r
+colnames(MaMatrice) = c("A","B","C")
+rownames(MaMatrice) = c("X","Y")
+MaMatrice
+```
+
+```
+##   A B C
+## X 1 3 5
+## Y 2 4 6
+```
+
+---
+
+# Exercice  
+
+Créez une matrice de 2 lignes et 5 colonnes remplies de chiffres tirés au hasard entre 0 et 100. Pour ce faire, vous pouvez utiliser la fonction `runif()`. Calculez la somme de la première colonne au moyen de la fonction `sum()`
+
+**Astuce** : pour obtenir de l'aide sur une fonction, essayez
+
+
+```r
+?runif()
+```
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution
+
+En roulant `?runif()`, la page de documentation de la fonction s'ouvre. On peut alors voir quels sont les arguments de cette fonction et comment utiliser la fonction.
+
+
+```r
+Description
+These functions provide information about the uniform distribution on the interval from min to max. dunif gives the density, punif gives the distribution function qunif gives the quantile function and runif generates random deviates.
+```
+
+
+```r
+Usage
+runif(n, min = 0, max = 1)
+```
+
+
+```r
+Argument
+n : number of observations. If length(n) &gt; 1, 
+the length is taken to be the number required.
+min, max : lower and upper limits of the distribution. 
+Must be finite
+```
+---
+
+# Solution
+
+On peut alors créer la matrice suivante
+
+
+```r
+MaPremiereMatrice &lt;- matrix(runif(2*5, 0, 100), nrow = 2, ncol = 5)
+MaPremiereMatrice
+```
+
+```
+##          [,1]     [,2]     [,3]     [,4]     [,5]
+## [1,] 89.02071 21.13403 13.99837 43.74119 14.19139
+## [2,] 72.07010 22.57173 47.99139 96.59641 95.49789
+```
+
+```r
+sum(MaPremiereMatrice[,1])
+```
+
+```
+## [1] 161.0908
+```
+
+
+---
+
+# Type d'objets: les `listes`
+
+R peut organiser également des collections d'objets sous forme de liste. Ces collections peuvent être très hétérogènes et rassembler par exemple, des vecteurs et matrices, mais aussi des objets plus complexes et hiérarchiques comme des résultats d'analyses statistiques.
+
+## La création et l'indexation des listes sont très similaires à celle des vecteurs et matrices
+
+
+```r
+MaListe = list()
+MaListe[[1]] = c(1,2)
+MaListe[[2]] = matrix(c("A","B","C","D"), nrow = 2, ncol = 2)
+```
+
+`MaListe[[1]]` permet d'obtenir l'objet contenu par le premier niveau de la liste.
+
+---
+
+# Type d'objets: les `listes`
+
+## Et de même on peut nommer les items d'une liste
+
+
+```r
+names(MaListe) &lt;- c("Vecteur","Matrice")
+MaListe
+```
+
+```
+## $Vecteur
+## [1] 1 2
+## 
+## $Matrice
+##      [,1] [,2]
+## [1,] "A"  "C" 
+## [2,] "B"  "D"
+```
+
+---
+
+# Type d'objets: les `listes`
+
+On pourra alors avoir accès à un élément de la liste par indexation avec l'accesseur `[[]]` :
+
+
+```r
+MaListe[[2]]
+```
+
+```
+##      [,1] [,2]
+## [1,] "A"  "C" 
+## [2,] "B"  "D"
+```
+
+ou encore avoir accès à ce même élément de la liste par référence à son nom avec l'accesseur `$` :
+
+
+```r
+MaListe$Matrice
+```
+
+```
+##      [,1] [,2]
+## [1,] "A"  "C" 
+## [2,] "B"  "D"
+```
+
+---
+
+# Type d'objets: les `data.frame`
+
+## Le `data.frame` se décrit comme un tableau de données, avec les rangées `i` et les colonnes `j`, ainsi que des noms de colonnes.
+
+
+```r
+df &lt;- data.frame(a = c(1:3), b = c(11:13))
+df
+```
+
+```
+##   a  b
+## 1 1 11
+## 2 2 12
+## 3 3 13
+```
+
+```r
+df$a
+```
+
+```
+## [1] 1 2 3
+```
+
+On peut indexer une colonne directement avec l'accesseur `$`
+
+---
+
+# Type d'objets: les `data.frame`
+
+## Un `data.frame` peut avoir différents types de valeur pour chaque colonne
+
+
+```r
+df2 &lt;- data.frame(a = c(1:3), traitement = factor(c("trait1","trait2","trait3")), verite = c(T, F, T) )
+df2
+```
+
+```
+##   a traitement verite
+## 1 1     trait1   TRUE
+## 2 2     trait2  FALSE
+## 3 3     trait3   TRUE
+```
+
+Cette capacité à entreposer plusieurs types de valeur est ce qui distingue un `data.frame` d'une matrice.
+
+---
+
+# Type d'objets: les `data.frame`
+
+## On peut néanmoins transformer un `data.frame` en matrice
+
+
+```r
+as.matrix(df)
+```
+
+```
+##      a  b
+## [1,] 1 11
+## [2,] 2 12
+## [3,] 3 13
+```
+
+```r
+as.matrix(df2)
+```
+
+```
+##      a   traitement verite 
+## [1,] "1" "trait1"   "TRUE" 
+## [2,] "2" "trait2"   "FALSE"
+## [3,] "3" "trait3"   "TRUE"
+```
+
+---
+
+# Type d'objets: les `data.frame`
+
+## Ou inversement, transformer une matrice en `data.frame`
+
+
+```r
+mat &lt;- matrix(c(1:6), nrow = 3, ncol = 2)
+as.data.frame(mat)
+```
+
+```
+##   V1 V2
+## 1  1  4
+## 2  2  5
+## 3  3  6
+```
+
+---
+
+class: inverse, middle, center
+
+# Exercices 
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exercice 1
+
+Soit le tableau suivant:
+
+
+```r
+note &lt;- read.table(file = './donnees/NoteEtudiant.txt', sep="\t", header = TRUE)
+head(note)
+```
+
+```
+##   Francais Mathematique Anglais Musique Histoire Danse
+## 1       41           57      59      73       82    78
+## 2       63           92      44      64       54    86
+## 3       63           97      57      56       56    71
+## 4       59           85      88      98       88    83
+## 5       95           43      70      89       93    61
+```
+
+1- Étant l'étudiant numéro 2, j'aimerais calculer ma moyenne générale. 
+
+2- Étant le professeur d'anglais, j'aimerais calculer la moyenne de ma classe.
+
+À l'aide d'un pseudo-code, répondez à (1) et (2).
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution de l'exercice 1
+
+.pull-left[
+## Solution 1:
+
+```
+NbCours &lt;- 6
+Somme &lt;- 0
+
+FOR posC IN 1:NbCours
+  Somme &lt;- Somme + note[2,posC]
+END FOR
+Moyenne &lt;- Somme/NbCours
+
+
+ET
+
+
+mean(note[2,])
+```
+
+]
+
+.pull-right[
+
+## Solution 2:
+
+```
+NbEtudiant &lt;- 5
+Somme &lt;- 0
+
+FOR posL IN 1:NbEtudiant
+  Somme &lt;- Somme + note[posL,3]
+END FOR
+Moyenne &lt;- Somme/NbEtudiant
+
+
+ET
+
+
+mean(note[,3])
+```
+]
+
+
+---
+
+# Exercice 2
+
+Soit le tableau suivant:
+
+
+```r
+note &lt;- read.table(file = './donnees/NoteEtudiant.txt', sep="\t", header = TRUE)
+head(note)
+```
+
+```
+##   Francais Mathematique Anglais Musique Histoire Danse
+## 1       41           57      59      73       82    78
+## 2       63           92      44      64       54    86
+## 3       63           97      57      56       56    71
+## 4       59           85      88      98       88    83
+## 5       95           43      70      89       93    61
+```
+
+En temps que directeur d'une école, je souhaite obtenir la moyenne générale de mon établissement scolaire. Ainsi, je souhaiterais obtenir la moyenne des moyennes générales de chaque étudiants. À l'aide de boucle `for`, définissez un pseudo-code permettant de calculer la moyenne de l'établissement scolaire.
+
+---
+
+class: inverse, middle, center
+
+# Mettre sur pause
+&lt;hr width="65%" size="0.3" color="red" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Solution de l'exercice 2
+
+```
+NbEtudiant &lt;- 5
+NbCours &lt;- 6
+Somme &lt;- 0
+
+FOR posL IN 1:NbEtudiant
+  FOR posC IN 1:NbCours
+    Somme &lt;- Somme + note[posL,posC]
+  END FOR
+END FOR
+MoyGen &lt;- Somme/(NbEtudiant * NbCours)
+
+
+ET
+
+
+sum(note)/(NbEtudiant * NbCours)
+```
+
+---
+
+class: middle, center, inverse
+
+# Interagir avec ses fichiers
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Lire un fichier
+
+La lecture de fichiers est souvent l'étape la plus frustrante lorsque l'on travaille avec R.
+
+Pour ce faire, nous utiliserons les fichiers sous format `CSV` (*Comma Separated values*) ou `txt` qui sont des fichiers de texte brut dont chaque ligne dispose d'un séparateur de colonne.
+
+---
+
+# Lire un fichier
+
+Si j'ouvre le fichier [Canadiens.csv](./donnees/Canadiens.csv) avec un bloc-notes, j'obtiens les 5 premières lignes suivantes:
+
+```
+Joueurs;Buts;Tirs;Points;Parties jouees;Position
+Tomas Tatar;22;162;61;68;AG
+Phillip Danault;13;131;47;71;C
+Max Domi;17;179;44;71;C
+Brendan Gallagher;22;226;43;59;AD
+```
+
+On voit ici le point virgule comme séparateur de colonne. La première ligne correspond aux noms des colonnes.
+
+**Note:** Garder à l'esprit que de connaître la structure du fichier facilite grandement l'importation des données dans R.
+
+---
+
+# Lire un fichier Excel
+
+Les fichiers `.xlsx` peuvent être lus au moyen de librairies spécialisées, mais il est préférable sous R d'utiliser un format multi-plateforme ouvrable sans logiciels propriétaires.
+
+---
+
+# Ouvrir un fichier `.csv` dans R
+
+Nous allons utiliser le fichier [Canadiens.csv](./donnees/Canadiens.csv) pour cet exemple.
+
+## On peut lire le fichier au moyen de la commande
+
+
+```r
+Canadiens &lt;- read.table(file = "donnees/Canadiens.csv", header = T, dec = ".", sep = ";")
+head(Canadiens)
+```
+
+```
+##             Joueurs Buts Tirs Points Parties.jouees Position
+## 1       Tomas Tatar   22  162     61             68       AG
+## 2   Phillip Danault   13  131     47             71        C
+## 3          Max Domi   17  179     44             71        C
+## 4 Brendan Gallagher   22  226     43             59       AD
+## 5       Nick Suzuki   13  138     41             71        C
+## 6        Jeff Petry   11  158     40             71        D
+```
+
+---
+
+# Lire un fichier `.csv`: anatomie des arguments
+
+- `file` : nom du fichier à lire
+- `header` : indique s'il y a un entête avec les noms de colonnes
+- `dec` : caractère utilisé pour délimiter les décimales
+- `sep` : caractère utilisé pour séparer les colonnes
+- `quote` : spécifie si les chaines de caractère sont entourées par des guillemets.
+
+**Note** : l'objet retourné est par défaut un `data.frame`. Il peut être ensuite converti, au besoin.
+
+---
+
+# Lire un fichier: les erreurs courantes
+
+- Mauvais nom de fichier
+- Mauvais répertoire de travail
+- Guillemets
+- Type de séparateur de colonnes
+- Présence de points
+- Nom des colonnes
+- Entrées vides
+- Présence de caractères invisibles
+- Mauvais encodage des données
+- Type de données et d'objets
+
+---
+
+# Écrire des fichiers `CSV` et `txt`
+
+Il y a une grande diversité de façons d'enregistrer sur le disque des objets provenant de R. La façon la plus simple, versatile et qui permet les échanges entre différents logiciels et systèmes d'exploitation est d'écrire sous format `CSV`.
+
+La syntaxe pour écrire une `matrice` ou un `data.frame` est aussi simple que pour lire un fichier `CSV`.
+
+
+```r
+mat2 &lt;- matrix(runif(n = 50,min = 0,max = 1),nrow = 5,ncol = 10)
+write.table(mat2, file = "mat.csv")
+```
+
+---
+
+# Écrire des fichiers `.Rdata` avec `save()`
+
+Parfois les objets que l'on souhaite enregistrer ont une structure plus complexe qu'un tableau de données. R permet d'enregistrer ces objets dans un format qui lui est unique, le `.Rdata`. Ces objets sont compressés pour minimiser l'espace disque et ne peuvent être lus uniquement par R.
+
+
+```r
+MaListe &lt;- list()
+MaListe[[1]] &lt;- 1
+MaListe[[2]] &lt;- c(1:10)
+save(MaListe, file = "MaListe.Rdata")
+```
+
+**NOTE** - `save()` permet également de sauvegarder plusieurs objets.
+
+
+```r
+save(MaListe,MonDataFrame, file = "MaListe.Rdata")
+```
+
+---
+
+# Lire des fichiers `.Rdata` avec `load()`
+
+Puisque le fichier `.Rdata` est spécifique à R, il s'agit peut-être du format le plus facile à lire puisque R prend en charge la mise en forme de l'objet, les noms et les types de données
+
+
+```r
+load("MaListe.Rdata")
+ls()
+```
+
+```
+##  [1] "a"                  "b"                  "B"                 
+##  [4] "ButsResult"         "c"                  "can"               
+##  [7] "Canadiens"          "collage"            "df"                
+## [10] "df2"                "faux"               "M"                 
+## [13] "MaListe"            "MaMatrice"          "MaPremiereMatrice" 
+## [16] "mat"                "MesFacteurs"        "MonDeuxiemeVecteur"
+## [19] "MonPremierVecteur"  "MonVecteur"         "note"              
+## [22] "parties"            "Scol"               "test"              
+## [25] "vrai"
+```
+
+---
+
+# Lire des fichiers: `load()` et `.Rdata`
+
+Faites attention, si le nom de l'objet contenu dans le fichier `.Rdata` est le même qu'un objet en mémoire, il va écraser ce premier objet.
+
+
+```r
+MaListe &lt;- list("Hello","World")
+load("MaListe.Rdata")
+MaListe
+```
+
+```
+## [[1]]
+## [1] 1
+## 
+## [[2]]
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+## Pour éviter cette erreur, il faut utiliser les fonctions `saveRDS()` et `readRDS()`.
+
+---
+
+# Quelques commandes utiles
+
+Il est important de vérifier la structure de l'objet après son importation dans l'environnement R.
+
+
+```r
+head(Canadiens, n = 3)
+```
+
+```
+##           Joueurs Buts Tirs Points Parties.jouees Position
+## 1     Tomas Tatar   22  162     61             68       AG
+## 2 Phillip Danault   13  131     47             71        C
+## 3        Max Domi   17  179     44             71        C
+```
+
+```r
+tail(Canadiens, n = 3)
+```
+
+```
+##             Joueurs Buts Tirs Points Parties.jouees Position
+## 8        Joel Armia   16  155     30             58       AD
+## 9  Artturi Lehkonen   13  140     27             70       AG
+## 10     Nick Cousins    9  105     22             58        C
+```
+
+---
+
+# Quelques commandes utiles
+
+Il est important de vérifier la structure de l'objet après son importation dans l'environnement R.
+
+
+```r
+str(Canadiens)
+```
+
+```
+## 'data.frame':	10 obs. of  6 variables:
+##  $ Joueurs       : Factor w/ 10 levels "Artturi Lehkonen",..: 10 8 5 2 7 3 9 4 1 6
+##  $ Buts          : int  22 13 17 22 13 11 15 16 13 9
+##  $ Tirs          : int  162 131 179 226 138 158 185 155 140 105
+##  $ Points        : int  61 47 44 43 41 40 36 30 27 22
+##  $ Parties.jouees: int  68 71 71 59 71 71 65 58 70 58
+##  $ Position      : Factor w/ 4 levels "AD","AG","C",..: 2 3 3 1 3 4 4 1 2 3
+```
+
+---
+
+# Quelques commandes utiles
+
+`summary()` permet d'obtenir un résumé du contenu de chaque colonne
+
+
+```r
+summary(Canadiens)
+```
+
+```
+##               Joueurs       Buts            Tirs           Points     
+##  Artturi Lehkonen :1   Min.   : 9.00   Min.   :105.0   Min.   :22.00  
+##  Brendan Gallagher:1   1st Qu.:13.00   1st Qu.:138.5   1st Qu.:31.50  
+##  Jeff Petry       :1   Median :14.00   Median :156.5   Median :40.50  
+##  Joel Armia       :1   Mean   :15.10   Mean   :157.9   Mean   :39.10  
+##  Max Domi         :1   3rd Qu.:16.75   3rd Qu.:174.8   3rd Qu.:43.75  
+##  Nick Cousins     :1   Max.   :22.00   Max.   :226.0   Max.   :61.00  
+##  (Other)          :4                                                  
+##  Parties.jouees Position
+##  Min.   :58.0   AD:2    
+##  1st Qu.:60.5   AG:2    
+##  Median :69.0   C :4    
+##  Mean   :66.2   D :2    
+##  3rd Qu.:71.0           
+##  Max.   :71.0           
+## 
+```
+
+---
+
+# Quelques commandes utiles
+
+Très souvent, on souhaite réaliser un sommaire de nos données. La fonction `summary()` est fort utile, mais parfois on souhaite avoir d'autres informations que la moyenne (p. ex. la variance). Dans ce cas, la fonction `table()` est recommandée.
+
+
+```r
+Tirs &lt;- table(Canadiens$Tirs)
+Tirs
+```
+
+```
+## 
+## 105 131 138 140 155 158 162 179 185 226 
+##   1   1   1   1   1   1   1   1   1   1
+```
+
+---
+
+# Exercice de manipulation des données
+
+- Ouvrir le fichier [ButsResult.csv](./donnees/ButsResult.csv) au moyen de Excel
+- Ouvrir le même fichier au moyen de R
+
+Dans Excel: 
+- Calculer le nombre moyen de buts marqué par le Canadiens de Montréal en fonction des résultats de la partie. 
+- Exprimer le résultat en un tableau avec titres au colonne.
+
+Dans R:
+- Vérifier que le fichier a le format approprié.
+- Créer un vecteur `ButsMoyen` d'une longueur correspondant au nombre de catégories de résultat d'une partie dans le fichier de données.
+- Attribuer les types de résultats pour chaque entrée de `ButsMoyen`.
+- Enregistrer le fichier sous forme de fichier `csv` et comparer le avec le fichier Excel.
+
+---
+
+# Exercice de manipulation des données (suite)
+
+Dans Excel:
+- Afin de calculer le nombre moyen de buts marqué en fonction des différents résultats d'une partie sur Excel, nous devons calculer (en exemple, pour les défaites): `Somme` de `Nombre de buts marqué * Nombre de défaites par ce nombre de buts`, puis diviser cette somme par le nombre total de défaites. (Répéter pour les égalités et les victoires)
+
+Il suffit ensuite d'ajouter `Défaite`, `Égalité` et `Victoire` comme titre de nos trois colonnes.
+
+
+---
+# Exercice de manipulation des données (suite)
+
+Dans R:
+- D'abord, on importe nos données (`read.table()`).
+- On calcule avec la même méthode que pour le Excel, le nombre moyen de buts en fonction du résultat de la partie.
+- Convertir le vecteur `ButsMoyen` en tableau de données. (`as.data.frame()`)
+- Attribuer les noms des positions pour chaque entrée de `ButsMoyen`. (`Colnames()`)
+- Enregistrer `ButsMoyen` sous forme de fichier `CSV`. (séparateur point-virgule) (`write.table()`)
+- Ouvrir le fichier `CSV` et le comparer au résultat de l'étape 1 dans Excel.
+
+**Note 1:** La fonction t() vous permet de transposer un tableau. (3 lignes, 1 colonne devient 1 ligne, 3 colonnes)
+
+**Note 2:** ?colnames (par exemple) dans la console permet d'ouvrir la fenêtre d'aide de cette fonction.
+
+---
+class: middle, center, inverse
+
+# Manipulation des données
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Différents outils pour générer des données
+
+
+```r
+seq(from = 1, to = 10, by = 0.5)
+```
+
+```
+##  [1]  1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5  5.0  5.5  6.0  6.5  7.0  7.5  8.0
+## [16]  8.5  9.0  9.5 10.0
+```
+
+```r
+rep(c(1:3), times = 3)
+```
+
+```
+## [1] 1 2 3 1 2 3 1 2 3
+```
+
+---
+
+# Différents outils pour générer des données
+
+
+```r
+v1 &lt;- c(1:3)
+v2 &lt;- c("A","B","C")
+expand.grid(v1,v2)
+```
+
+```
+##   Var1 Var2
+## 1    1    A
+## 2    2    A
+## 3    3    A
+## 4    1    B
+## 5    2    B
+## 6    3    B
+## 7    1    C
+## 8    2    C
+## 9    3    C
+```
+
+---
+# Combiner des objets
+
+
+```r
+rbind(v1,v2)
+```
+
+```
+##    [,1] [,2] [,3]
+## v1 "1"  "2"  "3" 
+## v2 "A"  "B"  "C"
+```
+
+```r
+cbind(v1,v2)
+```
+
+```
+##      v1  v2 
+## [1,] "1" "A"
+## [2,] "2" "B"
+## [3,] "3" "C"
+```
+
+---
+
+# Fonctions utiles: trier des objets
+
+
+```r
+tri &lt;- runif(n = 10, min = 0, max = 100)
+tri
+```
+
+```
+##  [1] 44.473056  5.936247 27.514918  3.114826  1.448234 48.716903 59.515162
+##  [8] 59.785304 39.768051 39.683040
+```
+
+```r
+sort(tri)
+```
+
+```
+##  [1]  1.448234  3.114826  5.936247 27.514918 39.683040 39.768051 44.473056
+##  [8] 48.716903 59.515162 59.785304
+```
+
+---
+# Fonctions utiles: obtenir des rangs
+
+
+```r
+rang &lt;- runif(n = 10, min = 0, max = 100)
+rang
+```
+
+```
+##  [1] 81.607607 23.519875 82.687025 53.347593 92.894271 54.979473 76.014253
+##  [8]  6.850976 79.360934 63.280343
+```
+
+```r
+rank(rang)
+```
+
+```
+##  [1]  8  2  9  3 10  4  6  1  7  5
+```
+
+---
+
+# Fonctions utiles: éch. les valeurs uniques
+
+
+```r
+uq &lt;- c(1,2,5,7,4,3,2,1,10,5,8)
+uq
+```
+
+```
+##  [1]  1  2  5  7  4  3  2  1 10  5  8
+```
+
+```r
+unique(uq)
+```
+
+```
+## [1]  1  2  5  7  4  3 10  8
+```
+
+---
+# Sous-échantillonner des objets
+
+Parfois, on souhaite avoir seulement une partie des données contenues dans un objet. La fonction `subset()` est fort pratique pour réaliser cette opération.
+
+Ici par exemple, on souhaite étudier seulement les joueurs du Canadiens ayant au moins 15 buts et au moins 40 points:
+
+
+```r
+Canad &lt;- read.table(file="donnees/Canadiens.csv", header=TRUE, stringsAsFactors=FALSE, sep = ";")
+sub_Centres &lt;- subset(Canad, Canad$Buts &gt;= 15 &amp; Canad$Points &gt;= 40)
+head(sub_Centres, n=3)
+```
+
+```
+##             Joueurs Buts Tirs Points Parties.jouees Position
+## 1       Tomas Tatar   22  162     61             68       AG
+## 3          Max Domi   17  179     44             71        C
+## 4 Brendan Gallagher   22  226     43             59       AD
+```
+
+Le "&gt;=" est utilisé pour le `au moins` (plus grand ou égal) et le symbole "&amp;" pour combiner deux conditions. (agit en tant que ET)
+
+---
+# Exercice récapitulatif de l'atelier
+
+Le fichier [ExerciceRecapitulatif.csv](./donnees/ExerciceRecapitulatif.csv) est un sommaire des données sur le virus qui frappe présentement la planète Erret: Le Divoc-91!
+
+À partir de ces données, le docteur Kombucha aimerait avoir un tableau détaillé du nombre de jours qu'un individu à passé à l'hôpital en fonction de sa région. 
+
+De plus, il aimerait qu'au bas du premier tableau figure les différents coûts de traitement par région. Les frais sont les suivants: 10*$* pour les résidents de la Capitale-Nationale, du Centre-du-Québec, des Chaudières-Appalaches ainsi que de Lanaudière. Les frais de la Montérégie sont les plus élevés et s'élèvent à 15*$* par individu, alors que pour les autres régions, les frais s'élèvent à 5*$* par personne.
+
+M. Kombucha vous demande de rédiger un script qui réalisera l'ensemble de ces étapes, de la lecture des données à l'enregistrement du tableau final.
+
+---
+# Indications
+
+1. Charger les données "ExerciceRecapitulatif". (vous pouvez modifier le nom des colonnes si nécessaire)
+2. Créer le premier tableau demandé.
+3. Créer un vecteur des frais par région.
+4. Combiner le premier tableau au vecteur, de sorte que les frais soient **au bas** du tableau.
+5. Enregistrer les résultats dans un tableau où les étiquettes de rangées correspondent aux nombres de jours passés à l'hôpital (la dernière ligne correspondra au frais totaux par région) et les étiquettes des colonnes correspondent aux régions.
+
+
+---
+# Suite
+
+Le tableau final doit avoir la forme de l'image ci-dessous.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/ExempleRecap1.png" width="70%"&gt;&lt;/img&gt;
+
+En utilisant **seulement** le tableau final obtenu à la question précédente, expliquez comment vous procéderiez (à l'aide d'un pseudo-code) afin de calculer le nombre total d'individu ayant eu besoin d'aller à l'hôpital plus d'une journée.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "monokai",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

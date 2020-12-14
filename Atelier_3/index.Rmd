@@ -1478,7 +1478,7 @@ X <- matrix(runif(3000*3000),nr=3000,nc=3000)
 
 ```{r, results="hold"}
 system.time(rowSums(X))
-system.time(apply(X,2,sum))
+system.time(apply(X,1,sum))
 system.time(f1(X))
 ```
 ]

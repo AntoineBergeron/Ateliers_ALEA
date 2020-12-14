@@ -1464,11 +1464,11 @@ f1 <- function(x) {
 	res <- numeric(ncol(x))
 	for(j in 1:ncol(x)) {
 		for(i in 1:nrow(x)){
-			res[x] <- res[j] + x[i,j]
+			res[j] <- res[j] + x[i,j]
 		}
 	}
 }
-X <- matrix(runif(100*100),nr=100,nc=100)
+X <- matrix(runif(3000*100),nr=3000,nc=3000)
 ```
 
 ]

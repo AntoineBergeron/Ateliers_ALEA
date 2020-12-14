@@ -1461,10 +1461,10 @@ Certaines fonctions sur R (voir Visser et al. 2015) sont optimisées. L'exemple 
 .pull-left[
 ```{r}
 f1 <- function(x) {
-	res <- numeric(ncol(x))
-	for(j in 1:ncol(x)) {
-		for(i in 1:nrow(x)){
-			res[j] <- res[j] + x[i,j]
+	res <- numeric(nrow(x))
+	for(i in 1:nrow(x)) {
+		for(j in 1:ncol(x)){
+			res[i] <- res[i] + x[i,j]
 		}
 	}
 }

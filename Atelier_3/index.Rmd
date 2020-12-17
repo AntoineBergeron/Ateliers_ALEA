@@ -1522,7 +1522,7 @@ class: middle, inverse, center
 
 .pull-right[
 <div style='text-align:center;'>
-<img src="assets/img/animation.gif" height="500px"></img>
+<img src="assets/img/animation1.gif" height="500px"></img>
 </div>
 ]
 

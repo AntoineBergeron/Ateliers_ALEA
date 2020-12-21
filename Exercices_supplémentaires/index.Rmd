@@ -155,7 +155,7 @@ Calcul de (ARRET <- TRUE) ou (ARRET <- FALSE) # On "observe" si le gardien fait 
 
 # Exemple 3
 
-<span style="font-size:small;text-transform:uppercase;text-align:right;">
+<text style="font-size:small;">
 
 Béatrice et Claude vont à l'Université de Sherbrooke et sont dans le même programme. À la suite de deux sessions, Béatrice est d'une constance incroyable. Pour ces 10 cours, elle a obtenu une moyenne de 70 exactement. Pour sa part, Claude a obtenu des moyennes plus variables. Celles-ci sont représentées dans le vecteur suivant:
 
@@ -168,6 +168,8 @@ Cependant, Claude remarque qu'il a inscrit ses notes à l'envers dans le vecteur
 ---
 
 # Exemple 3 (solution)
+
+<text style="font-size:small;">
 
 ```
 B <- c(70,70,70,70,70,70,70,70,70,70) # Cours dans l'ordre (1,2,3,...)

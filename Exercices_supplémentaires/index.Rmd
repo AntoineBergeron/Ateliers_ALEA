@@ -155,7 +155,7 @@ Calcul de (ARRET <- TRUE) ou (ARRET <- FALSE) # On "observe" si le gardien fait 
 
 # Exemple 3
 
-<text style="font-size:large;">
+<text style="font-size:Large;">
 
 Béatrice et Claude vont à l'Université de Sherbrooke et sont dans le même programme. À la suite de deux sessions, Béatrice est d'une constance incroyable. Pour ces 10 cours, elle a obtenu une moyenne de 70 exactement. Pour sa part, Claude a obtenu des moyennes plus variables. Celles-ci sont représentées dans le vecteur suivant:
 
@@ -164,6 +164,14 @@ C = (60.70,80,90,60,70,80,90,80,50)
 Cependant, Claude remarque qu'il a inscrit ses notes à l'envers dans le vecteur. Ainsi, la première position (60) représente sa moyenne au cours #10, la deuxième position (70) représente sa moyenne au cours #9, et ainsi de suite. 
 
 À l'aide d'un vecteur B (celui des notes de Béatrice) et du vecteur C (on doit utiliser le vecteur C, et non pas récrire le vecteur C à l'envers!!!), écrivez le pseudo-code qui permettrait de déterminer qui entre Béatrice et Claude a obtenu le meilleur résultat à chaque examen. On aimerait afficher à l'écran que Claude ou Béatrice a obtenu la meilleure note dans un tel cas, et inscrire que les notes sont semblables si celles-ci sont égales.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
+
 
 ---
 
@@ -176,7 +184,8 @@ B <- c(70,70,70,70,70,70,70,70,70,70) # Cours dans l'ordre (1,2,3,...)
 C <- c(60.70,80,90,60,70,80,90,80,50) # Cours à l'envers (10,9,8,...) d'où position 10 = 1er cours, position 9 = 2e cours, position 8 = 3e cours, etc.
 
 for (POS in 1:10) { # Pour chacune des 10 positions du vecteur (les 10 cours)
-  if(B[POS] > C[11-POS]){ # si la valeur en position POS pour Béatrice (Cours POS) est plus grande que la valeur en position 11-POS pour Claude (Cours POS)
+  if(B[POS] > C[11-POS]){ # si la valeur en position POS pour Béatrice (Cours POS) est plus grande que la 
+                          #valeur en position 11-POS pour Claude (Cours POS)
     print("Béatrice a obtenu la meilleure note") # Alors, c'est que Béatrice a la meilleure note
   } else if (B[POS] < C[11-POS]){ # Si c'est le contraire (seul le signe d'inégalité change)
     print("Claude a obtenu la meilleure note") # Alors, c'est que Claude a la meilleure note
@@ -185,7 +194,6 @@ for (POS in 1:10) { # Pour chacune des 10 positions du vecteur (les 10 cours)
   }
 }
 ```
-<text style="font-size:large;">
 
 Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS du vecteur C. Ainsi, en ordre, de POS=1 à POS=10, on compare les positions, sous forme de couple, suivantes: (1,10), (2,9), (3,8), ... , (10,1). La comparaison est donc adéquate.
 

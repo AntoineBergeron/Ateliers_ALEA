@@ -153,7 +153,7 @@ Calcul de (ARRET &lt;- TRUE) ou (ARRET &lt;- FALSE) # On "observe" si le gardien
 
 # Exemple 3
 
-&lt;text style="font-size:small;"&gt;
+&lt;text style="font-size:large;"&gt;
 
 Béatrice et Claude vont à l'Université de Sherbrooke et sont dans le même programme. À la suite de deux sessions, Béatrice est d'une constance incroyable. Pour ces 10 cours, elle a obtenu une moyenne de 70 exactement. Pour sa part, Claude a obtenu des moyennes plus variables. Celles-ci sont représentées dans le vecteur suivant:
 
@@ -167,7 +167,7 @@ Cependant, Claude remarque qu'il a inscrit ses notes à l'envers dans le vecteur
 
 # Exemple 3 (solution)
 
-&lt;text style="font-size:small;"&gt;
+&lt;text style="font-size:footnotesize;"&gt;
 
 ```
 B &lt;- c(70,70,70,70,70,70,70,70,70,70) # Cours dans l'ordre (1,2,3,...)
@@ -183,6 +183,7 @@ for (POS in 1:10) { # Pour chacune des 10 positions du vecteur (les 10 cours)
   }
 }
 ```
+&lt;text style="font-size:large;"&gt;
 
 Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS du vecteur C. Ainsi, en ordre, de POS=1 à POS=10, on compare les positions, sous forme de couple, suivantes: (1,10), (2,9), (3,8), ... , (10,1). La comparaison est donc adéquate.
 

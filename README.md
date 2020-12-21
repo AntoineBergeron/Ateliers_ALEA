@@ -20,7 +20,7 @@
 
 - [Présentation HTML](https://AntoineBergeron.github.io/Ateliers_ALEA/Atelier_3)
 
-## Bienvenue aux exercices supplémentaires
+## Exercices supplémentaires
 
 - [Présentation HTML](https://AntoineBergeron.github.io/Ateliers_ALEA/Exercices_supplémentaires)
 

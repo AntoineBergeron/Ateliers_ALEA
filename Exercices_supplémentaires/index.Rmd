@@ -155,6 +155,8 @@ Calcul de (ARRET <- TRUE) ou (ARRET <- FALSE) # On "observe" si le gardien fait 
 
 # Exemple 3
 
+<span style="font-size:small;text-transform:uppercase;text-align:right;">
+
 Béatrice et Claude vont à l'Université de Sherbrooke et sont dans le même programme. À la suite de deux sessions, Béatrice est d'une constance incroyable. Pour ces 10 cours, elle a obtenu une moyenne de 70 exactement. Pour sa part, Claude a obtenu des moyennes plus variables. Celles-ci sont représentées dans le vecteur suivant:
 
 C = (60.70,80,90,60,70,80,90,80,50)

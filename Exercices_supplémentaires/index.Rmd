@@ -1,0 +1,53 @@
+---
+title: ": Introduction à la programmation scientifique"
+author: "Antoine Bergeron"
+date: "A2020"
+output:
+  xaringan::moon_reader:
+    css: [default, ../Ateliers_ALEA.css, "hygge"]
+    lib_dir: assets
+    seal: false
+    nature:
+      highlightStyle: monokai
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "../macros.js"
+---
+
+class: title-slide, middle
+
+<style type="text/css">
+  .title-slide {
+    background-image: url('assets/img/Coding.png');
+    background-color: #23373B;
+    background-size: contain;
+    border: 0px;
+    background-position: 600px 0;
+    line-height: 1;
+  }
+</style>
+
+# Bienvenue aux exercices supplémentaires
+
+<hr width="65%" align="left" size="0.3" color="orange"></hr>
+
+## Atelier 1, 2 et 3. 
+
+<hr width="65%" align="left" size="0.3" color="orange" style="margin-bottom:40px;" alt="@Martin Sanchez"></hr>
+
+.instructors[
+  ***ALÉA R*** - Antoine Bergeron
+]
+
+<img src="assets/img/Rlogo.png" width="8%" style="margin-top:20px;"></img>
+
+
+---
+class: inverse, middle, center
+
+# Exercices supplémentaires de l'atelier 1
+<hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"></hr>
+
+---
+
+# Mise en situation

@@ -286,7 +286,7 @@ Dans le cadre de la collation des grades à l'UdeS, on souhaite imprimer une phr
 
 ```
 NOM, a réalisé des études en SUJET, d'une durée approximative de ANS D'ÉTUDE ans. 
-NOM termine ces études à l'âge de AGE ans.
+NOM termine ses études à l'âge de AGE ans.
 ```
 
 ---
@@ -565,6 +565,71 @@ det.2x2(mat3)
 ```
 ## Error in det.2x2(mat3): La dimension de la matrice n'est pas 2x2
 ```
+
+
+---
+
+# Exemple 5
+
+Vous êtes présentement en train de consulter l'exemple 5 des exercices supplémentaires de l'atelier 2. 
+
+Vous voyez! J'ai deviné ce que vous faisiez à l'instant présent. Ce n'est pas mon seul et unique tour de mathémagie!
+
+- Prenez la pointure de vos souliers
+- Multipliez cette pointure par 5
+- Ajoutez 50 à ce résultat
+- Multipliez par 20 le nouveau résultat
+- Ajoutez maintenant 1030 au résultat
+- Finalement, veuillez soustraire votre année de naissance
+
+TADAM! 
+
+Avant de comprendre ce qu'est le résultat, créons d'abord la fonction qui permet d'arriver à ce résultat, en fonction de la pointure et de l'année de naissance d'un individu quelconque.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 5 (solution)
+
+
+```r
+pointure.age &lt;- function(pointure, annee_naissance){
+  etape1 &lt;- pointure * 5
+  etape2 &lt;- etape1 + 50
+  etape3 &lt;- etape2 * 20
+  etape4 &lt;- etape3 + 1030
+  etape5 &lt;- etape4 - annee_naissance
+  return(etape5)
+}
+```
+
+
+```r
+pointure.age(11,1998)
+```
+
+```
+## [1] 1132
+```
+
+```r
+pointure.age(5,2018)
+```
+
+```
+## [1] 512
+```
+
+Les deux derniers chiffres représentent l'âge que vous aurez en 2030, alors que les deux premiers (ou le premier) représentent votre pointure de soulier.
+
+INCROYABLE!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

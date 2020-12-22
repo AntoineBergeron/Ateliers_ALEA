@@ -185,15 +185,16 @@ class: inverse, middle, center
 B <- c(70,70,70,70,70,70,70,70,70,70) 
 C <- c(60.70,80,90,60,70,80,90,80,50)
 
-for (POS in 1:10) { 
-  if(B[POS] > C[11-POS]){ 
-    print("Béatrice a obtenu la meilleure note")
-  } else if (B[POS] < C[11-POS]){ 
-    print("Claude a obtenu la meilleure note") 
-  } else { 
-    print("Les notes sont semblables")
+FOR POS in 1:10  
+  IF(B[POS] > C[11-POS]){ 
+    PRINT("Béatrice a obtenu la meilleure note")
+  } ELSEIF (B[POS] < C[11-POS]){ 
+    PRINT("Claude a obtenu la meilleure note") 
+  } ELSE { 
+    PRINT("Les notes sont semblables")
   }
-}
+  ENDIF
+END FOR
 ```
 
 Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS du vecteur C. Ainsi, en ordre, de POS=1 à POS=10, on compare les positions, sous forme de couple, suivantes: (1,10), (2,9), (3,8), ... , (10,1). La comparaison est donc adéquate.
@@ -222,6 +223,49 @@ Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS
    - D'où, les notes sont semblables
    
 ---
+
+# Exemple 4
+
+La fonction rank() sur R prend un vecteur en argument et retourne le rang des valeurs dans un nouveau vecteur de même longueur. Par exemple,
+
+```{r}
+vec <- c(24,52,11,7,34,77,47,1,96,45)
+rank(vec)
+```
+   
+Écrivez un pseudo-code, à l'aide de boucles et d'expressions conditionnelles, pouvant remplacer la fonction rank(). Pour vous faciliter la tâche, supposez que les valeurs du vecteur sont toutes différentes.
+
+*Indice:* Pour chacune des positions du vecteur que l'on souhaite créer, on cherche à comparer la position identique du vecteur "vec" avec toutes les autres valeurs. Lorsque cette valeur est plus grande qu'une autre valeur, alors c'est que son rang doit augmenter.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
+
+
+---
+
+# Exemple 4 (solution)
+
+```
+vec <- c(24,52,11,7,34,77,47,1,96,45)
+vec_rang <- rep(1,10)   # création d'un vecteur (1,1,...,1)
+
+FOR i in 1:10
+  FOR j in 1:10
+    IF(vec[i] > vec[j])
+      vec_rang[i] <- vec_rang[i] + 1
+    ENDIF
+  END FOR
+END FOR
+```
+
+Dans les exercices supplémentaires de l'atelier 2, nous créerons une fonction en se basant sur ce pseudo-code.
+
+   
+---
 class: inverse, middle, center
 
 # Exercices supplémentaires de l'atelier 2
@@ -237,9 +281,10 @@ Dans le cadre de la collation des grades à l'UdeS, on souhaite imprimer une phr
 
 À l'aide de ces informations, on aimerait créer une fonction qui permettra, en fonction des informations de chaque finissant, d'écrire ceci:
 
+```
 NOM, a réalisé des études en SUJET, d'une durée approximative de ANS D'ÉTUDE ans. 
-
 NOM termine ces études à l'âge de AGE ans.
+```
 
 ---
 
@@ -260,21 +305,166 @@ ecrire.phrase <- function(nom,age,annee.etude,sujet){
 }
 
 
-ecrire.phrase("Rolland","19",1.7,"histoire de la langue")
+ecrire.phrase("Rolland","19",1.7,"géographie")
 ecrire.phrase("Linda", "47", 2.8, "comptabilité")
 ecrire.phrase("M. Kombucha", "31", 8.6, "médecine")
 ```
 
 
+---
+
+# Exemple 2
+
+Lors de l'exemple 4 des exercices supplémentaires de l'atelier 1, nous avons défini un pseudo-code pour remplacer la fonction rank(). Pour cet exercice, on vous demande de coder le pseudo-code sous forme d'une fonction qui prend en argument le vecteur, et qui retourne le vecteur de rang, sans utiliser la fonction rank() bien sûr.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
 
 
+---
+
+# Exemple 2 (solution)
+
+```{r}
+func_rang <- function(vec){
+  vec_rang <- rep(1,length(vec))
+
+  for (i in (1:length(vec))){
+    for (j in (1:length(vec))){
+      if(vec[i] > vec[j]){
+        vec_rang[i] <- vec_rang[i] + 1
+      }
+    }
+  }
+  return(vec_rang)
+}
+```
+
+```{r}
+vec1 <- c(24,52,11,7,34,77,47,1,96,45)
+func_rang(vec1)
+rank(vec1)
+```
+
+---
 
 
+# Exemple 3
+
+.pull-left[
+<div style='text-align:center;'>
+On cherche ici à trouver la longueur d'un vecteur. Effectivement, lorsque le vecteur augmente sur l'axe des abscisses (axe des x) et sur l'axe des ordonnées (axe des y), la longueur totale du vecteur ne se calcule pas aussi simplement que "distance en X + distance en Y". À droite, l'illustration définit bien le calcul général que l'on doit appliquer.
+</div>
+]
+
+.pull-right[
+<div style='text-align:center;'>
+<img src="assets/img/vecteurgif.gif" height="300px"></img>
+</div>
+]
+
+---
+
+# Exemple 3 (suite)
+
+La formule se généralise lorsque le vecteur n'a pas seulement deux éléments.
+
+Par exemple:
+
+Soit le vecteur (x,y), alors la longueur de celui-ci est donnée par $\sqrt{x^2 + y^2}$.
+
+Soit le vecteur (x,y,z), alors la longueur de celui-ci est donnée par $\sqrt{x^2 + y^2 + z^2}$.
+
+Créez une fonction qui permettra de calculer, peu importe le vecteur entré en argument, la longueur de ce dernier.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
 
 
+---
+
+# Exemple 3 (solution)
 
 
+```{r}
+calcul.norme <- function(vecteur){ # Argument est le vecteur
+  sqrt(sum(vecteur^2)) # On fait la racine carrée de "la somme des éléments au carré"
+}
 
+calcul.norme(c(6,4)) # Notre vecteur illustré à la diapositive précédente
+calcul.norme(c(1,2,3,4,5,6,7,6,5,4,3,2,1))
+calcul.norme(c(2,2,2,2))
+```
+
+---
+
+
+# Exemple 4
+
+Comme vous avez pu le remarquer, une matrice est un tableau rectangulaire comportant des lignes et des colonnes. Lorsqu'une matrice comporte autant de lignes que de colonnes, on dit alors que la matrice est carrée. Ce type de matrice possède plusieurs propriétés supplémentaires. Effectivement, le **déterminant** d'une matrice peut seulement être calculé si cette même matrice est carrée. 
+
+Dans cet exercice, nous nous intéresserons à calculer le déterminant d'une matrice 2x2 (donc quatre éléments). Pour une matrice 
+
+$$A = \begin{bmatrix}
+a_{11} & a_{12} \\
+a_{21} & a_{22}
+\end{bmatrix}$$
+
+alors on note $det(A) = a_{11}*a_{22} - a_{21}*a_{12}$.
+
+Créez une fonction qui calculera le déterminant d'une matrice 2x2. Dans le cas d'une matrice d'une autre dimension, on souhaite que la fonction retourne un message d'erreur indiquant que "La dimension de la matrice n'est pas 2x2".
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
+
+
+---
+
+# Exemple 4 (solution)
+
+
+```{r}
+det.2x2 <- function(matrice){
+  if((((dim(matrice))[1] != (c(2,2))[1])) || (((dim(matrice))[2] != (c(2,2))[2]))){
+    stop("La dimension de la matrice n'est pas 2x2")
+  }
+  mat <- matrice[1,1]*matrice[2,2] - matrice[1,2]*matrice[2,1]
+  return(mat)
+}
+```
+
+```{r}
+
+mat1 <- matrix(c(1,2,3,4), nrow = 2, ncol = 2)
+mat1
+det.2x2(mat1)
+```
+
+---
+
+# Exemple 4 (solution: suite)
+
+```{r, error=TRUE}
+mat2 <- matrix(c(1,7,2,34), nrow = 2, ncol = 2)
+mat2
+det.2x2(mat2)
+
+mat3 <- matrix(c(1,2,3,4,5,6), nrow = 2, ncol = 3)
+mat3
+det.2x2(mat3)
+```
 
 
 

@@ -141,12 +141,14 @@ class: inverse, middle, center
 
 ```
 Nb_arret &lt;- 0  # Le gardien débute avec aucun arrêt
+
 While(Nb_arret &lt; 10){  # Tant que le nombre d'arrêt est plus petit que 10
-Calcul de (ARRET &lt;- TRUE) ou (ARRET &lt;- FALSE) # On "observe" si le gardien fait un arrêt ou non
+                                              # On "observe" si le gardien fait
+Calcul de (ARRET &lt;- TRUE) ou (ARRET &lt;- FALSE) # un arrêt ou non
    if(ARRET == TRUE){  # S'il a fait un arrêt,
      Nb_arret &lt;- Nb_arret + 1  # Alors le nombre d'arrêt augmente de 1
-   } # Pas besoin de else (S'il n'a pas fait d'arrêt, alors on recommence la boucle while tout simplement)
-}
+   } # Pas besoin de else (S'il n'a pas fait d'arrêt, 
+}    # alors on recommence la boucle while tout simplement)
 ```
 
 ---
@@ -179,14 +181,20 @@ class: inverse, middle, center
 
 ```
 B &lt;- c(70,70,70,70,70,70,70,70,70,70) # Cours dans l'ordre (1,2,3,...)
-C &lt;- c(60.70,80,90,60,70,80,90,80,50) # Cours à l'envers (10,9,8,...) d'où position 10 = 1er cours, position 9 = 2e cours, position 8 = 3e cours, etc.
+C &lt;- c(60.70,80,90,60,70,80,90,80,50) # Cours à l'envers (10,9,8,...) d'où 
+                                      # position 10 = 1er cours, position 9 = 2e cours, 
+                                      # position 8 = 3e cours, etc.
 
 for (POS in 1:10) { # Pour chacune des 10 positions du vecteur (les 10 cours)
-  if(B[POS] &gt; C[11-POS]){ # si la valeur en position POS pour Béatrice (Cours POS) est plus grande que la 
-                          #valeur en position 11-POS pour Claude (Cours POS)
-    print("Béatrice a obtenu la meilleure note") # Alors, c'est que Béatrice a la meilleure note
-  } else if (B[POS] &lt; C[11-POS]){ # Si c'est le contraire (seul le signe d'inégalité change)
-    print("Claude a obtenu la meilleure note") # Alors, c'est que Claude a la meilleure note
+  if(B[POS] &gt; C[11-POS]){ # si la valeur en position POS pour Béatrice (Cours POS)
+                          # est plus grande que la valeur en position 11 - POS
+                          # pour Claude (Cours POS)
+    print("Béatrice a obtenu la meilleure note") # Alors, c'est que Béatrice
+                                                 # a la meilleure note
+  } else if (B[POS] &lt; C[11-POS]){ # Si c'est le contraire 
+                                  # (seul le signe d'inégalité change)
+    print("Claude a obtenu la meilleure note") # Alors, c'est que Claude 
+                                               # a la meilleure note
   } else { # Sinon, c'est qu'ils ont la même note!
     print("Les notes sont semblables") # D'où, les notes sont semblables
   }

@@ -218,6 +218,72 @@ Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS
    - Alors, c'est que Claude a la meilleure note
    - Sinon, c'est qu'ils ont la même note!
    - D'où, les notes sont semblables
+   
+---
+class: inverse, middle, center
+
+# Exercices supplémentaires de l'atelier 2
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 1
+
+Dans le cadre de la collation des grades à l'UdeS, on souhaite imprimer une phrase afin de la déposer sur le siège de chaque étudiant gradué. Les étudiants remplissent alors un formulaire en ligne et doivent indiquer leur nom, leur champ d'études, la durée de leurs études et leur âge à l'instant présent.
+
+
+À l'aide de ces informations, on aimerait créer une fonction qui permettra, en fonction des informations de chaque finissant, d'écrire ceci:
+
+NOM, a réalisé des études en SUJET, d'une durée approximative de ANS D'ÉTUDE ans. 
+
+NOM termine ces études à l'âge de AGE ans.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 1 (solution)
+
+
+```r
+ecrire.phrase &lt;- function(nom,age,annee.etude,sujet){
+  cat(nom, "a réalisé ses études en", sujet, ", d'une durée approximative de", round(annee.etude), "ans. \n")
+  cat(nom, "termine ses études à l'âge de", age, "ans.")
+}
+
+
+ecrire.phrase("Rolland","19",1.7,"histoire de la langue")
+```
+
+```
+## Rolland a réalisé ses études en histoire de la langue , d'une durée approximative de 2 ans. 
+## Rolland termine ses études à l'âge de 19 ans.
+```
+
+```r
+ecrire.phrase("Linda", "47", 2.8, "comptabilité")
+```
+
+```
+## Linda a réalisé ses études en comptabilité , d'une durée approximative de 3 ans. 
+## Linda termine ses études à l'âge de 47 ans.
+```
+
+```r
+ecrire.phrase("M. Kombucha", "31", 8.6, "médecine")
+```
+
+```
+## M. Kombucha a réalisé ses études en médecine , d'une durée approximative de 9 ans. 
+## M. Kombucha termine ses études à l'âge de 31 ans.
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

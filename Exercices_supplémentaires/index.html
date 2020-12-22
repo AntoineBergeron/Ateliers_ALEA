@@ -183,15 +183,16 @@ class: inverse, middle, center
 B &lt;- c(70,70,70,70,70,70,70,70,70,70) 
 C &lt;- c(60.70,80,90,60,70,80,90,80,50)
 
-for (POS in 1:10) { 
-  if(B[POS] &gt; C[11-POS]){ 
-    print("Béatrice a obtenu la meilleure note")
-  } else if (B[POS] &lt; C[11-POS]){ 
-    print("Claude a obtenu la meilleure note") 
-  } else { 
-    print("Les notes sont semblables")
+FOR POS in 1:10  
+  IF(B[POS] &gt; C[11-POS]){ 
+    PRINT("Béatrice a obtenu la meilleure note")
+  } ELSEIF (B[POS] &lt; C[11-POS]){ 
+    PRINT("Claude a obtenu la meilleure note") 
+  } ELSE { 
+    PRINT("Les notes sont semblables")
   }
-}
+  ENDIF
+END FOR
 ```
 
 Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS du vecteur C. Ainsi, en ordre, de POS=1 à POS=10, on compare les positions, sous forme de couple, suivantes: (1,10), (2,9), (3,8), ... , (10,1). La comparaison est donc adéquate.
@@ -220,6 +221,54 @@ Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS
    - D'où, les notes sont semblables
    
 ---
+
+# Exemple 4
+
+La fonction rank() sur R prend un vecteur en argument et retourne le rang des valeurs dans un nouveau vecteur de même longueur. Par exemple,
+
+
+```r
+vec &lt;- c(24,52,11,7,34,77,47,1,96,45)
+rank(vec)
+```
+
+```
+##  [1]  4  8  3  2  5  9  7  1 10  6
+```
+   
+Écrivez un pseudo-code, à l'aide de boucles et d'expressions conditionnelles, pouvant remplacer la fonction rank(). Pour vous faciliter la tâche, supposez que les valeurs du vecteur sont toutes différentes.
+
+*Indice:* Pour chacune des positions du vecteur que l'on souhaite créer, on cherche à comparer la position identique du vecteur "vec" avec toutes les autres valeurs. Lorsque cette valeur est plus grande qu'une autre valeur, alors c'est que son rang doit augmenter.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 4 (solution)
+
+```
+vec &lt;- c(24,52,11,7,34,77,47,1,96,45)
+vec_rang &lt;- rep(1,10)   # création d'un vecteur (1,1,...,1)
+
+FOR i in 1:10
+  FOR j in 1:10
+    IF(vec[i] &gt; vec[j])
+      vec_rang[i] &lt;- vec_rang[i] + 1
+    ENDIF
+  END FOR
+END FOR
+```
+
+Dans les exercices supplémentaires de l'atelier 2, nous créerons une fonction en se basant sur ce pseudo-code.
+
+   
+---
 class: inverse, middle, center
 
 # Exercices supplémentaires de l'atelier 2
@@ -235,9 +284,10 @@ Dans le cadre de la collation des grades à l'UdeS, on souhaite imprimer une phr
 
 À l'aide de ces informations, on aimerait créer une fonction qui permettra, en fonction des informations de chaque finissant, d'écrire ceci:
 
+```
 NOM, a réalisé des études en SUJET, d'une durée approximative de ANS D'ÉTUDE ans. 
-
 NOM termine ces études à l'âge de AGE ans.
+```
 
 ---
 
@@ -259,11 +309,11 @@ ecrire.phrase &lt;- function(nom,age,annee.etude,sujet){
 }
 
 
-ecrire.phrase("Rolland","19",1.7,"histoire de la langue")
+ecrire.phrase("Rolland","19",1.7,"géographie")
 ```
 
 ```
-## Rolland a réalisé ses études en histoire de la langue , d'une durée approximative de 2 ans. 
+## Rolland a réalisé ses études en géographie , d'une durée approximative de 2 ans. 
 ## Rolland termine ses études à l'âge de 19 ans.
 ```
 
@@ -283,6 +333,237 @@ ecrire.phrase("M. Kombucha", "31", 8.6, "médecine")
 ```
 ## M. Kombucha a réalisé ses études en médecine , d'une durée approximative de 9 ans. 
 ## M. Kombucha termine ses études à l'âge de 31 ans.
+```
+
+
+---
+
+# Exemple 2
+
+Lors de l'exemple 4 des exercices supplémentaires de l'atelier 1, nous avons défini un pseudo-code pour remplacer la fonction rank(). Pour cet exercice, on vous demande de coder le pseudo-code sous forme d'une fonction qui prend en argument le vecteur, et qui retourne le vecteur de rang, sans utiliser la fonction rank() bien sûr.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 2 (solution)
+
+
+```r
+func_rang &lt;- function(vec){
+  vec_rang &lt;- rep(1,length(vec))
+
+  for (i in (1:length(vec))){
+    for (j in (1:length(vec))){
+      if(vec[i] &gt; vec[j]){
+        vec_rang[i] &lt;- vec_rang[i] + 1
+      }
+    }
+  }
+  return(vec_rang)
+}
+```
+
+
+```r
+vec1 &lt;- c(24,52,11,7,34,77,47,1,96,45)
+func_rang(vec1)
+```
+
+```
+##  [1]  4  8  3  2  5  9  7  1 10  6
+```
+
+```r
+rank(vec1)
+```
+
+```
+##  [1]  4  8  3  2  5  9  7  1 10  6
+```
+
+---
+
+
+# Exemple 3
+
+.pull-left[
+&lt;div style='text-align:center;'&gt;
+On cherche ici à trouver la longueur d'un vecteur. Effectivement, lorsque le vecteur augmente sur l'axe des abscisses (axe des x) et sur l'axe des ordonnées (axe des y), la longueur totale du vecteur ne se calcule pas aussi simplement que "distance en X + distance en Y". À droite, l'illustration définit bien le calcul général que l'on doit appliquer.
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/vecteurgif.gif" height="300px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+]
+
+---
+
+# Exemple 3 (suite)
+
+La formule se généralise lorsque le vecteur n'a pas seulement deux éléments.
+
+Par exemple:
+
+Soit le vecteur (x,y), alors la longueur de celui-ci est donnée par `\(\sqrt{x^2 + y^2}\)`.
+
+Soit le vecteur (x,y,z), alors la longueur de celui-ci est donnée par `\(\sqrt{x^2 + y^2 + z^2}\)`.
+
+Créez une fonction qui permettra de calculer, peu importe le vecteur entré en argument, la longueur de ce dernier.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 3 (solution)
+
+
+
+```r
+calcul.norme &lt;- function(vecteur){ # Argument est le vecteur
+  sqrt(sum(vecteur^2)) # On fait la racine carrée de "la somme des éléments au carré"
+}
+
+calcul.norme(c(6,4)) # Notre vecteur illustré à la diapositive précédente
+```
+
+```
+## [1] 7.211103
+```
+
+```r
+calcul.norme(c(1,2,3,4,5,6,7,6,5,4,3,2,1))
+```
+
+```
+## [1] 15.19868
+```
+
+```r
+calcul.norme(c(2,2,2,2))
+```
+
+```
+## [1] 4
+```
+
+---
+
+
+# Exemple 4
+
+Comme vous avez pu le remarquer, une matrice est un tableau rectangulaire comportant des lignes et des colonnes. Lorsqu'une matrice comporte autant de lignes que de colonnes, on dit alors que la matrice est carrée. Ce type de matrice possède plusieurs propriétés supplémentaires. Effectivement, le **déterminant** d'une matrice peut seulement être calculé si cette même matrice est carrée. 
+
+Dans cet exercice, nous nous intéresserons à calculer le déterminant d'une matrice 2x2 (donc quatre éléments). Pour une matrice 
+
+`$$A = \begin{bmatrix}
+a_{11} &amp; a_{12} \\
+a_{21} &amp; a_{22}
+\end{bmatrix}$$`
+
+alors on note `\(det(A) = a_{11}*a_{22} - a_{21}*a_{12}\)`.
+
+Créez une fonction qui calculera le déterminant d'une matrice 2x2. Dans le cas d'une matrice d'une autre dimension, on souhaite que la fonction retourne un message d'erreur indiquant que "La dimension de la matrice n'est pas 2x2".
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 4 (solution)
+
+
+
+```r
+det.2x2 &lt;- function(matrice){
+  if((((dim(matrice))[1] != (c(2,2))[1])) || (((dim(matrice))[2] != (c(2,2))[2]))){
+    stop("La dimension de la matrice n'est pas 2x2")
+  }
+  mat &lt;- matrice[1,1]*matrice[2,2] - matrice[1,2]*matrice[2,1]
+  return(mat)
+}
+```
+
+
+```r
+mat1 &lt;- matrix(c(1,2,3,4), nrow = 2, ncol = 2)
+mat1
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+```
+
+```r
+det.2x2(mat1)
+```
+
+```
+## [1] -2
+```
+
+---
+
+# Exemple 4 (solution: suite)
+
+
+```r
+mat2 &lt;- matrix(c(1,7,2,34), nrow = 2, ncol = 2)
+mat2
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    2
+## [2,]    7   34
+```
+
+```r
+det.2x2(mat2)
+```
+
+```
+## [1] 20
+```
+
+```r
+mat3 &lt;- matrix(c(1,2,3,4,5,6), nrow = 2, ncol = 3)
+mat3
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+```
+
+```r
+det.2x2(mat3)
+```
+
+```
+## Error in det.2x2(mat3): La dimension de la matrice n'est pas 2x2
 ```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

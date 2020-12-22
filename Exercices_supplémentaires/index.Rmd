@@ -207,9 +207,10 @@ Remarquons que l'on compare la position POS du vecteur B avec la position 11-POS
 
  - Cours dans l'ordre (1,2,3,...)
  - Cours à l'envers (10,9,8,...) d'où 
- - position 10 = 1er cours, position 9 = 2e cours, 
- - position 8 = 3e cours, etc.
-
+ - position 10 = 1er cours, position 9 = 2e cours
+ - position 8 = 3e cours, position 7 = 4e cours, etc.
+   
+   
  - Pour chacune des 10 positions du vecteur (les 10 cours)
    - si la valeur en position POS pour Béatrice (Cours POS)
    - est plus grande que la valeur en position 11 - POS

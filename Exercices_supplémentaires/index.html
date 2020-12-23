@@ -630,6 +630,48 @@ pointure.age(5,2018)
 Les deux derniers chiffres représentent l'âge que vous aurez en 2030, alors que les deux premiers (ou le premier) représentent votre pointure de soulier.
 
 INCROYABLE!
+
+   
+---
+class: inverse, middle, center
+
+# Exercices supplémentaires de l'atelier 3
+&lt;hr width="65%" size="0.3" color="orange" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 1
+
+Une compagnie travaille dans la farine. Leur branche principale est la conception de différente grandeur de sac de farine. Par contre, dernièrement, plusieurs plaintes ont été reçues au département des sacs de 250g. Certaines par des clients, spécifiant que leur sac de farine était beaucoup plus léger que 250g, et certaines par les directeurs, qui dans un sens contraire, affirmait que certains sacs étaient beaucoup trop remplis et dépassait 250g. 
+
+En regardant les réglages de la machine, on remarque que cette dernière crée des sacs de 250g en moyenne, dont l’écart-type est de 5g. La quantité de farine introduite dans les sacs suit une loi normale. 
+
+- Simulez d’abord 1000 données suivant ces caractéristiques
+
+---
+
+# Exemple 1 (suite)
+
+En statistique, il est fréquent de transformer des données en données centrées réduites. Pour ce faire, il suffit, pour chacune des 1000 valeurs, de leur soustraire la moyenne théorique, puis de diviser ce résultat par l’écart-type théorique.
+
+-	Créez un nouveau vecteur des valeurs centrées réduites.
+-	Afin de nous aider à visualiser les nouvelles données, représentez-les graphiquement à l’aide de la fonction plot(). 
+
+*Rappelons que le premier argument doit être les valeurs sur l’axe des x (soit des valeurs de 1 à 1000 représentants chacune des données) et que les valeurs en y doivent être les valeurs centrées réduites.
+
+---
+
+# Exemple 1 (suite)
+
+Dans cet exemple, nous considérerons comme valeurs extrêmes les points du graphique obtenu qui seront sous (-3) ou au-dessus de (3). Statistiquement, toutes ces valeurs extrêmes signifient qu’elles se situent à plus de 3 écarts-types de la moyenne réelle.
+Exemple : `\(250 + 3*5 = 265\)` (à partir de 265)   OU   `\(250 – 3*5 = 235\)` (sous 235).
+
+-	Créez un nouveau vecteur affichant 1 si la valeur centrée réduite est supérieure à 3 ou inférieure à -3, et 0 sinon.
+-	Calculez combien de valeurs centrées réduites sont supérieures à 3 ou inférieures à 3 en utilisant le vecteur créé à la question précédente. 
+-	Finalement, si le nombre de valeurs (qui représente le nombre de sacs) est strictement supérieur à 2, on souhaite afficher à l’écran que la machine est défectueuse. Dans un cas contraire, on affichera qu’il n’y a aucun problème avec la machine.
+
+*La création d'une fonction effectuant toutes les étapes pourrait vous être utile*
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

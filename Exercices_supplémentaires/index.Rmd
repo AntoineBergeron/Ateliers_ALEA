@@ -859,7 +859,7 @@ mean(resultat) # Moyenne du nombre de lancer total
 Au moyen du fichier [individu.csv](./donnees/individu.csv), je vous demande de faire les opérations suivantes:
 
 - Trouvez d'abord la moyenne d'âge
-- Déterminez la proportion d'individu âgé de 45 ans et plus qui sont en couple (représenté par le codage 1)
+- Déterminez la proportion d'individus âgés de 45 ans et plus qui sont en couple (représenté par le codage 1)
 - Finalement, déterminez le nombre moyen d'animaux qu'un individu en couple possède. Faites de même pour les individus seuls.
 - Que peut-on conclure des résultats obtenus?
 
@@ -923,8 +923,7 @@ for (i in 1:50){
 moy_coup <- sum(anim_coup)/nb_coup
 moy_seul <- sum(anim_seul)/nb_seul
 
-moy_coup
-moy_seul
+c(moy_coup, moy_seul)
 ```
 
 

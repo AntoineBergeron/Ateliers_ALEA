@@ -576,6 +576,13 @@ class: inverse, middle, center
 ```{r}
 sac_farine <- rnorm(n = 1000, mean = 250, sd = 5) # 1000 sacs, moyenne de 250 et é.t de 5
 sac_farine_cr <- (sac_farine-250)/5 # centrer et réduire les sacs
+```
+
+---
+
+# Exemple 1 (solution: suite)
+
+```{r}
 plot(c(1:1000),sac_farine_cr) # On affiche le graphique
 ```
 
@@ -624,21 +631,21 @@ calcul_sac <- function(sac_farine){
 # Exemple 1 (sous forme d'une fonction)
 
 ```{r}
-calcul_sac(sac_farine <- rnorm(n = 1000, mean = 250, sd = 5))
-calcul_sac(sac_farine <- rnorm(n = 1000, mean = 250, sd = 5))
-calcul_sac(sac_farine <- rnorm(n = 1000, mean = 250, sd = 5))
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ---
 
 # Exemple 2
 
-Dans cet exercice, on souhaite représenter graphiquement la fonction 0.0002x^3 – 0.01x^2 + 2.
+Dans cet exercice, on souhaite représenter graphiquement la fonction $0.0002x^3 – 0.01x^2 + 2$.
 
-Pour ce faire, créez une boucle évaluant la fonction pour des valeurs de x allant de 0 à 100. Gardez ces valeurs dans un vecteur y.
+Pour ce faire, créez une boucle évaluant la fonction pour des valeurs de x allant de -100 à 100. Gardez ces valeurs dans un vecteur y.
 Dans les arguments du graphique, ajouter la commande permettant de relier les points à l’aide de ligne.
 
-*?plot pourrait vous être utile.
+** *?plot pourrait vous être utile.**
 
 ---
 
@@ -656,11 +663,17 @@ class: inverse, middle, center
 y <- numeric(201)
 
 for (x in -100:100){
-  y[x+101] <- 0.0002*x^3 - 0.01*x^2 + 2
+  y[x+101] <- 0.0002*x^3 - 0.01*x^2 + 2 # On commence à remplir y à la position -100 + 101 = 1
 }
 
-plot(c(-100:100),y, type = "l")
+```
 
+---
+
+# Exemple 2 (solution: suite)
+
+```{r}
+plot(c(-100:100),y, type = "l")
 ```
 
 
@@ -746,7 +759,9 @@ essai <- nb_step_face + nb_step_de + nb_step_de_add
 
 # Exemple 3 (solution: suite)
 
-```{r}
+
+
+```
 calcul_essai <- function(N){
 essai <- numeric(N)
     for (i in 1:N){
@@ -764,7 +779,16 @@ essai <- numeric(N)
       obtenir_3 <- sample(de,1)
       nb_step_de <- nb_step_de + 1
     }
-    deuxde <- c(1:6) # Lancer des deux dés
+    ### Suite à la prochaine diapositive
+```
+
+---
+
+# Exemple 3 (solution: suite)
+
+```
+### Suite ici
+deuxde <- c(1:6) # Lancer des deux dés
     somme_de <- 0
     nb_step_de_add <- 0
     while(somme_de < 9){
@@ -779,7 +803,52 @@ essai <- numeric(N)
 }
 ```
 
+Remarquons que pour calculer la fonction N fois, l'argument prend simplement N, qui reproduit une boucle à l'intérieur de notre fonction.
 
+---
+
+# Exemple 3 (solution: suite)
+
+Ainsi, on obtient
+
+```{r, echo=FALSE}
+calcul_essai <- function(N){
+essai <- numeric(N)
+    for (i in 1:N){
+    piece <- c("pile","face") # les deux valeurs de la pièce
+    obtenir_face <- 0
+    nb_step_face <- 0
+    while(obtenir_face != "face"){
+      obtenir_face <- sample(piece,1)
+      nb_step_face <- nb_step_face + 1
+    }
+    de <- c(1:6) # les 6 valeurs du dé
+    obtenir_3 <- 0
+    nb_step_de <- 0
+    while(obtenir_3 != 3){
+      obtenir_3 <- sample(de,1)
+      nb_step_de <- nb_step_de + 1
+    }
+    deuxde <- c(1:6) # les 6 valeurs des deux dés
+    somme_de <- 0
+    nb_step_de_add <- 0
+    while(somme_de < 9){
+      de1 <- sample(deuxde,1)
+      de2 <- sample(deuxde,1)
+      somme_de <- de1 + de2
+      nb_step_de_add <- nb_step_de_add + 1
+    }
+    essai[i] <- nb_step_face + nb_step_de + nb_step_de_add
+    }
+return(essai)
+}
+```
+
+```{r}
+resultat <- calcul_essai(10000)
+resultat[1:10] # idée des 10 première tentatives
+mean(resultat) # Moyenne du nombre de lancer total
+```
 
 
 

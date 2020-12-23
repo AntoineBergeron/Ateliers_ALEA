@@ -852,6 +852,86 @@ mean(resultat) # Moyenne du nombre de lancer total
 
 
 
+---
+
+# Exemple 4
+
+Au moyen du fichier [individu.csv](./donnees/individu.csv), je vous demande de faire les opérations suivantes:
+
+- Trouvez d'abord la moyenne d'âge
+- Déterminez la proportion d'individu âgé de 45 ans et plus qui sont en couple (représenté par le codage 1)
+- Finalement, déterminez le nombre moyen d'animaux qu'un individu en couple possède. Faites de même pour les individus seuls.
+- Que peut-on conclure des résultats obtenus?
+
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
+
+
+---
+
+# Exemple 4 (solution)
+
+```{r}
+donnees <- read.table(file = "./donnees/individu.csv", header = TRUE, sep = ";", row.names = 1)
+
+# Trouver la moyenne d'âge
+age <- donnees[,1]
+moy_age <- mean(age)
+moy_age
+```
+
+---
+
+# Exemple 4 (solution: suite)
+
+```{r}
+# Déterminer la proportion d'individu âgé de 45 ans et plus qui sont en couple (1)
+couple <- donnees[,2]
+
+nb_indiv <- numeric(50)
+nb_indiv[age >= 45 & couple == 1] <- 1
+
+prop_indiv <- sum(nb_indiv)/length(nb_indiv)
+prop_indiv
+```
+
+---
+
+# Exemple 4 (solution: suite)
+
+```{r}
+# Nombre moyen d'animaux par couple/seul
+animaux <- donnees[,3]
+
+nb_coup <- sum(couple) # Nombre de personne en couple
+nb_seul <- 50 - nb_coup # Nombre de personne seul (50 - nombre en couple)
+anim_coup <- numeric(50) # Vecteur de 0
+anim_seul <- numeric(50) # Vecteur de 0
+
+for (i in 1:50){
+  if(couple[i] == 1){
+    anim_coup[i] <- animaux[i]
+  } else if (couple[i] == 0){
+    anim_seul[i] <- animaux[i]
+  }
+}
+moy_coup <- sum(anim_coup)/nb_coup
+moy_seul <- sum(anim_seul)/nb_seul
+
+moy_coup
+moy_seul
+```
+
+
+
+
+
+
 
 
 

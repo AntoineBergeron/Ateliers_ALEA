@@ -658,7 +658,7 @@ En statistique, il est fréquent de transformer des données en données centré
 -	Créez un nouveau vecteur des valeurs centrées réduites.
 -	Afin de nous aider à visualiser les nouvelles données, représentez-les graphiquement à l’aide de la fonction plot(). 
 
-*Rappelons que le premier argument doit être les valeurs sur l’axe des x (soit des valeurs de 1 à 1000 représentants chacune des données) et que les valeurs en y doivent être les valeurs centrées réduites.
+*Rappelons que le premier argument doit être les valeurs sur l’axe des x (soit des valeurs de 1 à 1000 représentants chacune des données) et que le deuxième argument doit être les valeurs en y (les valeurs centrées réduites).
 
 ---
 
@@ -672,6 +672,278 @@ Exemple : `\(250 + 3*5 = 265\)` (à partir de 265)   OU   `\(250 – 3*5 = 235\)
 -	Finalement, si le nombre de valeurs (qui représente le nombre de sacs) est strictement supérieur à 2, on souhaite afficher à l’écran que la machine est défectueuse. Dans un cas contraire, on affichera qu’il n’y a aucun problème avec la machine.
 
 *La création d'une fonction effectuant toutes les étapes pourrait vous être utile*
+
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 1 (solution)
+
+
+```r
+sac_farine &lt;- rnorm(n = 1000, mean = 250, sd = 5) # 1000 sacs, moyenne de 250 et é.t de 5
+sac_farine_cr &lt;- (sac_farine-250)/5 # centrer et réduire les sacs
+plot(c(1:1000),sac_farine_cr) # On affiche le graphique
+```
+
+![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+# Exemple 1 (solution: suite)
+
+
+```r
+vec &lt;- numeric(length(sac_farine)) # Création d'un vecteur de 1000 positions de 0
+vec[sac_farine_cr &gt; 3 | sac_farine_cr &lt; -3] &lt;- 1 # Vectoriellement au lieu d'une boucle
+# si sac_farine_cr &gt; 3 OU si sac_farine_cr &lt; -3, alors on assigne la valeur 1 (pour chaque position)
+
+nb_sac_extreme &lt;- sum(vec) # En effectuant la somme de vec, on obtient combien de valeurs extrêmes
+nb_sac_extreme             # (qui dépasse 3 ou -3) nous avions dans l'échantillon de 1000 sacs.
+```
+
+```
+## [1] 5
+```
+
+```r
+if(nb_sac_extreme &gt; 2){
+  print("La machine est clairement défectueuse")
+} else {
+  print("Il n'y a aucun problème avec la machine")
+}
+```
+
+```
+## [1] "La machine est clairement défectueuse"
+```
+
+---
+
+# Exemple 1 (sous forme d'une fonction)
+
+
+```r
+calcul_sac &lt;- function(sac_farine){
+  ecart_moy &lt;- mean(sac_farine) - 250
+  ecart_et &lt;- sd(sac_farine) - 5
+  sac_farine_cr &lt;- (sac_farine-250)/sd(sac_farine)
+  vec &lt;- numeric(length(sac_farine))
+  vec[sac_farine_cr &gt; 3 | sac_farine_cr &lt; -3] &lt;- 1
+  nb_sac_extreme &lt;- sum(vec)
+  if(nb_sac_extreme &gt; 2){
+    print("La machine est clairement défectueuse")
+  } else {
+    print("Il n'y a aucun problème avec la machine")
+  }
+  return(nb_sac_extreme)
+}
+```
+
+---
+
+# Exemple 1 (sous forme d'une fonction)
+
+
+```r
+calcul_sac(sac_farine &lt;- rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "Il n'y a aucun problème avec la machine"
+```
+
+```
+## [1] 0
+```
+
+```r
+calcul_sac(sac_farine &lt;- rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "Il n'y a aucun problème avec la machine"
+```
+
+```
+## [1] 0
+```
+
+```r
+calcul_sac(sac_farine &lt;- rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "La machine est clairement défectueuse"
+```
+
+```
+## [1] 4
+```
+
+---
+
+# Exemple 2
+
+Dans cet exercice, on souhaite représenter graphiquement la fonction 0.0002x^3 – 0.01x^2 + 2.
+
+Pour ce faire, créez une boucle évaluant la fonction pour des valeurs de x allant de 0 à 100. Gardez ces valeurs dans un vecteur y.
+Dans les arguments du graphique, ajouter la commande permettant de relier les points à l’aide de ligne.
+
+*?plot pourrait vous être utile.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 2 (solution)
+
+
+```r
+y &lt;- numeric(201)
+
+for (x in -100:100){
+  y[x+101] &lt;- 0.0002*x^3 - 0.01*x^2 + 2
+}
+
+plot(c(-100:100),y, type = "l")
+```
+
+![](index_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+
+---
+
+# Exemple 3
+
+Un nouveau jeu vient de sortir au casino. Venez tester votre chance!
+
+Première étape (lancer de la pièce de monnaie): Lancez votre pièce de monnaie jusqu’à obtenir la valeur FACE.
+
+Deuxième étape (lancer du dé): Lancez votre dé jusqu’à obtenir la valeur 3.
+
+Troisième étape (lancer de deux dés): Lancez vos deux dés et additionnez les valeurs obtenues. Le but est d’obtenir une valeur de 9 ou plus.
+
+Créer une fonction qui permet de réaliser l’expérience N fois. 
+Réalisez cette expérience 10000 fois et calculez le nombre de lancers moyen (total) afin de terminer l’ensemble des trois étapes.
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 3 (solution)
+
+Lancer de la pièce de monnaie:
+
+
+```r
+piece &lt;- c("pile","face") # les deux valeurs de la pièce
+obtenir_face &lt;- 0
+nb_step_face &lt;- 0
+
+while(obtenir_face != "face"){
+  obtenir_face &lt;- sample(piece,1)
+  nb_step_face &lt;- nb_step_face + 1
+}
+```
+
+Lancer du dé
+
+
+```r
+de &lt;- c(1:6) # les 6 valeurs du dé
+obtenir_3 &lt;- 0
+nb_step_de &lt;- 0
+
+while(obtenir_3 != 3){
+  obtenir_3 &lt;- sample(de,1)
+  nb_step_de &lt;- nb_step_de + 1
+}
+```
+
+---
+
+# Exemple 3 (solution: suite)
+
+Lancer des deux dés
+
+
+```r
+deuxde &lt;- c(1:6) # les 6 valeurs des deux dés
+somme_de &lt;- 0
+nb_step_de_add &lt;- 0
+
+while(somme_de &lt; 9){
+  de1 &lt;- sample(deuxde,1)
+  de2 &lt;- sample(deuxde,1)
+  somme_de &lt;- de1 + de2
+  nb_step_de_add &lt;- nb_step_de_add + 1
+}
+```
+
+Somme des essais
+
+
+```r
+essai &lt;- nb_step_face + nb_step_de + nb_step_de_add
+```
+
+---
+
+# Exemple 3 (solution: suite)
+
+
+```r
+calcul_essai &lt;- function(N){
+essai &lt;- numeric(N)
+    for (i in 1:N){
+    piece &lt;- c("pile","face") # Lancer de la pièce
+    obtenir_face &lt;- 0
+    nb_step_face &lt;- 0
+    while(obtenir_face != "face"){
+      obtenir_face &lt;- sample(piece,1)
+      nb_step_face &lt;- nb_step_face + 1
+    }
+    de &lt;- c(1:6) # Lancer du dé
+    obtenir_3 &lt;- 0
+    nb_step_de &lt;- 0
+    while(obtenir_3 != 3){
+      obtenir_3 &lt;- sample(de,1)
+      nb_step_de &lt;- nb_step_de + 1
+    }
+    deuxde &lt;- c(1:6) # Lancer des deux dés
+    somme_de &lt;- 0
+    nb_step_de_add &lt;- 0
+    while(somme_de &lt; 9){
+      de1 &lt;- sample(deuxde,1)
+      de2 &lt;- sample(deuxde,1)
+      somme_de &lt;- de1 + de2
+      nb_step_de_add &lt;- nb_step_de_add + 1
+    }
+    essai[i] &lt;- nb_step_face + nb_step_de + nb_step_de_add
+    }
+ return(essai)
+}
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

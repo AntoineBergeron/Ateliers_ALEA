@@ -267,7 +267,272 @@ END FOR
 
 Dans les exercices supplémentaires de l'atelier 2, nous créerons une fonction en se basant sur ce pseudo-code.
 
-   
+---
+
+# Exemple 5
+
+Rémi est à la recherche du crystal enchanté.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/remi.PNG" height="300px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+Sa route le mêne au labyrinthe des Luncredi, illustré à la diapositive suivante.
+
+---
+
+# Exemple 5 (suite)
+
+Heureusement, Rémi avait son cellulaire pour vous contacter. Vous survolez présentement le labyrinthe en hélicoptère. 
+
+Déterminez la route que Rémi doit prendre pour aller du début à la fin du labyrinthe.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/labyrintheNONRES.PNG" height="300px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Exemple 5 (suite)
+
+À vue d'oeil, le chemin a prendre est unique et est indiqué en blanc.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/labyrintheRES.PNG" height="300px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Exemple 5 (suite)
+
+Il est d'ailleurs possible de séparer la route en emprunter en 4 sections:
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/labyrintheEXP.PNG" height="300px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Exemple 5 (suite)
+
+Section 1: &lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/region1.PNG" height="70px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+Section 2: &lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/region2.PNG" height="70px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+Section 3: &lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/region3.PNG" height="70px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+Section 4: &lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/region4.PNG" height="70px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Exemple 5 (suite)
+
+Déterminez le pseudo code a envoyer à Rémi afin de lui permettre de se rendre à la fin du labyrinthe. On peut penser à des étapes dans le style suivant:
+
+- Avancer de X mètres
+- Tourner à (gauche/droite)
+
+---
+
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+
+---
+
+# Exemple 5 (solution)
+
+Section 1:
+
+.pull-left[
+
+```
+Avancer de 50 mètres
+Tourner à droite
+Avancer de 30 mètres
+Tourner à gauche
+Avancer de 50 mètres
+Tourner à droite
+Avancer de 30 mètres
+Tourner à gauche
+Avancer de 50 mètres
+Tourner à droite
+```
+
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```
+FOR mouvement in 1:2
+   Avancer de 50 mètres
+   Tourner à droite
+   Avancer de 30 mètres
+   Tourner à gauche
+ENDFOR
+Avancer de 50 mètres
+Tourner à droite
+```
+
+&lt;/div&gt;
+]
+
+---
+
+# Exemple 5 (solution: suite)
+
+Section 2:
+
+.pull-left[
+
+```
+Avancer de 70 mètres
+Tourner à gauche
+Avancer de 60 mètres
+Tourner à droite
+Avancer de 70 mètres
+Tourner à gauche
+Avancer de 60 mètres
+Tourner à droite
+Avancer de 70 mètres
+Tourner à gauche
+```
+
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```
+FOR mouvement in 1:2
+   Avancer de 70 mètres
+   Tourner à gauche
+   Avancer de 60 mètres
+   Tourner à droite
+ENDFOR
+Avancer de 70 mètres
+Tourner à gauche
+```
+
+&lt;/div&gt;
+]
+
+---
+
+# Exemple 5 (solution: suite)
+
+Section 3:
+
+.pull-left[
+
+```
+Avancer de 70 mètres
+Tourner à gauche
+Avancer de 70 mètres
+Tourner à droite
+Avancer de 70 mètres
+Tourner à gauche
+Avancer de 70 mètres
+Tourner à droite
+Avancer de 70 mètres
+Tourner à gauche
+```
+
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```
+FOR mouvement in 1:2
+   Avancer de 70 mètres
+   Tourner à gauche
+   Avancer de 70 mètres
+   Tourner à droite
+ENDFOR
+Avancer de 70 mètres
+Tourner à gauche
+```
+
+&lt;/div&gt;
+]
+
+---
+
+# Exemple 5 (solution: suite)
+
+Section 4:
+
+```
+Avancer de 110 mètres dans la courbe
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+Total:
+
+.pull-left[
+
+```
+# Section 1
+FOR mouvement in 1:2
+   Avancer de 50 mètres
+   Tourner à droite
+   Avancer de 30 mètres
+   Tourner à gauche
+ENDFOR
+Avancer de 50 mètres
+Tourner à droite
+
+# Section 2
+FOR mouvement in 1:2
+   Avancer de 70 mètres
+   Tourner à gauche
+   Avancer de 60 mètres
+   Tourner à droite
+ENDFOR
+Avancer de 70 mètres
+Tourner à gauche
+```
+
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```
+# Section 3
+FOR mouvement in 1:2
+   Avancer de 70 mètres
+   Tourner à gauche
+   Avancer de 70 mètres
+   Tourner à droite
+ENDFOR
+Avancer de 70 mètres
+Tourner à gauche
+
+# Section 4
+Avancer de 110 mètres dans la courbe
+```
+
+&lt;/div&gt;
+]
+
+
 ---
 class: inverse, middle, center
 
@@ -631,6 +896,86 @@ Les deux derniers chiffres représentent l'âge que vous aurez en 2030, alors qu
 
 INCROYABLE!
 
+---
+
+# Exemple 6
+
+Reprenons l'exemple 5 des exercices supplémentaires de l'atelier 1. Remarquons d'abord que les sections 3 et 4 ont été modifiés. 
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/LabModif.PNG" height="300px"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+
+# Exemple 6 (suite)
+
+Le pseudo-code associé serait alors le suivant:
+
+.pull-left[
+
+```
+# Section 1
+FOR mouvement in 1:2
+   Avancer de 50 mètres
+   Tourner à droite
+   Avancer de 30 mètres
+   Tourner à gauche
+ENDFOR
+Avancer de 50 mètres
+Tourner à droite
+
+# Section 2
+FOR mouvement in 1:2
+   Avancer de 70 mètres
+   Tourner à gauche
+   Avancer de 60 mètres
+   Tourner à droite
+ENDFOR
+Avancer de 70 mètres
+Tourner à gauche
+```
+
+&lt;/div&gt;
+]
+
+.pull-right[
+
+```
+# Section 3
+FOR mouvement in 1:3
+   Avancer de 70 mètres
+   Tourner à gauche
+   Avancer de 70 mètres
+   Tourner à droite
+ENDFOR
+Avancer de 70 mètres
+Tourner à gauche
+
+# Section 4
+Avancer de 130 mètres jusqu'à l'arrivée
+```
+
+&lt;/div&gt;
+]
+
+---
+
+# Exemple 6 (suite)
+
+Voici une fonction qui permet de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi. Les arguments de cette fonction sont définis comme suit:
+
+- posXinit: Position initiale de Rémi en x.
+- posYinit: Position initiale de Rémi en y.
+- directionRemi: Dans le plan cartésien, vers quelle direction doit se diriger Rémi? ("droite", "haut", "gauche", "bas")
+- distance1: Lors du premier mouvement de Rémi, combien de mètres doit-il avancer?
+- distance2: Lors du deuxième mouvement de Rémi, combien de mètres doit-il avancer?
+- changementdirection1: Entre le premier et le deuxième mouvement, quel sera le changement de direction de Rémi? ("droite", "gauche")
+- nbmouvement: Combien de fois Rémi fera le mouvement répétitif semblable à un L?
+   
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/mouvement.PNG" height="200px"&gt;&lt;/img&gt;
+&lt;/div&gt;
    
 ---
 class: inverse, middle, center
@@ -718,7 +1063,7 @@ nb_sac_extreme             # (qui dépasse 3 ou -3) nous avions dans l'échantil
 ```
 
 ```
-## [1] 1
+## [1] 3
 ```
 
 ```r
@@ -730,7 +1075,7 @@ if(nb_sac_extreme &gt; 2){
 ```
 
 ```
-## [1] "Il n'y a aucun problème avec la machine"
+## [1] "La machine est clairement défectueuse"
 ```
 
 ---
@@ -769,7 +1114,7 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
-## [1] 2
+## [1] 1
 ```
 
 ```r
@@ -793,7 +1138,7 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
-## [1] 6
+## [1] 3
 ```
 
 ---
@@ -987,7 +1332,7 @@ resultat[1:10] # idée des 10 première tentatives
 ```
 
 ```
-##  [1] 15  7  5 13  7 16 21  9 11 12
+##  [1] 19  7  9  6  3  9 19 11 10 11
 ```
 
 ```r
@@ -995,7 +1340,7 @@ mean(resultat) # Moyenne du nombre de lancer total
 ```
 
 ```
-## [1] 11.5089
+## [1] 11.5314
 ```
 
 

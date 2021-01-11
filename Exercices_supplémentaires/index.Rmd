@@ -1010,6 +1010,12 @@ mouvement <- function(posXinit,posYinit,directionRemi,distance1,distance2,change
 }
 ```
 
+---
+
+# Exemple 6 (solution: suite)
+
+L'objet **section1** était déjà défini dans le script R. Ainsi, il suffit de faire rouler cette portion de code afin d'obtenir les premières coordonnées empruntées.
+
 ```{r}
 section1 <- round(mouvement(0,0,"droite",50,30,"droite",2)) # Besoin de 6 paires de coordonnées.
 section1
@@ -1059,9 +1065,27 @@ section4
 matfinal <- rbind(section1,section2,section3,section4) # rbind() pour combiner toutes les matrices ensembles:
 ```
 
+
+.pull-left[
+Début:
+
 ```{r, echo=FALSE}
-matfinal
+matfinal[1:11,]
 ```
+
+</div>
+]
+
+.pull-right[
+Suite:
+
+```{r, echo=FALSE}
+matfinal[11:21,]
+```
+
+</div>
+]
+
 
 ---
 

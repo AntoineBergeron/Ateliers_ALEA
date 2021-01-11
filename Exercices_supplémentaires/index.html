@@ -1092,6 +1092,12 @@ mouvement &lt;- function(posXinit,posYinit,directionRemi,distance1,distance2,cha
 
 
 
+---
+
+# Exemple 6 (solution: suite)
+
+L'objet **section1** était déjà défini dans le script R. Ainsi, il suffit de faire rouler cette portion de code afin d'obtenir les premières coordonnées empruntées.
+
 
 ```r
 section1 &lt;- round(mouvement(0,0,"droite",50,30,"droite",2)) # Besoin de 6 paires de coordonnées.
@@ -1183,18 +1189,34 @@ matfinal &lt;- rbind(section1,section2,section3,section4) # rbind() pour combine
 ```
 
 
+.pull-left[
+Début:
+
+
+```
+##  [,1] [,2]
+##     0    0
+##    50    0
+##    50  -30
+##   100  -30
+##   100  -60
+##   150  -60
+##   150  -60
+##   150 -130
+##   210 -130
+##   210 -200
+##   270 -200
+```
+
+&lt;/div&gt;
+]
+
+.pull-right[
+Suite:
+
+
 ```
 ##          [,1] [,2]
-##             0    0
-##            50    0
-##            50  -30
-##           100  -30
-##           100  -60
-##           150  -60
-##           150  -60
-##           150 -130
-##           210 -130
-##           210 -200
 ##           270 -200
 ##           270 -270
 ##           270 -270
@@ -1207,6 +1229,10 @@ matfinal &lt;- rbind(section1,section2,section3,section4) # rbind() pour combine
 ##           550  -60
 ## section4  430  -10
 ```
+
+&lt;/div&gt;
+]
+
 
 ---
 
@@ -1293,7 +1319,7 @@ sac_farine_cr &lt;- (sac_farine-250)/5 # centrer et réduire les sacs
 plot(c(1:1000),sac_farine_cr) # On affiche le graphique
 ```
 
-![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -1310,7 +1336,7 @@ nb_sac_extreme             # (qui dépasse 3 ou -3) nous avions dans l'échantil
 ```
 
 ```
-## [1] 4
+## [1] 1
 ```
 
 ```r
@@ -1322,7 +1348,7 @@ if(nb_sac_extreme &gt; 2){
 ```
 
 ```
-## [1] "La machine est clairement défectueuse"
+## [1] "Il n'y a aucun problème avec la machine"
 ```
 
 ---
@@ -1357,6 +1383,18 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
+## [1] "Il n'y a aucun problème avec la machine"
+```
+
+```
+## [1] 1
+```
+
+```r
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
 ## [1] "La machine est clairement défectueuse"
 ```
 
@@ -1373,19 +1411,7 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
-## [1] 2
-```
-
-```r
-calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
-```
-
-```
-## [1] "La machine est clairement défectueuse"
-```
-
-```
-## [1] 4
+## [1] 1
 ```
 
 ---
@@ -1429,7 +1455,7 @@ for (x in -100:100){
 plot(c(-100:100),y, type = "l")
 ```
 
-![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -1579,7 +1605,7 @@ resultat[1:10] # idée des 10 première tentatives
 ```
 
 ```
-##  [1]  9 31  5  8  7  4  6 12 15 16
+##  [1] 14  7  4 11  4  7 14 12  5 10
 ```
 
 ```r
@@ -1587,7 +1613,7 @@ mean(resultat) # Moyenne du nombre de lancer total
 ```
 
 ```
-## [1] 11.6566
+## [1] 11.725
 ```
 
 

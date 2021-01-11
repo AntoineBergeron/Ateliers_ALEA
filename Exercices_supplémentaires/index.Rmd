@@ -302,7 +302,7 @@ Déterminez la route que Rémi doit prendre pour aller du début à la fin du la
 
 # Exemple 5 (suite)
 
-Il est d'ailleurs possible de séparer la route en emprunter en 4 sections:
+Il est d'ailleurs possible de séparer la route à emprunter en 4 sections:
 
 <div style='text-align:center;'>
 <img src="assets/img/labyrintheEXP.PNG" height="300px"></img>
@@ -325,7 +325,7 @@ Section 3: <div style='text-align:center;'>
 </div>
 
 Section 4: <div style='text-align:center;'>
-<img src="assets/img/region4.PNG" height="70px"></img>
+La section courbe est d'une longueur de 110 mètres
 </div>
 
 ---
@@ -336,6 +336,8 @@ Déterminez le pseudo code a envoyer à Rémi afin de lui permettre de se rendre
 
 - Avancer de X mètres
 - Tourner à (gauche/droite)
+
+*Notons que Rémi regarde initialement vers la droite. Il est donc déjà prêt à emprunter le premier chemin.
 
 ---
 
@@ -353,6 +355,7 @@ class: inverse, middle, center
 Section 1:
 
 .pull-left[
+Une indication à la fois:
 
 ```
 Avancer de 50 mètres
@@ -371,6 +374,7 @@ Tourner à droite
 ]
 
 .pull-right[
+À l'aide d'une boucle:
 
 ```
 FOR mouvement in 1:2
@@ -379,6 +383,7 @@ FOR mouvement in 1:2
    Avancer de 30 mètres
    Tourner à gauche
 ENDFOR
+
 Avancer de 50 mètres
 Tourner à droite
 ```
@@ -393,6 +398,7 @@ Tourner à droite
 Section 2:
 
 .pull-left[
+Une indication à la fois:
 
 ```
 Avancer de 70 mètres
@@ -411,6 +417,7 @@ Tourner à gauche
 ]
 
 .pull-right[
+À l'aide d'une boucle:
 
 ```
 FOR mouvement in 1:2
@@ -419,6 +426,7 @@ FOR mouvement in 1:2
    Avancer de 60 mètres
    Tourner à droite
 ENDFOR
+
 Avancer de 70 mètres
 Tourner à gauche
 ```
@@ -433,6 +441,7 @@ Tourner à gauche
 Section 3:
 
 .pull-left[
+Une indication à la fois:
 
 ```
 Avancer de 70 mètres
@@ -451,6 +460,7 @@ Tourner à gauche
 ]
 
 .pull-right[
+À l'aide d'une boucle:
 
 ```
 FOR mouvement in 1:2
@@ -459,6 +469,7 @@ FOR mouvement in 1:2
    Avancer de 70 mètres
    Tourner à droite
 ENDFOR
+
 Avancer de 70 mètres
 Tourner à gauche
 ```
@@ -492,6 +503,7 @@ FOR mouvement in 1:2
    Avancer de 30 mètres
    Tourner à gauche
 ENDFOR
+
 Avancer de 50 mètres
 Tourner à droite
 
@@ -502,8 +514,6 @@ FOR mouvement in 1:2
    Avancer de 60 mètres
    Tourner à droite
 ENDFOR
-Avancer de 70 mètres
-Tourner à gauche
 ```
 
 </div>
@@ -512,6 +522,10 @@ Tourner à gauche
 .pull-right[
 
 ```
+# Section 2 (suite)
+Avancer de 70 mètres
+Tourner à gauche
+
 # Section 3
 FOR mouvement in 1:2
    Avancer de 70 mètres
@@ -519,6 +533,7 @@ FOR mouvement in 1:2
    Avancer de 70 mètres
    Tourner à droite
 ENDFOR
+
 Avancer de 70 mètres
 Tourner à gauche
 
@@ -787,7 +802,7 @@ INCROYABLE!
 
 # Exemple 6
 
-Reprenons l'exemple 5 des exercices supplémentaires de l'atelier 1. Remarquons d'abord que les sections 3 et 4 ont été modifiés. 
+Reprenons l'exemple 5 des exercices supplémentaires de l'atelier 1. Remarquons d'abord que les sections 3 et 4 ont été modifiées. 
 
 <div style='text-align:center;'>
 <img src="assets/img/LabModif.PNG" height="300px"></img>
@@ -809,6 +824,7 @@ FOR mouvement in 1:2
    Avancer de 30 mètres
    Tourner à gauche
 ENDFOR
+
 Avancer de 50 mètres
 Tourner à droite
 
@@ -819,8 +835,6 @@ FOR mouvement in 1:2
    Avancer de 60 mètres
    Tourner à droite
 ENDFOR
-Avancer de 70 mètres
-Tourner à gauche
 ```
 
 </div>
@@ -829,6 +843,10 @@ Tourner à gauche
 .pull-right[
 
 ```
+# Section 2 (suite)
+Avancer de 70 mètres
+Tourner à gauche
+
 # Section 3
 FOR mouvement in 1:3
    Avancer de 70 mètres
@@ -836,6 +854,7 @@ FOR mouvement in 1:3
    Avancer de 70 mètres
    Tourner à droite
 ENDFOR
+
 Avancer de 70 mètres
 Tourner à gauche
 
@@ -846,11 +865,26 @@ Avancer de 130 mètres jusqu'à l'arrivée
 </div>
 ]
 
+
 ---
 
 # Exemple 6 (suite)
 
-Voici une fonction qui permet de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi. Les arguments de cette fonction sont définis comme suit:
+Dans le fichier [DeplacementRemi.R](./donnees/DeplacementRemi.R), la fonction permettant de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi y est écrite. L'objet ***section1*** nous renvoie une matrice des positions empruntées par Rémi.
+
+Notons que Rémi débute à la coordonnée (0,0), et qu'il regarde déjà en direction du chemin qu'il doit prendre. (De haut, il regarde vers la droite)
+
+Déterminez l'ensemble des coordonnées empruntées par Rémi lors de la section 2 et 3.
+
+À l'aide de l'information supplémentaire des prochaines diapositives, déterminez en quelle coordonnée Rémi terminera sa route.
+
+Finalement, créez une matrice finale comportant l'ensemble des coordonnées empruntées par Rémi au cours de la section 1, 2, 3 et 4.
+
+---
+
+# Exemple 6 (suite)
+
+Les arguments de cette fonction sont définis comme suit:
 
 - posXinit: Position initiale de Rémi en x.
 - posYinit: Position initiale de Rémi en y.
@@ -860,9 +894,188 @@ Voici une fonction qui permet de déterminer l'emplacement (la coordonnée x et 
 - changementdirection1: Entre le premier et le deuxième mouvement, quel sera le changement de direction de Rémi? ("droite", "gauche")
 - nbmouvement: Combien de fois Rémi fera le mouvement répétitif semblable à un L?
    
+---
+
+# Exemple 6 (suite)
+
+Le mouvement en L est défini comme suit:
+
 <div style='text-align:center;'>
 <img src="assets/img/mouvement.PNG" height="200px"></img>
 </div>
+
+Bien sûr, ce mouvement est valide dans tout les sens:
+
+<div style='text-align:center;'>
+<img src="assets/img/mouvementL.PNG" height="150px"></img>
+</div>
+
+---
+
+# Exemple 6 (suite)
+
+La section 4 n'est pas un mouvement horizontale ou verticale. Cependant, on peut exprimer le chemin à prendre comme l'hypothénuse du triangle rectangle suivant. 
+
+<div style='text-align:center;'>
+<img src="assets/img/nouvregion4.PNG" height="200px"></img>
+</div>
+
+---
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
+
+---
+
+# Exemple 6 (solution)
+
+D'abord, on compile la fonction *mouvement*.
+
+```{r, eval = FALSE}
+mouvement <- function(posXinit,posYinit,directionRemi,distance1,distance2,changementdirection1,nbmouvement){
+  xy <- matrix(0, nrow = 2*nbmouvement+2, ncol = 2)  # Création d'une matrice des coordonnées (x,y)
+  xy[1,] <- c(posXinit,posYinit)  # Position initiale dans le plan cartésien
+  
+  # Si Rémi regarde à (gauche/haut/droite/bas), alors l'angle doit être de...
+  if(directionRemi == "gauche"){
+    angle <- 3*pi/2
+  } else if(directionRemi == "droite"){
+    angle <- pi/2
+  } else if(directionRemi == "haut"){
+    angle <- 0
+  } else if(directionRemi == "bas"){
+    angle <- pi
+  }
+  
+  # Si Rémi doit tourner à (droite/gauche) au premier tournant, alors l'angle sera modifier
+  if(changementdirection1 == "droite"){
+    angle2 <- pi/2
+  } else if(changementdirection1 == "gauche"){
+    angle2 <- -pi/2
+  }
+  
+# Suite à la diapositive suivante
+```
+
+---
+
+# Exemple 6 (solution: suite)
+
+```{r, eval = FALSE}
+ # Suite de la fonction mouvement
+ # Pour chaque mouvement de style "L", on calcule la coordonnée de Rémi au creux et à la fin du "L"
+  for (i in 1:nbmouvement){
+    xy[2*i,] <- c(xy[2*i-1,1] + sin(angle)*distance1, xy[2*i-1,2] + cos(angle)*distance1)
+    xy[2*i+1,] <- c(xy[2*i,1] + sin(angle + angle2)*distance2, xy[2*i,2] + cos(angle + angle2)*distance2)
+  }
+  
+  # On ajoute la dernière ligne droite nécessaire
+  xy[2*nbmouvement+2,] <- c(xy[2*nbmouvement+1,1] + sin(angle)*distance1, xy[2*nbmouvement+1,2] + cos(angle)*distance1)
+  return(xy)
+}
+```
+
+```{r, echo=FALSE}
+mouvement <- function(posXinit,posYinit,directionRemi,distance1,distance2,changementdirection1,nbmouvement){
+  xy <- matrix(0, nrow = 2*nbmouvement+2, ncol = 2)  # Création d'une matrice des coordonnées (x,y)
+  xy[1,] <- c(posXinit,posYinit)  # Position initiale dans le plan cartésien
+  
+  # Si Rémi regarde à (gauche/haut/droite/bas), alors l'angle doit être de...
+  if(directionRemi == "gauche"){
+    angle <- 3*pi/2
+  } else if(directionRemi == "droite"){
+    angle <- pi/2
+  } else if(directionRemi == "haut"){
+    angle <- 0
+  } else if(directionRemi == "bas"){
+    angle <- pi
+  }
+  
+  # Si Rémi doit tourner à (droite/gauche) au premier tournant, alors l'angle sera modifier
+  if(changementdirection1 == "droite"){
+    angle2 <- pi/2
+  } else if(changementdirection1 == "gauche"){
+    angle2 <- -pi/2
+  }
+  
+  # Pour chaque mouvement de style "L", on calcule la coordonnée de Rémi au creux et à la fin du "L"
+  for (i in 1:nbmouvement){
+    xy[2*i,] <- c(xy[2*i-1,1] + sin(angle)*distance1, xy[2*i-1,2] + cos(angle)*distance1)
+    xy[2*i+1,] <- c(xy[2*i,1] + sin(angle + angle2)*distance2, xy[2*i,2] + cos(angle + angle2)*distance2)
+  }
+  
+  # On ajoute la dernière ligne droite nécessaire
+  xy[2*nbmouvement+2,] <- c(xy[2*nbmouvement+1,1] + sin(angle)*distance1, xy[2*nbmouvement+1,2] + cos(angle)*distance1)
+  return(xy)
+}
+```
+
+```{r}
+section1 <- round(mouvement(0,0,"droite",50,30,"droite",2)) # Besoin de 6 paires de coordonnées.
+section1
+```
+
+---
+
+# Exemple 6 (solution: suite)
+
+Pour la section 2, on remarque que la *coordonnée initiale* doit être la coordonnée finale de la section 1. De plus, Rémi doit regarder vers le *bas*, puis tourner à *gauche* en premier (pour effectuer le L). Le premier couloir est d'une longueur de *70 mètres*, alors qu'après le premier tournant, le couloir est d'une longueur de *60 mètres*. Il réalise *2 fois* un L, avant de devoir faire sa ligne droite supplémentaire.
+
+```{r}
+section2 <- mouvement(section1[6,1],section1[6,2],"bas",70,60,"gauche",2) # jusqu'à 6
+section2
+```
+
+---
+
+# Exemple 6 (solution: suite)
+
+Pour la section 3, on remarque que la *coordonnée initiale* doit être la coordonnée finale de la section 2. De plus, Rémi doit regarder vers le *droite*, puis tourner à *gauche* en premier (pour effectuer le L). Le premier couloir est d'une longueur de *70 mètres*, alors qu'après le premier tournant, le couloir est aussi d'une longueur de *70 mètres*. Il réalise *3 fois* un L, avant de devoir faire sa ligne droite supplémentaire.
+
+```{r}
+section3 <- mouvement(section2[6,1],section2[6,2], "droite", 70,70,"gauche",3) # jusqu'à 8
+section3
+```
+
+---
+
+# Exemple 6 (solution: suite)
+
+Pour la section 4, on remarque à l'aide du triangle rectangle qu'au final, Rémi aura parcouru 120 mètres en x (vers la gauche), et 50 mètres en y (vers le haut).
+
+Ainsi, on doit ajouter le vecteur (-120,50) à la dernière coordonnée de la section 3.
+
+```{r}
+section4 <- section3[8,] + c(-120,50)
+section4
+```
+
+---
+
+# Exemple 6 (solution: suite)
+
+
+```{r}
+matfinal <- rbind(section1,section2,section3,section4)
+matfinal # rbind() pour combiner toutes les matrices ensembles:
+```
+
+---
+
+# Exemple 6 (solution: suite)
+
+Notons que deux lignes sont inutiles. Effectivement, la coordonnée finale de la section 1 se répète avec la coordonnée initiale de la section 2. Le même problème survient pour la coordonnée finale de la section 2 et la coordonnée initiale de la section 3. 
+
+Pour enlever la ligne 7 et 13, il suffit d'écrire:
+
+```{r, eval=FALSE}
+matfinal[-c(7,13),]
+```
+
+Le signe négatif indique que l'élément sera supprimé. Comme il s'agit d'une matrice, on note que l'élément *matfinal[7,]* qui correspond à la $7^e$ ligne et l'élément *matfinal[13,]* qui correspond à la $13^e$ ligne seront supprimés.
+   
    
 ---
 class: inverse, middle, center

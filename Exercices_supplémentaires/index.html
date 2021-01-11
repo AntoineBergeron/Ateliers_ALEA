@@ -983,7 +983,7 @@ Avancer de 130 mètres jusqu'à l'arrivée
 
 # Exemple 6 (suite)
 
-Dans le fichier [DeplacementRemi.R](./donnees/DeplacementRemi.R), la fonction permettant de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi y est écrite. L'objet ***section1*** nous renvoie une matrice des positions empruntées par Rémi.
+Dans le fichier [DeplacementRemi.R](./donnees/DeplacementRemi.R), la fonction permettant de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi y est écrite. L'objet **section1** nous renvoie la matrice des positions empruntées par Rémi lors de ces déplacements dans la section 1.
 
 Notons que Rémi débute à la coordonnée (0,0), et qu'il regarde déjà en direction du chemin qu'il doit prendre. (De haut, il regarde vers la droite)
 
@@ -1043,8 +1043,6 @@ class: inverse, middle, center
 ---
 
 # Exemple 6 (solution)
-
-D'abord, on compile la fonction *mouvement*.
 
 
 ```r
@@ -1181,9 +1179,9 @@ section4
 
 
 ```r
-matfinal &lt;- rbind(section1,section2,section3,section4)
-matfinal # rbind() pour combiner toutes les matrices ensembles:
+matfinal &lt;- rbind(section1,section2,section3,section4) # rbind() pour combiner toutes les matrices ensembles:
 ```
+
 
 ```
 ##          [,1] [,2]
@@ -1295,7 +1293,7 @@ sac_farine_cr &lt;- (sac_farine-250)/5 # centrer et réduire les sacs
 plot(c(1:1000),sac_farine_cr) # On affiche le graphique
 ```
 
-![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -1363,31 +1361,31 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
-## [1] 4
-```
-
-```r
-calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
-```
-
-```
-## [1] "La machine est clairement défectueuse"
-```
-
-```
-## [1] 4
-```
-
-```r
-calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
-```
-
-```
-## [1] "La machine est clairement défectueuse"
-```
-
-```
 ## [1] 5
+```
+
+```r
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "Il n'y a aucun problème avec la machine"
+```
+
+```
+## [1] 2
+```
+
+```r
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "La machine est clairement défectueuse"
+```
+
+```
+## [1] 4
 ```
 
 ---
@@ -1431,7 +1429,7 @@ for (x in -100:100){
 plot(c(-100:100),y, type = "l")
 ```
 
-![](index_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -1581,7 +1579,7 @@ resultat[1:10] # idée des 10 première tentatives
 ```
 
 ```
-##  [1] 15  5  7  8 11 27  6  5  7  7
+##  [1]  9 31  5  8  7  4  6 12 15 16
 ```
 
 ```r
@@ -1589,7 +1587,7 @@ mean(resultat) # Moyenne du nombre de lancer total
 ```
 
 ```
-## [1] 11.619
+## [1] 11.6566
 ```
 
 

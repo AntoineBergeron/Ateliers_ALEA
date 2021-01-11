@@ -870,7 +870,7 @@ Avancer de 130 mètres jusqu'à l'arrivée
 
 # Exemple 6 (suite)
 
-Dans le fichier [DeplacementRemi.R](./donnees/DeplacementRemi.R), la fonction permettant de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi y est écrite. L'objet ***section1*** nous renvoie une matrice des positions empruntées par Rémi.
+Dans le fichier [DeplacementRemi.R](./donnees/DeplacementRemi.R), la fonction permettant de déterminer l'emplacement (la coordonnée x et y du plan cartésien) après chaque déplacement de Rémi y est écrite. L'objet **section1** nous renvoie la matrice des positions empruntées par Rémi lors de ces déplacements dans la section 1.
 
 Notons que Rémi débute à la coordonnée (0,0), et qu'il regarde déjà en direction du chemin qu'il doit prendre. (De haut, il regarde vers la droite)
 
@@ -930,8 +930,6 @@ class: inverse, middle, center
 ---
 
 # Exemple 6 (solution)
-
-D'abord, on compile la fonction *mouvement*.
 
 ```{r, eval = FALSE}
 mouvement <- function(posXinit,posYinit,directionRemi,distance1,distance2,changementdirection1,nbmouvement){
@@ -1058,8 +1056,11 @@ section4
 
 
 ```{r}
-matfinal <- rbind(section1,section2,section3,section4)
-matfinal # rbind() pour combiner toutes les matrices ensembles:
+matfinal <- rbind(section1,section2,section3,section4) # rbind() pour combiner toutes les matrices ensembles:
+```
+
+```{r, echo=FALSE}
+matfinal
 ```
 
 ---

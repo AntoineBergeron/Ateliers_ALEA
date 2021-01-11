@@ -56,7 +56,7 @@ mouvement <- function(posXinit,posYinit,directionRemi,distance1,distance2,change
 
 # Exemple pour la section 1:
 
-section1 <- mouvement(0,0,"droite",50,30,"droite",2) # Besoin de 6 paires de coordonnées.
+section1 <- round(mouvement(0,0,"droite",50,30,"droite",2)) # Besoin de 6 paires de coordonnées.
 
 # Section 2:
 

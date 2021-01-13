@@ -1754,7 +1754,7 @@ mat6 <- matrix(NA, nrow = 5, ncol = 5)
 
 for (i in 1:nrow(mat6)){
   for (j in 1:ncol(mat6)){
-    mat6[i,j] <- 3^j-2^i-1
+    mat6[i,j] <- 3^j-2^i-1 # Le 3^j - 2^i - 1 apparaît ici!
   }
 }
 mat6
@@ -1787,7 +1787,7 @@ mat6 <- matrix(NA, nrow = 5, ncol = 5)
 
 for (i in 1:nrow(mat6)){
   for (j in 1:ncol(mat6)){
-    mat6[i,j] <- 3^(j-1)-2^(i-1)
+    mat6[i,j] <- 3^(j-1)-2^(i-1) # Le 3^(j-1)-2^(i-1) apparaît ici!
   }
 }
 mat6

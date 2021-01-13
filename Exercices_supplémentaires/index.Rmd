@@ -1509,6 +1509,96 @@ moy_seul <- sum(anim_seul)/nb_seul
 c(moy_coup, moy_seul)
 ```
 
+---
+
+# Exemple 5
+
+En appliquant une boucle imbriquée (une boucle dans une autre boucle), construisez les matrices suivantes:
+
+.pull-left[
+Matrice 1:
+
+<img src="assets/img/matrice1.PNG" height="150px"></img>
+
+
+</div>
+]
+
+.pull-right[
+Matrice 2:
+
+<img src="assets/img/matrice2.PNG" height="150px"></img>
+
+
+</div>
+]
+
+Indice: Pour une même ligne (ou colonne), est-ce que les valeurs augmentent en changeant de colonne (ou ligne) et de combien est l'augmentation?
+
+---
+
+# Exemple 5 (suite)
+
+.pull-left[
+Matrice 3:
+
+<img src="assets/img/matrice3.PNG" height="150px"></img>
+
+
+</div>
+]
+
+.pull-right[
+Matrice 4:
+
+<img src="assets/img/matrice4.PNG" height="150px"></img>
+
+
+</div>
+]
+
+Pour la matrice 3, pensez à regarder la matrice 1. De plus, *?abs* pourrait vous être utile.
+
+---
+
+# Exemple 5 (suite)
+
+.pull-left[
+Matrice 5:
+
+<img src="assets/img/matrice5.PNG" height="150px"></img>
+
+
+</div>
+]
+
+.pull-right[
+Matrice 6:
+
+<img src="assets/img/matrice6.PNG" height="150px"></img>
+
+
+</div>
+]
+
+On augmente un peu la difficulté ici. 
+
+Indice: Pour une même ligne (ou colonne), regardez l'augmentation entre les différentes valeurs. Par exemple, si on remarque que pour la ligne 1, on passe de 3 à 7, puis de 7 à 23, alors on remarque qu'on a une augmentation de $4= 4^1$, puis de $16 = 4^2$. On se doute alors que la ligne est définie comme $C + 4^{j}$ où $j$ pourrait représenter le numéro de la colonne et $C$ une constante quelconque.
+
+
+---
+
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+<hr width="65%" size="0.3" color="green" style="margin-top:-20px;"></hr>
+
+---
+
+# Exemple 5 (solution)
+
+
 
 
 

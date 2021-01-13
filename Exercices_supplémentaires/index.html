@@ -1336,7 +1336,7 @@ nb_sac_extreme             # (qui dépasse 3 ou -3) nous avions dans l'échantil
 ```
 
 ```
-## [1] 2
+## [1] 7
 ```
 
 ```r
@@ -1348,7 +1348,7 @@ if(nb_sac_extreme &gt; 2){
 ```
 
 ```
-## [1] "Il n'y a aucun problème avec la machine"
+## [1] "La machine est clairement défectueuse"
 ```
 
 ---
@@ -1383,23 +1383,11 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
-## [1] "La machine est clairement défectueuse"
+## [1] "Il n'y a aucun problème avec la machine"
 ```
 
 ```
-## [1] 3
-```
-
-```r
-calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
-```
-
-```
-## [1] "La machine est clairement défectueuse"
-```
-
-```
-## [1] 5
+## [1] 2
 ```
 
 ```r
@@ -1411,7 +1399,19 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
-## [1] 5
+## [1] 4
+```
+
+```r
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "La machine est clairement défectueuse"
+```
+
+```
+## [1] 4
 ```
 
 ---
@@ -1605,7 +1605,7 @@ resultat[1:10] # idée des 10 première tentatives
 ```
 
 ```
-##  [1] 13 15 18 11 13  9 15  7 17 11
+##  [1]  4  9 12 16 11 12  7 14 19  9
 ```
 
 ```r
@@ -1613,7 +1613,7 @@ mean(resultat) # Moyenne du nombre de lancer total
 ```
 
 ```
-## [1] 11.4389
+## [1] 11.57
 ```
 
 
@@ -1706,6 +1706,95 @@ c(moy_coup, moy_seul)
 ```
 ## [1] 0.4583333 2.1923077
 ```
+
+---
+
+# Exemple 5
+
+En appliquant une boucle imbriquée (une boucle dans une autre boucle), construisez les matrices suivantes:
+
+.pull-left[
+Matrice 1:
+
+&lt;img src="assets/img/matrice1.PNG" height="150px"&gt;&lt;/img&gt;
+
+
+&lt;/div&gt;
+]
+
+.pull-right[
+Matrice 2:
+
+&lt;img src="assets/img/matrice2.PNG" height="150px"&gt;&lt;/img&gt;
+
+
+&lt;/div&gt;
+]
+
+Indice: Pour une même ligne (ou colonne), est-ce que les valeurs augmentent en changeant de colonne (ou ligne) et de combien est l'augmentation?
+
+---
+
+# Exemple 5 (suite)
+
+.pull-left[
+Matrice 3:
+
+&lt;img src="assets/img/matrice3.PNG" height="150px"&gt;&lt;/img&gt;
+
+
+&lt;/div&gt;
+]
+
+.pull-right[
+Matrice 4:
+
+&lt;img src="assets/img/matrice4.PNG" height="150px"&gt;&lt;/img&gt;
+
+
+&lt;/div&gt;
+]
+
+Pour la matrice 3, pensez à regarder la matrice 1. De plus, *?abs* pourrait vous être utile.
+
+---
+
+# Exemple 5 (suite)
+
+.pull-left[
+Matrice 5:
+
+&lt;img src="assets/img/matrice5.PNG" height="150px"&gt;&lt;/img&gt;
+
+
+&lt;/div&gt;
+]
+
+.pull-right[
+Matrice 6:
+
+&lt;img src="assets/img/matrice6.PNG" height="150px"&gt;&lt;/img&gt;
+
+
+&lt;/div&gt;
+]
+
+On augmente un peu la difficulté ici. 
+
+Indice: Pour une même ligne (ou colonne), regardez l'augmentation entre les différentes valeurs. Par exemple, si on remarque que pour la ligne 1, on passe de 3 à 7, puis de 7 à 23, alors on remarque qu'on a une augmentation de `\(4= 4^1\)`, puis de `\(16 = 4^2\)`. On se doute alors que la ligne est définie comme `\(C + 4^{j}\)` où `\(j\)` pourrait représenter le numéro de la colonne et `\(C\)` une constante quelconque.
+
+
+---
+
+
+class: inverse, middle, center
+
+# Solution à la prochaine diapositive
+&lt;hr width="65%" size="0.3" color="green" style="margin-top:-20px;"&gt;&lt;/hr&gt;
+
+---
+
+# Exemple 5 (solution)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

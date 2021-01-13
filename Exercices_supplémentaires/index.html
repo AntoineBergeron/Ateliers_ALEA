@@ -1383,35 +1383,35 @@ calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
 ```
 
 ```
+## [1] "La machine est clairement défectueuse"
+```
+
+```
+## [1] 4
+```
+
+```r
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
+## [1] "La machine est clairement défectueuse"
+```
+
+```
+## [1] 3
+```
+
+```r
+calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
+```
+
+```
 ## [1] "Il n'y a aucun problème avec la machine"
 ```
 
 ```
 ## [1] 2
-```
-
-```r
-calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
-```
-
-```
-## [1] "La machine est clairement défectueuse"
-```
-
-```
-## [1] 4
-```
-
-```r
-calcul_sac(rnorm(n = 1000, mean = 250, sd = 5))
-```
-
-```
-## [1] "La machine est clairement défectueuse"
-```
-
-```
-## [1] 4
 ```
 
 ---
@@ -1605,7 +1605,7 @@ resultat[1:10] # idée des 10 première tentatives
 ```
 
 ```
-##  [1]  4  9 12 16 11 12  7 14 19  9
+##  [1] 12 12 22 33  4  3  8  4 12  6
 ```
 
 ```r
@@ -1613,7 +1613,7 @@ mean(resultat) # Moyenne du nombre de lancer total
 ```
 
 ```
-## [1] 11.57
+## [1] 11.6206
 ```
 
 
@@ -1795,6 +1795,279 @@ class: inverse, middle, center
 ---
 
 # Exemple 5 (solution)
+
+Matrice 1:
+
+- On remarque que pour une même ligne, il y a une augmentation de 1 lorsque la colonne change (lorsque `\(j\)` augmente): `\(+j\)`.
+- On remarque que pour une même colonne, il y a une diminution de 1 lorsque la ligne change (lorsque `\(i\)` augmente): `\(-i\)`.
+- La première coordonnée en ligne 0 et colonne 0 étant de 0, alors `\((+1)+(-1)=0\)` fonctionne et il n'est pas nécessaire d'ajouter une constante.
+- On retrouve donc `\(j-i\)` pour créer la matrice.
+
+
+```r
+mat1 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat1)){
+  for (j in 1:ncol(mat1)){
+    mat1[i,j] &lt;- j-i # Le j-i apparaît ici!
+  }
+}
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 2:
+
+- On remarque que pour une même ligne, il y a une augmentation de 2 lorsque la colonne change (lorsque `\(j\)` augmente de 1): `\(+2*j\)`.
+- On remarque que pour une même colonne, il y a une augmentation de 1 lorsque la ligne change (lorsque `\(i\)` augmente de 1): `\(+i\)`.
+- La première coordonnée en ligne 1 et colonne 1 étant de 4, alors `\((+2*1)+(+1)=3\)` ne fonctionne pas `\((3 \ne 4)\)` et il est nécessaire d'ajouter une constante `\((+1)\)` afin d'obtenir `\((4 = 4)\)`.
+- On retrouve donc `\(2*j+i+1\)` pour créer la matrice.
+
+
+
+
+```r
+mat2 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat2)){
+  for (j in 1:ncol(mat2)){
+    mat2[i,j] &lt;- 2*j+i+1 # Le 2j + i + 1 apparaît ici!
+  }
+}
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+
+```r
+mat1 # Matrice 1
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    1    2    3    4
+## [2,]   -1    0    1    2    3
+## [3,]   -2   -1    0    1    2
+## [4,]   -3   -2   -1    0    1
+## [5,]   -4   -3   -2   -1    0
+```
+
+```r
+mat2 # Matrice 2
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    4    6    8   10   12
+## [2,]    5    7    9   11   13
+## [3,]    6    8   10   12   14
+## [4,]    7    9   11   13   15
+## [5,]    8   10   12   14   16
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 3:
+
+- On remarque que la matrice est 3 est la même que la matrice 1, mis-à-part les chiffres négatifs qui sont devenus positifs. De plus, on remarque que la fonction *abs(x)* permet d'obtenir la valeur positive de x. (Par exemple, *abs(3) = 3* et *abs(-4) = 4*)
+- Deux choix sont donc possibles: appliquer la fonction *abs()* à **mat1**, ou d'appliquer *abs()* à **j-i**.
+
+
+```r
+mat3 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat3)){
+  for (j in 1:ncol(mat3)){
+    mat3[i,j] &lt;- abs(j-i) # Le abs(j-i) apparaît ici!
+  }
+}
+#
+# OU
+#
+mat3 &lt;- abs(mat1) # abs(mat1) apparaît ici!
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 4:
+
+- On remarque que pour une même ligne, il n'y a pas d'augmentation lorsque la colonne change (lorsque `\(j\)` augmente de 1): `\(0\)`.
+- On remarque que pour une même colonne, il y a une augmentation de 1 lorsque la ligne change (lorsque `\(i\)` augmente de 1): `\(+i\)`.
+- La première coordonnée en ligne 1 et colonne 1 étant de 1, alors `\((0)+(+1)=1\)` fonctionne et il n'est pas nécessaire d'ajouter une constante.
+- On retrouve donc `\(i\)` pour créer la matrice.
+
+
+```r
+mat4 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat4)){
+  for (j in 1:ncol(mat4)){
+    mat4[i,j] &lt;- i
+  }
+}
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+
+```r
+mat3 # Matrice 3
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    1    2    3    4
+## [2,]    1    0    1    2    3
+## [3,]    2    1    0    1    2
+## [4,]    3    2    1    0    1
+## [5,]    4    3    2    1    0
+```
+
+```r
+mat4 # Matrice 4
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    1    1    1    1
+## [2,]    2    2    2    2    2
+## [3,]    3    3    3    3    3
+## [4,]    4    4    4    4    4
+## [5,]    5    5    5    5    5
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 5:
+
+- On remarque que pour une même ligne, l'augmentation n'est pas constante. Effectivement, on remarque qu'entre la colonne 1 et la colonne 2, une différence de (+2) est visible. Entre la colonne 2 et la colonne 3, une différence de (+4) est visible. En continuant, on observe une augmentation de (+8) et (+16).
+- `\((2;4;8;16) = (2^1;2^2;2^3;2^4)\)`
+- Lorsque la colonne augmente de 1, l'exposant augmente de 1. On s'attend donc à apercevoir la valeur `\(2^j\)`.
+- On remarque que pour une même colonne, il y a une diminution de 1 lorsque la ligne change (lorsque `\(i\)` augmente): `\(-i\)`.
+- Finalement, on remarque que pour la ligne 1 et colonne 1 (i=1, j=1), on doit obtenir la valeur 1. Hors, `\((2^1 - 1) = 1\)` d'où aucune constante supplémentaire n'est nécessaire.
+- On retrouve donc `\(2^j-i\)` pour créer la matrice.
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 5:
+
+
+```r
+mat5 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat5)){
+  for (j in 1:ncol(mat5)){
+    mat5[i,j] &lt;- 2^j-i # Le 2^j-i apparaît ici!
+  }
+}
+mat5
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    7   15   31
+## [2,]    0    2    6   14   30
+## [3,]   -1    1    5   13   29
+## [4,]   -2    0    4   12   28
+## [5,]   -3   -1    3   11   27
+```
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 6:
+
+- On remarque que pour une même ligne, l'augmentation n'est pas constante. On augmente effectivement de (2;6;18;54).
+- `\(2*3 = 6\)`, `\(6*3 = 18\)`, `\(18 * 3 = 54\)`. Il se cache donc un `\(3^j\)` ou quelque chose d'assez semblable.
+- On remarque que pour une même colonne, l'augmentation n'est pas constante. On augmente effectivement de (-1;-2;-4;-8).
+- `\(-1*2 = -2\)`, `\(-2*2 = -4\)`, `\(-4*2 = -8\)`. Il se cache donc un `\(2^i\)` ou quelque chose d'assez semblable.
+- La valeur en ligne 1 et colonne 1 est 0. Hors, `\(3^1 - 2^1 = 1 \ne 0\)`. Nous devons donc soustraire 1.
+- On s'attend à ce que `\(3^j - 2^i - 1\)` soit le terme pour créer la matrice.
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 6:
+
+
+```r
+mat6 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat6)){
+  for (j in 1:ncol(mat6)){
+    mat6[i,j] &lt;- 3^j-2^i-1
+  }
+}
+mat6
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    6   24   78  240
+## [2,]   -2    4   22   76  238
+## [3,]   -6    0   18   72  234
+## [4,]  -14   -8   10   64  226
+## [5,]  -30  -24   -6   48  210
+```
+
+**Ça ne fonctionne pas!!!**
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 6: 
+
+Effectivement, la matrice obtenue n'est pas la même. Ainsi, il est fort à parier que ce n'est pas une constante que nous devrions ajouter, mais bien une modification dans les exposants.
+
+On peut remarquer que `\(3^j - 2^i\)`, pour i=1 et j=1, est égale à 1. Comme on cherche à obtenir 0 comme réponse, on peut penser au fait que `\(3^0 = 1\)` et que `\(2^0 = 1\)`, d'où `\(3^0 - 2^0 = 1 - 1 = 0\)`. 
+
+Pour obtenir 0 comme exposant, il suffit de soustraire 1 à la ligne et à la colonne. 
+
+On obtient alors `\(3^{j-1}\)` et `\(2^{i-1}\)`, de sorte que `\(3^{j-1}-2^{i-1}\)` est notre terme pour créer la matrice.
+
+---
+
+# Exemple 5 (solution: suite)
+
+Matrice 6:
+
+
+```r
+mat6 &lt;- matrix(NA, nrow = 5, ncol = 5)
+
+for (i in 1:nrow(mat6)){
+  for (j in 1:ncol(mat6)){
+    mat6[i,j] &lt;- 3^(j-1)-2^(i-1)
+  }
+}
+mat6
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    2    8   26   80
+## [2,]   -1    1    7   25   79
+## [3,]   -3   -1    5   23   77
+## [4,]   -7   -5    1   19   73
+## [5,]  -15  -13   -7   11   65
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

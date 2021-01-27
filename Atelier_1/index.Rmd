@@ -594,7 +594,7 @@ Tout comme pour la planète, il est important de garder notre environnement de p
 > <b>3.</b> Ton script sera dur à avaler. Mieux vaut le découper
 
 
-Le pseudo-code est souvent très utile pour répondre à ce commandement. Celui-ci agit à titre de résumer et nous permet de mieux séparer les différentes sections nécessaires dans la réalisation de notre script. N'oublions pas que de programmer, c'est avant tout résoudre des problèmes. De plus, si l'histoire nous a bien appris une chose, c'est bien qu'il vaut mieux diviser pour régner.
+Le pseudo-code est souvent très utile pour répondre à ce commandement. Celui-ci agit à titre de résumé et nous permet de mieux séparer les différentes sections nécessaires dans la réalisation de notre script. N'oublions pas que de programmer, c'est avant tout résoudre des problèmes. De plus, si l'histoire nous a bien appris une chose, c'est bien qu'il vaut mieux diviser pour régner.
 
 .pull-left[
 <img src="assets/img/Commandement3.PNG" width="50%"></img>

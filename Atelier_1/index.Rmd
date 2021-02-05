@@ -1128,6 +1128,10 @@ Prenez le temps de distinguer les étapes que vous réalisez lorsque vous triez 
 
 Note: L'utilisation de booléen peut être utile. `is.sort = FALSE` indique que les 5 lettres ne sont pas ordonnées!
 
+*Pour ordonner des lettres, il faut savoir que $A=1$, $B=2$, ... , $Z = 26$. 
+
+Ainsi, $B<A =$ FALSE,car $2\nless1$.
+
 ---
 
 class: inverse, middle, center

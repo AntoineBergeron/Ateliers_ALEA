@@ -1740,9 +1740,9 @@ R peut organiser également des collections d'objets sous forme de liste. Ces co
 ## La création et l'indexation des listes sont très similaires à celle des vecteurs et matrices
 
 ```{r}
-MaListe = list()
-MaListe[[1]] = c(1,2)
-MaListe[[2]] = matrix(c("A","B","C","D"), nrow = 2, ncol = 2)
+MaListe <- list()
+MaListe[[1]] <- c(1,2)
+MaListe[[2]] <- matrix(c("A","B","C","D"), nrow = 2, ncol = 2)
 ```
 
 `MaListe[[1]]` permet d'obtenir l'objet contenu par le premier niveau de la liste.

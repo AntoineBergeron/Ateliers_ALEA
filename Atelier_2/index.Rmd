@@ -648,7 +648,7 @@ prodsum <- function(x, y){
 }
 ```
 
-Les lignes de codes ajoutées mesurent la longueur de `x` et `y` et lorsqu'ils sont d'une longueur différente, un message d'erreur est envoyé et le reste du code dans la fonction n'est pas évalué.
+Les lignes de codes ajoutées mesurent la longueur de `x` et `y` et lorsqu'ils sont d'une longueur différente (!=), un message d'erreur est envoyé et le reste du code dans la fonction n'est pas évalué.
 
 ---
 

@@ -343,7 +343,7 @@ for(i in 2:n_annees) {
 ---
 # La boucle while
 
-La boucle de type *while* répète une série d'intructions tant qu'une condition est respectée. C'est une version générale de la boucle *for*. Par exemple, on peut tirer deux pièces de monnaie jusqu'à ce que l'on obtienne la combinaison pile-pile. 
+La boucle de type *while* répète une série d'instructions tant qu'une condition est respectée. C'est une version générale de la boucle *for*. Par exemple, on peut tirer deux pièces de monnaie jusqu'à ce que l'on obtienne la combinaison pile-pile. 
 
 Rappel: (!=) signifie non-égale
 

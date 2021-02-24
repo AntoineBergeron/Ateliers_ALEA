@@ -254,6 +254,13 @@ for(C in -50:100) {
 }
 ```
 
+```{r  eval=FALSE}
+tempC <- -50:100 
+tempF <- tempC*1.8 + 32 
+resultat <- matrix(c(tempC, tempF), ncol=2) 
+}
+```
+
 ---
 # Exercice
 
@@ -263,7 +270,9 @@ $$
 n! = 1 \times 2 \times 3 \times \dots \times (n-1) \times n
 $$
 
-Calculez la factorielle  de 10 au moyen d'une boucle.
+Calculez la factorielle  de 10 au moyen d'une boucle. 
+
+*Pour vérifier votre réponse, il est possible d'utiliser la fonction `factorial()`
 
 ---
 

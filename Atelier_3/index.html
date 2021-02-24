@@ -400,11 +400,11 @@ for(etape in 1:5) {
 ```
 
 ```
-## [1] 0.1762834
-## [1] 0.4653835
-## [1] 0.9113266
-## [1] 0.6457266
-## [1] 0.1192594
+## [1] 0.5004105
+## [1] 0.9718388
+## [1] 0.4749386
+## [1] 0.6997801
+## [1] 0.6936389
 ```
 
 ---
@@ -594,14 +594,14 @@ for(i in 2:n_annees) {
 ---
 # La boucle while
 
-La boucle de type *while* répète une série d'intructions tant qu'une condition n'a pas été atteinte. C'est une version générale de la boucle *for*. Par exemple, on peut tirer deux pièces de monnaie jusqu'à ce que l'on obtienne la combinaison pile-pile.
+La boucle de type *while* répète une série d'intructions tant qu'une condition est respectée. C'est une version générale de la boucle *for*. Par exemple, on peut tirer deux pièces de monnaie jusqu'à ce que l'on obtienne la combinaison pile-pile.
 
 
 ```r
 piece &lt;- c("pile","face")
 combinaison = "face-face"
-while(combinaison != "pile-pile") {
-    essai1 &lt;- sample(piece, 1)
+while(combinaison != "pile-pile") { # (!=)
+    essai1 &lt;- sample(piece, 1)  # OU sample(piece, 2, replace = TRUE)
     essai2 &lt;- sample(piece, 1)
     combinaison &lt;- paste(essai1, "-" , essai2, sep = "")
     print(combinaison)
@@ -610,19 +610,6 @@ while(combinaison != "pile-pile") {
 
 ```
 ## [1] "face-pile"
-## [1] "face-face"
-## [1] "pile-face"
-## [1] "face-pile"
-## [1] "face-face"
-## [1] "face-pile"
-## [1] "face-pile"
-## [1] "face-face"
-## [1] "face-pile"
-## [1] "face-face"
-## [1] "pile-face"
-## [1] "face-face"
-## [1] "pile-face"
-## [1] "face-face"
 ## [1] "pile-pile"
 ```
 
@@ -663,7 +650,7 @@ mean(res)
 ```
 
 ```
-## [1] 6.0126
+## [1] 6.0445
 ```
 
 ---
@@ -917,16 +904,16 @@ cbind(X,res)
 
 ```
 ##       X                    res         
-##  [1,] "0.257429900579154"  "plus petit"
-##  [2,] "0.954370913561434"  "plus grand"
-##  [3,] "0.604091723682359"  "plus grand"
-##  [4,] "0.14386065187864"   "plus petit"
-##  [5,] "0.88443977246061"   "plus grand"
-##  [6,] "0.831927527440712"  "plus grand"
-##  [7,] "0.300069415709004"  "plus grand"
-##  [8,] "0.30131694348529"   "plus grand"
-##  [9,] "0.0642846948467195" "plus petit"
-## [10,] "0.404910633107647"  "plus grand"
+##  [1,] "0.328929497627541"  "plus grand"
+##  [2,] "0.821897872490808"  "plus grand"
+##  [3,] "0.380110898520797"  "plus grand"
+##  [4,] "0.370220892829821"  "plus grand"
+##  [5,] "0.79286849568598"   "plus grand"
+##  [6,] "0.111563452752307"  "plus petit"
+##  [7,] "0.960642525926232"  "plus grand"
+##  [8,] "0.128844490973279"  "plus petit"
+##  [9,] "0.0682619325816631" "plus petit"
+## [10,] "0.79678660701029"   "plus grand"
 ```
 ]
 
@@ -981,16 +968,16 @@ cbind(X,res2)
 
 ```
 ##       X                    res2 
-##  [1,] "0.257429900579154"  "oui"
-##  [2,] "0.954370913561434"  "non"
-##  [3,] "0.604091723682359"  "non"
-##  [4,] "0.14386065187864"   "non"
-##  [5,] "0.88443977246061"   "non"
-##  [6,] "0.831927527440712"  "non"
-##  [7,] "0.300069415709004"  "oui"
-##  [8,] "0.30131694348529"   "oui"
-##  [9,] "0.0642846948467195" "non"
-## [10,] "0.404910633107647"  "oui"
+##  [1,] "0.328929497627541"  "oui"
+##  [2,] "0.821897872490808"  "non"
+##  [3,] "0.380110898520797"  "oui"
+##  [4,] "0.370220892829821"  "oui"
+##  [5,] "0.79286849568598"   "non"
+##  [6,] "0.111563452752307"  "non"
+##  [7,] "0.960642525926232"  "non"
+##  [8,] "0.128844490973279"  "non"
+##  [9,] "0.0682619325816631" "non"
+## [10,] "0.79678660701029"   "non"
 ```
 ]
 
@@ -1017,16 +1004,16 @@ cbind(X,res2)
 
 ```
 ##       X                    res2 
-##  [1,] "0.257429900579154"  "oui"
-##  [2,] "0.954370913561434"  "non"
-##  [3,] "0.604091723682359"  "non"
-##  [4,] "0.14386065187864"   "non"
-##  [5,] "0.88443977246061"   "non"
-##  [6,] "0.831927527440712"  "non"
-##  [7,] "0.300069415709004"  "oui"
-##  [8,] "0.30131694348529"   "oui"
-##  [9,] "0.0642846948467195" "non"
-## [10,] "0.404910633107647"  "oui"
+##  [1,] "0.328929497627541"  "oui"
+##  [2,] "0.821897872490808"  "non"
+##  [3,] "0.380110898520797"  "oui"
+##  [4,] "0.370220892829821"  "oui"
+##  [5,] "0.79286849568598"   "non"
+##  [6,] "0.111563452752307"  "non"
+##  [7,] "0.960642525926232"  "non"
+##  [8,] "0.128844490973279"  "non"
+##  [9,] "0.0682619325816631" "non"
+## [10,] "0.79678660701029"   "non"
 ```
 ]
 
@@ -1140,7 +1127,7 @@ tirage(3, cartes)
 ```
 
 ```
-## [1] "valet - trèfle" "8 - carreau"    "9 - trèfle"
+## [1] "as - coeur" "6 - coeur"  "2 - pique"
 ```
 
 ---
@@ -1167,7 +1154,7 @@ res
 ```
 
 ```
-## [1] S F S I B T F
+## [1] T A S I T N L
 ## Levels: A B C D F G H I J K L M N O P Q R S T U V W X Y Z
 ```
 
@@ -1241,7 +1228,7 @@ rbinom(n = 10, size = 1, prob = 0.5)
 ```
 
 ```
-##  [1] 1 0 1 1 1 0 0 1 1 1
+##  [1] 1 1 0 0 0 1 0 0 0 0
 ```
 ]
 
@@ -1267,8 +1254,8 @@ rmultinom(n = 3, size = 1, prob = rep(1/6, 6))
 ## [1,]    0    0    1
 ## [2,]    1    0    0
 ## [3,]    0    0    0
-## [4,]    0    1    0
-## [5,]    0    0    0
+## [4,]    0    0    0
+## [5,]    0    1    0
 ## [6,]    0    0    0
 ```
 ]
@@ -1769,7 +1756,7 @@ system.time(tri(x))
 
 ```
 ##    user  system elapsed 
-##    0.30    0.00    0.33
+##    0.32    0.00    0.33
 ```
 
 ---
@@ -1829,7 +1816,7 @@ system.time(f1(x))
 
 ```
 ##    user  system elapsed 
-##    0.07    0.00    0.08
+##    0.08    0.00    0.08
 ```
 
 ```r
@@ -1838,7 +1825,7 @@ system.time(f2(x))
 
 ```
 ##    user  system elapsed 
-##       0       0       0
+##    0.01    0.00    0.02
 ```
 ]
 
@@ -1878,9 +1865,9 @@ system.time(f1(X))
 ##    user  system elapsed 
 ##    0.01    0.00    0.01 
 ##    user  system elapsed 
-##    0.14    0.02    0.15 
+##    0.13    0.00    0.13 
 ##    user  system elapsed 
-##    1.01    0.00    1.06
+##    0.97    0.00    0.97
 ```
 ]
 

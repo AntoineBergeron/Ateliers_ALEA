@@ -400,11 +400,11 @@ for(etape in 1:5) {
 ```
 
 ```
-## [1] 0.1308127
-## [1] 0.3760433
-## [1] 0.4452944
-## [1] 0.8887601
-## [1] 0.7504452
+## [1] 0.88487
+## [1] 0.9577038
+## [1] 0.78506
+## [1] 0.6415602
+## [1] 0.3753994
 ```
 
 ---
@@ -483,6 +483,14 @@ for(C in -50:100) {
 }
 ```
 
+
+```r
+tempC &lt;- -50:100 
+tempF &lt;- tempC*1.8 + 32 
+resultat &lt;- matrix(c(tempC, tempF), ncol=2) 
+}
+```
+
 ---
 # Exercice
 
@@ -492,7 +500,9 @@ $$
 n! = 1 \times 2 \times 3 \times \dots \times (n-1) \times n
 $$
 
-Calculez la factorielle  de 10 au moyen d'une boucle.
+Calculez la factorielle  de 10 au moyen d'une boucle. 
+
+*Pour vérifier votre réponse, il est possible d'utiliser la fonction `factorial()`
 
 ---
 
@@ -630,7 +640,7 @@ mean(res)
 ```
 
 ```
-## [1] 5.9733
+## [1] 5.9597
 ```
 
 ---
@@ -641,7 +651,7 @@ mean(res)
 hist(res)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-18-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: middle, center, inverse
@@ -718,7 +728,7 @@ N[25:30]
 plot(c(1900:2015), N, type = "l", xlab = "Année", ylab = "Population")
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-22-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -883,17 +893,17 @@ cbind(X,res)
 
 
 ```
-##       X                    res         
-##  [1,] "0.652711788890883"  "plus grand"
-##  [2,] "0.159879217389971"  "plus petit"
-##  [3,] "0.102195509476587"  "plus petit"
-##  [4,] "0.145604759221897"  "plus petit"
-##  [5,] "0.428812137804925"  "plus grand"
-##  [6,] "0.0910753447096795" "plus petit"
-##  [7,] "0.403872641036287"  "plus grand"
-##  [8,] "0.642493414925411"  "plus grand"
-##  [9,] "0.701259054010734"  "plus grand"
-## [10,] "0.489438244374469"  "plus grand"
+##       X                   res         
+##  [1,] "0.2098266154062"   "plus petit"
+##  [2,] "0.247018785448745" "plus petit"
+##  [3,] "0.685340331867337" "plus grand"
+##  [4,] "0.415826271288097" "plus grand"
+##  [5,] "0.553588388254866" "plus grand"
+##  [6,] "0.14444571104832"  "plus petit"
+##  [7,] "0.371470524696633" "plus grand"
+##  [8,] "0.601010548882186" "plus grand"
+##  [9,] "0.380179000319913" "plus grand"
+## [10,] "0.150815793313086" "plus petit"
 ```
 ]
 
@@ -947,17 +957,17 @@ cbind(X,res2)
 
 
 ```
-##       X                    res2 
-##  [1,] "0.652711788890883"  "non"
-##  [2,] "0.159879217389971"  "non"
-##  [3,] "0.102195509476587"  "non"
-##  [4,] "0.145604759221897"  "non"
-##  [5,] "0.428812137804925"  "oui"
-##  [6,] "0.0910753447096795" "non"
-##  [7,] "0.403872641036287"  "oui"
-##  [8,] "0.642493414925411"  "non"
-##  [9,] "0.701259054010734"  "non"
-## [10,] "0.489438244374469"  "oui"
+##       X                   res2 
+##  [1,] "0.2098266154062"   "oui"
+##  [2,] "0.247018785448745" "oui"
+##  [3,] "0.685340331867337" "non"
+##  [4,] "0.415826271288097" "oui"
+##  [5,] "0.553588388254866" "oui"
+##  [6,] "0.14444571104832"  "non"
+##  [7,] "0.371470524696633" "oui"
+##  [8,] "0.601010548882186" "non"
+##  [9,] "0.380179000319913" "oui"
+## [10,] "0.150815793313086" "non"
 ```
 ]
 
@@ -983,17 +993,17 @@ cbind(X,res2)
     
 
 ```
-##       X                    res2 
-##  [1,] "0.652711788890883"  "non"
-##  [2,] "0.159879217389971"  "non"
-##  [3,] "0.102195509476587"  "non"
-##  [4,] "0.145604759221897"  "non"
-##  [5,] "0.428812137804925"  "oui"
-##  [6,] "0.0910753447096795" "non"
-##  [7,] "0.403872641036287"  "oui"
-##  [8,] "0.642493414925411"  "non"
-##  [9,] "0.701259054010734"  "non"
-## [10,] "0.489438244374469"  "oui"
+##       X                   res2 
+##  [1,] "0.2098266154062"   "oui"
+##  [2,] "0.247018785448745" "oui"
+##  [3,] "0.685340331867337" "non"
+##  [4,] "0.415826271288097" "oui"
+##  [5,] "0.553588388254866" "oui"
+##  [6,] "0.14444571104832"  "non"
+##  [7,] "0.371470524696633" "oui"
+##  [8,] "0.601010548882186" "non"
+##  [9,] "0.380179000319913" "oui"
+## [10,] "0.150815793313086" "non"
 ```
 ]
 
@@ -1107,7 +1117,7 @@ tirage(3, cartes)
 ```
 
 ```
-## [1] "valet - coeur" "as - coeur"    "2 - coeur"
+## [1] "4 - pique"   "5 - carreau" "10 - pique"
 ```
 
 ---
@@ -1134,7 +1144,7 @@ res
 ```
 
 ```
-## [1] A G N R W H P
+## [1] N A T A I A K
 ## Levels: A B C D F G H I J K L M N O P Q R S T U V W X Y Z
 ```
 
@@ -1168,7 +1178,7 @@ Plutôt que de tirer un élément d'une série de chiffres ou de caractères, on
 hist(floor(runif(n = 10000, min = 1, max = 50)))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1188,7 +1198,7 @@ hist(floor(runif(n = 10000, min = 1, max = 50)))
 hist(rnorm(n = 30, mean = 10, sd = 1))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-36-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-37-1.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1208,7 +1218,7 @@ rbinom(n = 10, size = 1, prob = 0.5)
 ```
 
 ```
-##  [1] 1 1 0 1 1 1 1 0 0 1
+##  [1] 0 1 0 0 0 1 1 1 1 1
 ```
 ]
 
@@ -1232,8 +1242,8 @@ rmultinom(n = 3, size = 1, prob = rep(1/6, 6))
 ```
 ##      [,1] [,2] [,3]
 ## [1,]    0    0    0
-## [2,]    0    0    0
-## [3,]    1    0    0
+## [2,]    1    0    0
+## [3,]    0    0    0
 ## [4,]    0    0    0
 ## [5,]    0    0    1
 ## [6,]    0    1    0
@@ -1260,7 +1270,7 @@ hist(rexp(n = 1000, rate = 1/6),
 xlab = "Nombre d'essais avant de perdre")
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-39-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-40-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1449,7 +1459,7 @@ for(step in 2:(nsteps+1)) {
 
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-45-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-46-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1686,7 +1696,7 @@ plot(c(1:(nsteps+1)), matres[,1], type = "l", ylim = c(0,ntotalcorde),
 for(i in 2:(ncorde)) lines(c(1:(nsteps+1)), matres[,i], col = colo[i-1])
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-52-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-53-1.png" width="45%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -1736,7 +1746,7 @@ system.time(tri(x))
 
 ```
 ##    user  system elapsed 
-##    0.80    0.02    0.83
+##    0.27    0.00    0.27
 ```
 
 ---
@@ -1761,7 +1771,7 @@ plot(n,res, type = "l", xlab = "Taille",
 
 .pull-right[
 
-&lt;img src="index_files/figure-html/unnamed-chunk-55-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-56-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -1796,7 +1806,7 @@ system.time(f1(x))
 
 ```
 ##    user  system elapsed 
-##    0.17    0.00    0.19
+##    0.08    0.00    0.07
 ```
 
 ```r
@@ -1805,7 +1815,7 @@ system.time(f2(x))
 
 ```
 ##    user  system elapsed 
-##    0.04    0.00    0.03
+##       0       0       0
 ```
 ]
 
@@ -1843,11 +1853,11 @@ system.time(f1(X))
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05 
+##    0.01    0.00    0.01 
 ##    user  system elapsed 
-##    0.28    0.03    0.32 
+##    0.11    0.02    0.13 
 ##    user  system elapsed 
-##    3.17    0.00    3.25
+##    0.98    0.00    0.98
 ```
 ]
 

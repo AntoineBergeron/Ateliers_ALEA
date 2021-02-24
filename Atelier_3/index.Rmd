@@ -151,7 +151,7 @@ for(etape in c("Bonjour", "programmeurs", "en R")) {
 }
 ```
 
-Dans cet exemple, notre séquence contient 3 éléments "Bonjour", "programmeurs", "en R". R va évaluer l'expression 3 fois. La variable index, ici `etape`, prendra successivement les valeurs de 1 à 3 pendant l'exécution de la boucle.
+Dans cet exemple, notre séquence contient 3 éléments "Bonjour", "programmeurs", "en R". R va donc évaluer l'expression 3 fois (3 éléments). La variable index, ici `etape`, prendra successivement les valeurs de l'élément 1 à 3 pendant l'exécution de la boucle.
 
 ---
 # Quelques exemples simples

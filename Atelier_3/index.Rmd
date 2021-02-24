@@ -291,6 +291,10 @@ for(etape in 1:10) n <- n*etape
 n
 ```
 
+```{r}
+factorial(10)
+```
+
 ---
 # On complexifie le problème ...
 

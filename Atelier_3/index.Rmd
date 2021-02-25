@@ -449,7 +449,7 @@ r <- 0.3
 K <- 200000
 n_steps <- 115
 N <- numeric(n_steps+1)
-N[1] <- 220
+N[1] <- 220 # Année 0 en position 1 (donc [position - 1] = nombre d'années écoulées)
 
 for(i in 2:(n_steps+1)) {
     N[i] <- N[i-1] + r * N[i-1] * (1 - N[i-1]/K)
@@ -483,8 +483,7 @@ La structure de base d'une expression conditionnelle est la suivante:
 ```{r eval = FALSE}
 if(condition) {
     instruction(1)
-    }
-else {
+} else {
     instruction(2)
 }
 ```

@@ -433,7 +433,7 @@ class: inverse, middle, center
 r <- 0.3
 N <- 220
 K <- 200000
-step <- 1
+step <- 0
 while(N < K/2) {
     N <- N + r * N * (1 - N/K)
     step <- step + 1

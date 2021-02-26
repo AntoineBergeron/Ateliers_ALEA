@@ -1653,3 +1653,16 @@ Quelle sera la distribution de la forêt tempérée au sein de la Réserve écol
 	+ Réalisation de la simulation stochastique (tirage des transitions)
 	+ Réalisation de la figure
 - Pouvoir exécuter le code de A à Z, soit de la lecture du fichier de données jusqu'à la figure, sans intervenir.
+
+---
+
+# Informations complémentaires
+
+.pull-left[
+<img src="assets/img/typedarbre.png" height="200px"></img>
+]
+
+
+.pull-right[
+<img src="assets/img/defarbres.png" height="350px"></img>
+]

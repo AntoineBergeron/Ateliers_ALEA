@@ -933,20 +933,20 @@ rmultinom(n = 3, size = 1, prob = rep(1/6, 6))
 
 ---
 
-# La roulette russe
+# L'ampoule grillée
 ## La loi exponentielle
 
 .pull-left[
 <div style='text-align:center;'>
-<img src="assets/img/roulette.jpg" width="80%"></img>
+<img src="assets/img/ampoule.png" width="80%"></img>
 </div>
 ]
 
 
 .pull-right[
 ```{r ,out.width = '60%', dpi=300, fig.align="center"}
-hist(rexp(n = 1000, rate = 1/6),
-xlab = "Nombre d'essais avant de perdre")
+hist(rexp(n = 1000, rate = 1/5),
+xlab = "Nombre d'années avant de griller")
 ```
 ]
 

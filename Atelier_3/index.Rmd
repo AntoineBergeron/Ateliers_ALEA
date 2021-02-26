@@ -1659,7 +1659,7 @@ Quelle sera la distribution de la forêt tempérée au sein de la Réserve écol
 # Informations complémentaires
 
 .pull-left[
-<img src="assets/img/typedarbre.png" height="200px"></img>
+<img src="assets/img/typedarbre.png" height="160px"></img>
 
 <div style='text-align:center;'>
 <img src="assets/img/arbre.png" height="200px"></img>

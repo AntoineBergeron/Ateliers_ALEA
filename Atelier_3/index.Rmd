@@ -1620,11 +1620,6 @@ Une entrée $P(B_{t+1} | T_t)$ se lit comme "la probabilité qu'un quadrat occup
 Bien qu'il y ait de nombreuses similarités avec le modèle de lotterie, il ne s'agit pas du même modèle. Ainsi, les étapes de mortalité et de recrutement sont combinées dans une seule étape où sont remplacés automatiquement les états d'un pas de temps à l'autre et où les probabilités sont toujours les mêmes (elles ne changent pas avec l'abondance relative).
 
 ---
-# Question de recherche
-
-Quelle sera la distribution de la forêt tempérée au sein de la Réserve écologique des Montagnes vertes dans 100 ans ?
-
----
 # Données
 
 - Distribution initiale de la végétation dans le fichier [quadrats.txt](./donnees/quadrats.txt)

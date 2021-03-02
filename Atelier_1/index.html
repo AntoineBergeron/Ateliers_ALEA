@@ -1067,7 +1067,7 @@ END FOR
 
 # Exercice 4
 
-Bruno et Martin s'entraînent au lancer du poids. Au cours des dernières années, ils ont dû s'affronter 10 fois dans des compétitions. Pour Bruno, son meilleur lancer (en mètres) pour chacune des compétitions est donné par le vecteur B. Les meilleurs lancers de Martin se trouvent dans le vecteur M.
+Béatrice et Martine s'entraînent au lancer du poids. Au cours des dernières années, elles ont dû s'affronter 10 fois dans des compétitions. Pour Béatrice, son meilleur lancer (en mètres) pour chacune des compétitions est donné par le vecteur B. Les meilleurs lancers de Martine se trouvent dans le vecteur M.
 
 
 
@@ -1088,7 +1088,7 @@ M
 ##  [1] 13.23 14.21 13.43 14.52 13.18 12.91 13.74 16.00 14.50 15.79
 ```
 
-Ainsi, pour accéder au résultat de Bruno lors de sa deuxième compétition, il suffit de noter l'indexation 2:
+Ainsi, pour accéder au résultat de Béatrice lors de sa deuxième compétition, il suffit de noter l'indexation 2:
 
 
 ```r
@@ -1103,7 +1103,11 @@ B[2]
 
 # Exercice 4 (suite)
 
-On aimerait écrire le pseudo-code nous permettant de déterminer qui de Bruno ou Martin a obtenu le meilleur lancer pour chacune des compétitions.
+On aimerait écrire le pseudo-code nous permettant de déterminer qui de Béatrice ou de Martine a obtenu le meilleur lancer pour chacune des compétitions.
+
+&lt;div style='text-align:center;'&gt;
+&lt;img src="assets/img/poids.png" height="400px"&gt;&lt;/img&gt;
+&lt;/div&gt;
 
 ---
 
@@ -1123,9 +1127,9 @@ Une méthode (qui n'est pas la plus optimale) serait de comparer les lancers lor
 
 ```
 IF B[1] &lt; M[1]
-  PRINT "Martin a gagné la compétition 1"
+  PRINT "Martine a gagné la compétition 1"
 IF ELSE B[1] &gt; M[1]
-  PRINT "Bruno a gagné la compétition 1"
+  PRINT "Béatrice a gagné la compétition 1"
 ELSE
   PRINT "Il y a eu égalité à la compétition 1"
 ENDIF
@@ -1139,9 +1143,9 @@ ENDIF
 
 ```
 IF B[2] &lt; M[2]
-  PRINT "Martin a gagné la compétition 2"
+  PRINT "Martine a gagné la compétition 2"
 IF ELSE B[2] &gt; M[2]
-  PRINT "Bruno a gagné la compétition 2"
+  PRINT "Béatrice a gagné la compétition 2"
 ELSE
   PRINT "Il y a eu égalité à la compétition 2"
 ENDIF
@@ -1158,9 +1162,9 @@ Il est alors possible de passer une boucle `for` où les indexations seront le n
 ```
 FOR NumCompet in 1:10
   IF B[NumCompet] &lt; M[NumCompet]
-    PRINT ("Martin a gagné la compétition" NumCompet)
+    PRINT ("Martine a gagné la compétition" NumCompet)
   IF ELSE B[NumCompet] &gt; M[NumCompet]
-    PRINT ("Bruno a gagné la compétition" NumCompet)
+    PRINT ("Béatrice a gagné la compétition" NumCompet)
   ELSE
     PRINT ("Il y a eu égalité à la compétition" NumCompet)
   ENDIF

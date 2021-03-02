@@ -1056,7 +1056,7 @@ B[2]
 On aimerait écrire le pseudo-code nous permettant de déterminer qui de Béatrice ou de Martine a obtenu le meilleur lancer pour chacune des compétitions.
 
 <div style='text-align:center;'>
-<img src="assets/img/poids.png" height="400px"></img>
+<img src="assets/img/poids.PNG" height="400px"></img>
 </div>
 
 ---
